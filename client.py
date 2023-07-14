@@ -1,35 +1,37 @@
+import asyncio
 import socket
 import json
 import script
 
-s = socket.socket()
 host = "0.0.0.0"
 port = 420
 
-s.bind((host, port))
-s.listen()
+global s
+s = socket.socket()
 
-thevar = True
+def prepare():
+    global s
+    s.bind((host, port))
+    s.listen()
 
-def run():
+    global thevar
+    thevar = True
+
+async def run():
+    global thevar
+    global s
     while thevar:
         con, addr = s.accept()
         while con:
             data = con.recv(1024)
             if not data: break
             strn = str(data.decode('utf-8'))
-            if(strn == ""): strn = "{}"
-            son = json.loads(strn)
-            script.callback(son)
+            if(strn == ""): strn = "{}\n"
+            strn = strn.split("\\n")[0]
+            script.callback(strn)
 
 def stopper():
-    thevar = False
-
-try:
-    run()
-except KeyboardInterrupt:
-    print('\nProgram terminated due to keyboard interruption.')
-finally:
+    global s
+    global thevar
     s.close()
-    client.stopper()
-    script.stopper()
+    thevar = False

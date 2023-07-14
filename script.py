@@ -1,25 +1,81 @@
+import asyncio
+
+import json
+import modeling
+import time
+import serial
+
 import prepare
+import drive
+import led
 import client
 
-def main():
+peoplemaybes = [1, 2, 19]
+
+global tracking
+tracking = 0
+global lastFound
+lastFound = 0
+
+def getTracking():
+    return tracking
+
+def getLastFound():
+    return lastFound
+
+def setTracking(to):
+    tracking = to
+
+def setLastFound(to):
+    lastFound = to
+
+async def main():
     prepare.prepare()
+    client.prepare()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(drive.run())
+    loop.run_until_complete(client.run())
 
-    client.run()
+async def callback(son):
+    js = json.loads(son)
+    data = modeling.ReceivedDetection(js)
+    box_x, box_y = data.center
+    global tracking
+    global lastFound
+    if(data.type in peoplemaybes):
+        if(tracking == 0):
+            tracking = data.id
+        else:
+            if(data.id == tracking):
+                lastFound = int(time.time())
+            elif(lastFound < (int(time.time()) - 5)):
+                    led.emergency()
+                    tracking = data.id
+                    lastFound = int(time.time())
+        if(tracking == data.id):
+            ab = abs(box_x)
+            print("CONFIRMED TARGET IS CURRENT", ab)
+            if(ab != 0):
+                if(box_x < 0):
+                    drive.turn_right()
+                else:
+                    drive.turn_left()
 
-def callback(son):
-    print(son)
+        print("TARGET", tracking, lastFound, getTracking(), getLastFound(), ">>>", box_x, box_y)
+    else:
+        print("No action for type " + str(data.type))
 
 def stopper():
-        prepare.unpare()
+    drive.stopper()
+    prepare.stopper()
+    client.stopper()
 
-if __name__ == '__main__':
+async def wrapper():
     try:
-        # Stuff we want to do (in this case, just call our main function)
-        main()
+        await main()
     except KeyboardInterrupt:
-        # What to do if there's a keyboard interrupt (ctrl+c) exception
-        # In this case, we're just going to print a message
-        print('\nProgram terminated with keyboard interrupt.')
-    finally:
-        # What to do before we exit the block
         stopper()
+        print('\nProgram terminated with keyboard interrupt.')
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(wrapper())

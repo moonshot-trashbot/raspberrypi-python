@@ -1,3 +1,4 @@
+import asyncio
 import sys
 import time
 
@@ -6,13 +7,19 @@ from sphero_sdk import SpheroRvrObserver
 
 rvr = SpheroRvrObserver()
 
+global queue
+queue = []
+
+global queueStart
+queueStart = True
+
 def drive_forward_seconds(spee, head, tim):
-    rvr.drive_control.drive_forward_seconds(
-        speed=spee,       # This is out of 255, where 255 corresponds to 2 m/s
-        heading=head,      # Valid heading values are 0-359
-        time_to_drive=tim # Driving duration in seconds
-    )
-    time.sleep(1)
+    global queue
+    queue.append({
+        "speed": spee,
+        "heading": head,
+        "time_to_drive": tim
+    })
 
 # import sys
 # import time
@@ -40,32 +47,46 @@ def drive_forward_seconds(spee, head, tim):
 #     )
 
 def drive_forward():
-    rvr.drive_control.drive_forward_seconds(
-        speed = 50,
-        heading = 0,
-        time_to_drive = 1
+    drive_forward_seconds(
+        50,
+        0,
+        1
     )
 
 def drive_backward():
-    rvr.drive_control.drive_forward_seconds(
-        speed = 50,
-        heading = 0,
-        time_to_drive = 1
+    drive_forward_seconds(
+        50,
+        0,
+        1
     )
 
 def turn_left():
-    rvr.drive_control.drive_forward_seconds(
-        speed = 10,
-        heading = 45,
-        time_to_drive = 1
+    drive_forward_seconds(
+        10,
+        45,
+        0
     )
 
 def turn_right():
-    rvr.drive_control.drive_forward_seconds(
-        speed = 10,
-        heading = 315,
-        time_to_drive = 1
+    drive_forward_seconds(
+        10,
+        315,
+        0
     )
+
+async def run():
+    global queueStart
+    while(queueStart is True):
+        print("RUN NOTHING QUEUE")
+        if(queue.__len__() > 0):
+            current = queue.pop(0)
+            print(current)
+            rvr.drive_control.drive_forward_seconds(speed = int(current["speed"]), heading = int(current["heading"]), time_to_drive = int(current["time_to_drive"]))
+        time.sleep(1)
+
+def stopper():
+    global queueStart
+    queueStart = False
 
 # if __name__ == '__main__':
 #     try:
