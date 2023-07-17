@@ -3,12 +3,11 @@ import asyncio
 import json
 import modeling
 import time
-import serial
 
 import prepare
+import listener
 import drive
 import led
-import client
 
 peoplemaybes = [1, 2, 19]
 
@@ -29,12 +28,11 @@ def setTracking(to):
 def setLastFound(to):
     lastFound = to
 
-async def main():
+def main():
     prepare.prepare()
-    client.prepare()
     loop = asyncio.get_event_loop()
     loop.run_until_complete(drive.run())
-    loop.run_until_complete(client.run())
+    loop.run_until_complete(listener.run())
 
 async def callback(son):
     js = json.loads(son)
@@ -68,11 +66,11 @@ async def callback(son):
 def stopper():
     drive.stopper()
     prepare.stopper()
-    client.stopper()
+    listener.stopper()
 
 async def wrapper():
     try:
-        await main()
+        main()
     except KeyboardInterrupt:
         stopper()
         print('\nProgram terminated with keyboard interrupt.')
