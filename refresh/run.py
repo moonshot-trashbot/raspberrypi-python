@@ -78,20 +78,20 @@ def addition(inp):
     return
 
 moveaplifier = 0.133
-track = -1
+tracking = -1
 lastChance = int(time.time())-5
 
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
-    global track
+    global tracking
     global lastChance
     await manager.leds_red()
-    if(inp is None): return
+    if(inp is None or inp is not _models.Detection): return
     print(">>> PROCESSES: Starting processing of following object...")
     print(inp)
-    if(track == -1): track = inp.id
-    if((time - lastChance) > 5): track = inp.id
-    if(track == inp.id):
+    if(tracking == -1): tracking = inp.id
+    if((int(time.time()) - lastChance) > 5): tracking = inp.id
+    if(tracking == inp.id):
         lastChance = int(time.time())
         num = num * moveaplifier
         await manager.left_turn(10)
