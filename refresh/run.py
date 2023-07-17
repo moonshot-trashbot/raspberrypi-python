@@ -39,7 +39,7 @@ recent = int(time.time())
 # ----------------------------------------
 
 # REACCESS() - Get Next Processable Entry
-def reaccess():
+async def reaccess():
     global save
     global recent
     global run
@@ -50,7 +50,7 @@ def reaccess():
     else:
         final = 300
         sec = int(time.time()) - recent
-        if(sec <= 5): manager.leds_green()
+        if(sec <= 5): await manager.leds_green()
         if(sec <= 60): return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
@@ -100,7 +100,7 @@ def quit():
 
 async def coreRobot():
     while True:
-        x = reaccess()
+        x = await reaccess()
         if(x is not None and x is not {}):
             await process(x)
 
