@@ -46,7 +46,6 @@ async def reaccess():
     global lastBattery
     lbm = int(time.time()) - lastBattery
     if(save.__len__() > 0):
-        await manager.cancel_hazard()
         x = save.pop(0)
         recent = int(time.time())
         return x
@@ -59,7 +58,6 @@ async def reaccess():
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             time.sleep(2)
         elif(sec <= (final - 120)):
-            await manager.start_hazard()
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 5s]")
             time.sleep(5)
         elif(sec < (final - 60)):
@@ -67,17 +65,10 @@ async def reaccess():
             time.sleep(10)
         else:
             if(sec >= final):
-                await manager.cancel_hazard()
                 run = False
                 print(">>> NOTICE: Finished processing, inactive for over 5 minutes, shutting down.")
                 await quit()
                 return
-    if(lbm > 20):
-        battery_percentage = await manager.battery_percentage()
-        print(">>> BATTERY PERCENTAGE: ", (str(battery_percentage) + "%"))
-        manager.always_hazard(True)
-        if(battery_percentage <= 30): await manager.start_hazard()
-        lastBattery = int(time.time())
 
 # ADDITIOn(Input) - Add Item to Process Queue
 def addition(inp):
