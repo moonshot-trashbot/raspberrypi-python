@@ -135,10 +135,10 @@ def stop(error):
         sys.exit(0)
     return None
 
-if __name__ == '__main__':
+async def main():
     try:
         print("Calling open - manager")
-        manager.open()
+        await manager.open()
         print("Calling open - listener")
         listens.open()
     finally:
@@ -154,3 +154,9 @@ if __name__ == '__main__':
             stop(e)
             # t2.terminate()
             # t1.terminate()
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(
+        main()
+    )
