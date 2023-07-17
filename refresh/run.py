@@ -131,7 +131,9 @@ def stop(error):
 
 if __name__ == '__main__':
     try:
+        print("Calling open - manager")
         manager.open()
+        print("Calling open - listener")
         listens.open()
     finally:
         try:
