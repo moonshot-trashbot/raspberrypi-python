@@ -55,9 +55,9 @@ async def callback(son):
             print("CONFIRMED TARGET IS CURRENT", ab)
             if(ab != 0):
                 if(box_x < 0):
-                    drive.turn_right()
+                    drive.turn_right(10)
                 else:
-                    drive.turn_left()
+                    drive.turn_left(10)
 
         print("TARGET", tracking, lastFound, getTracking(), getLastFound(), ">>>", box_x, box_y)
     else:
