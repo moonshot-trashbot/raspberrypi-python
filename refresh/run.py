@@ -126,7 +126,7 @@ def coreSocket():
 def coreRobotWrapper():
     loop = asyncio.new_event_loop()
     loop.run_until_complete(
-        coreRobot
+        coreRobot()
     )
 
 t2 = Thread(target = coreSocket)

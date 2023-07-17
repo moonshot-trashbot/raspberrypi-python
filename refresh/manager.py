@@ -104,7 +104,7 @@ async def start_hazard():
     if(hazard is False):
         hazard = True
         while hazard:
-            loop.run_until_complete(__internal_hazard)
+            loop.run_until_complete(__internal_hazard())
 
 def always_hazard(yesorno):
     global alwaysHazard
