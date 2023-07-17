@@ -55,18 +55,20 @@ async def drive_forward_seconds(spee, head, tim):
     await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
     await asyncio.sleep(1)
 
-async def left_turn():
+async def left_turn(num):
+    num = abs(num)
     await rvr.drive_control.reset_heading()
     await drive_forward_seconds(
         10,
-        270,
+        360-num,
         0.1
     )
-async def right_turn():
+async def right_turn(num):
+    num = abs(num)
     await rvr.drive_control.reset_heading()
     await drive_forward_seconds(
         10,
-        90,
+        num,
         0.1
     )
 

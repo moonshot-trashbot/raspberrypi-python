@@ -65,7 +65,7 @@ async def reaccess():
             if(sec >= final):
                 run = False
                 print(">>> NOTICE: Finished processing, inactive for over 5 minutes, shutting down.")
-                quit()
+                await quit()
                 return
 
 # ADDITIOn(Input) - Add Item to Process Queue
@@ -77,20 +77,31 @@ def addition(inp):
     save.append(new)
     return
 
+moveaplifier = 0.133
+track = -1
+lastChance = int(time.time())-5
+
 # PROCESS(Input) - Run Single Instruction [Async]
-async def process(inp):
+async def process(inp: _models.Detection or None):
+    global track
+    global lastChance
     await manager.leds_red()
     if(inp is None): return
     print(">>> PROCESSES: Starting processing of following object...")
-    print("   ", inp)
-    await manager.left_turn()
-    await manager.right_turn()
+    print(inp)
+    if(track == -1): track = inp.id
+    if((time - lastChance) > 5): track = inp.id
+    if(track == inp.id):
+        lastChance = int(time.time())
+        num = num * moveaplifier
+        await manager.left_turn(10)
+        await manager.right_turn(10)
     print(">>> PROCESSES: Finished Processing object, moving on.")
     pass
 
 # QUIT() - Request to Close Connections, Clean-up
-def quit():
-    stop(False)
+async def quit():
+    await stop(False)
     sys.exit(130)
 
 
@@ -117,7 +128,7 @@ t2 = Thread(target = coreSocket)
 t1 = Thread(target = coreRobotWrapper)
 
 # STOP(Error) - Must Close Connections, Clean-up
-def stop(error):
+async def stop(error):
     global stopb
     global run
     if(stopb is False):
@@ -129,7 +140,7 @@ def stop(error):
             print(">>> TRACEBACK: Now forcing the program to close down... (check error log?)")
             print(error)
             traceback.print_tb(error.__traceback__, 5)
-        manager.close()
+        await manager.close()
         listens.close()
         sys.exit(0)
     return None
@@ -146,11 +157,11 @@ async def main():
             t2.start()
         except KeyboardInterrupt as e:
             signal.signal(signal.SIGINT, signal.SIG_IGN)
-            stop(False)
+            await stop(False)
             # t2.terminate()
             # t1.terminate()
         except Exception as e:
-            stop(e)
+            await stop(e)
             # t2.terminate()
             # t1.terminate()
 
