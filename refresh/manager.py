@@ -28,7 +28,6 @@ rvr = SpheroRvrAsync(
         loop
     )
 )
-loop2 = asyncio.new_event_loop()
 
 
 # ----------------------------------------
@@ -52,16 +51,18 @@ async def leds_reset():
     await asyncio.sleep(1)
 async def leds_red():
     global alwaysHazard
-    if(alwaysHazard == False):
+    if(alwaysHazard is False):
         await cancel_hazard()
+        await asyncio.sleep(0.1)
         await rvr.led_control.set_all_leds_color(color = Colors.red)
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.1)
 async def leds_green():
     global alwaysHazard
-    if(alwaysHazard == False):
+    if(alwaysHazard is False):
         await cancel_hazard()
+        await asyncio.sleep(0.1)
         await rvr.led_control.set_all_leds_color(color = Colors.green)
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.1)
 
 async def drive_forward_seconds(spee, head, tim):
     await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
@@ -91,6 +92,8 @@ async def __internal_hazard_on():
 async def __internal_hazard_off():
     await rvr.led_control.set_all_leds_color(color = Colors.white)
 async def __internal_hazard():
+    global hazard
+    if(hazard is False): return
     __internal_hazard_on()
     await asyncio.wait(1)
     __internal_hazard_off()
