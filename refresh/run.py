@@ -14,11 +14,11 @@
 # ----------------------------------------
 
 import traceback
-import multiprocessing
 import signal
 import sys
 import json
 import time
+import asyncio
 import _models
 import manager
 import listens
@@ -77,15 +77,15 @@ def addition(inp):
     save.append(new)
     return
 
-# PROCESS(Input) - Run Single Instruction
-def process(inp):
-    manager.leds_red()
+# PROCESS(Input) - Run Single Instruction [Async]
+async def process(inp):
+    await manager.leds_red()
     if(inp is None): return
     print(">>> PROCESSES: Starting processing of following object...")
     print("   ", inp)
-    manager.left_turn()
-    manager.right_turn()
-    print(">>> PROCESSES: Finished Processing, moving on.")
+    await manager.left_turn()
+    await manager.right_turn()
+    print(">>> PROCESSES: Finished Processing object, moving on.")
     pass
 
 # QUIT() - Request to Close Connections, Clean-up
@@ -98,18 +98,23 @@ def quit():
 # MAIN INSTRUCTION
 # ----------------------------------------
 
-def coreRobot():
+async def coreRobot():
     while True:
         x = reaccess()
         if(x is not None and x is not {}):
-            # (?) Add more here, maybe.
-            process(x)
+            await process(x)
 
 def coreSocket():
     listens.accept(addition)
 
-t1 = Thread(target = coreRobot)
+def coreRobotWrapper():
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(
+        coreRobot()
+    )
+
 t2 = Thread(target = coreSocket)
+t1 = Thread(target = coreRobotWrapper)
 
 # STOP(Error) - Must Close Connections, Clean-up
 def stop(error):

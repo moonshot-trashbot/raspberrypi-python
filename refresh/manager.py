@@ -15,12 +15,19 @@
 
 
 import sys
+import asyncio
 import time
 import _models
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
-from sphero_sdk import SpheroRvrObserver, Colors
-rvr = SpheroRvrObserver()
+from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets
+
+loop = asyncio.get_event_loop()
+rvr = SpheroRvrAsync(
+    dal=SerialAsyncDal(
+        loop
+    )
+)
 
 
 # ----------------------------------------
@@ -28,47 +35,38 @@ rvr = SpheroRvrObserver()
 # ----------------------------------------
 
 # OPEN() - Create and Setup Connection
-def open():
-    rvr.wake()
-    time.sleep(2.1)
-    leds_green()
+async def open():
+    await rvr.wake()
+    await asyncio.sleep(2)
+    await leds_green()
 
 # (ALL LED FUNCTIONS)
-def leds_reset():
-    rvr.led_control.turn_leds_off()
-    time.sleep(0.1)
-def leds_red():
-    rvr.led_control.set_all_leds_color(color = Colors.red)
-    time.sleep(0.1)
-def leds_green():
-    rvr.led_control.set_all_leds_color(color = Colors.green)
-    time.sleep(0.1)
+async def leds_reset():
+    await rvr.led_control.turn_leds_off()
+async def leds_red():
+    await rvr.led_control.set_all_leds_color(color = Colors.red)
+async def leds_green():
+    await rvr.led_control.set_all_leds_color(color = Colors.green)
 
-def drive_forward_seconds(spee, head, tim):
-    rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
-    time.sleep(tim + 0.5)
+async def drive_forward_seconds(spee, head, tim):
+    await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
 
-def left_turn():
-    rvr.drive_control.reset_heading()
-    time.sleep(0.1)
-    drive_forward_seconds(
+async def left_turn():
+    await rvr.drive_control.reset_heading()
+    await drive_forward_seconds(
         10,
         270,
         0.1
     )
-def right_turn():
-    rvr.drive_control.reset_heading()
-    time.sleep(0.1)
-    drive_forward_seconds(
+async def right_turn():
+    await rvr.drive_control.reset_heading()
+    await drive_forward_seconds(
         10,
         90,
         0.1
     )
 
 # CLOSE() - Delete and Close Connection
-def close():
-    global rvr
-    leds_reset()
-    time.sleep(0.1)
-    rvr.close()
-    time.sleep(0.1)
+async def close():
+    await leds_reset()
+    await rvr.close()
