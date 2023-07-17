@@ -60,17 +60,19 @@ def drive_backward():
         1
     )
 
-def turn_left():
+def turn_left(num):
+    num = abs(num)
     drive_forward_seconds(
-        10,
-        45,
+        254,
+        num,
         0
     )
 
-def turn_right():
+def turn_right(num):
+    num = abs(num)
     drive_forward_seconds(
-        10,
-        315,
+        254,
+        360-num,
         0
     )
 

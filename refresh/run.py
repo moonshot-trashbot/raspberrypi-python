@@ -4,7 +4,7 @@
 #
 # This file controls the main runtime
 # program for the sphero RVR and
-# server socket connection!
+# server socket connection.
 #
 # ****************************************
 
