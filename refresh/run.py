@@ -85,13 +85,13 @@ lastChance = int(time.time())-5
 
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
+    print(inp)
     global tracking
     global lastChance
     print(">>> PROCESSES: Starting processing of following object...")
     await manager.leds_red()
     print("Manager leds red")
     if(inp is None or inp is not _models.Detection): return
-    print(inp)
     if(tracking == -1): tracking = inp.id
     if((int(time.time()) - lastChance) > 5): tracking = inp.id
     if(tracking == inp.id):
@@ -118,8 +118,9 @@ async def coreRobot():
     while True:
         x = await reaccess()
         if(x is not None and x is not {}):
-            process(x)
             print("Quick processing")
+            await process(x)
+            print("Quick processing end")
 
 def coreSocket():
     listens.accept(addition)
