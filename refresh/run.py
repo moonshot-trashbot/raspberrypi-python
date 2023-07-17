@@ -50,6 +50,7 @@ def reaccess():
     else:
         final = 300
         sec = int(time.time()) - recent
+        if(sec <= 5): manager.leds_green()
         if(sec <= 60): return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
@@ -78,13 +79,13 @@ def addition(inp):
 
 # PROCESS(Input) - Run Single Instruction
 def process(inp):
+    manager.leds_red()
     if(inp is None): return
     print(">>> PROCESSES: Starting processing of following object...")
     print("   ", inp)
     manager.left_turn()
     manager.right_turn()
-    time.sleep(1)
-    print(">>> PROCESSES: (Fake: Finished Processing, moving on.)")
+    print(">>> PROCESSES: Finished Processing, moving on.")
     pass
 
 # QUIT() - Request to Close Connections, Clean-up

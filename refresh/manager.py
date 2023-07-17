@@ -31,6 +31,7 @@ rvr = SpheroRvrObserver()
 def open():
     rvr.wake()
     time.sleep(2)
+    leds_green()
 
 # (ALL LED FUNCTIONS)
 def leds_reset():
@@ -52,7 +53,7 @@ def left_turn():
     time.sleep(0.1)
     drive_forward_seconds(
         10,
-        45,
+        -45,
         0
     )
 def right_turn():
@@ -60,7 +61,7 @@ def right_turn():
     time.sleep(0.1)
     drive_forward_seconds(
         10,
-        315,
+        45,
         0
     )
 
