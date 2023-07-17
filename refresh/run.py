@@ -87,9 +87,10 @@ lastChance = int(time.time())-5
 async def process(inp: _models.Detection or None):
     global tracking
     global lastChance
-    await manager.leds_red()
-    if(inp is None or inp is not _models.Detection): return
     print(">>> PROCESSES: Starting processing of following object...")
+    await manager.leds_red()
+    print("Manager leds red")
+    if(inp is None or inp is not _models.Detection): return
     print(inp)
     if(tracking == -1): tracking = inp.id
     if((int(time.time()) - lastChance) > 5): tracking = inp.id
@@ -100,7 +101,7 @@ async def process(inp: _models.Detection or None):
         await manager.right_turn(10)
         print(">>> TRACKING: Turned to continue following (", tracking , ").")
     else:
-        print(">>> TRACKING: We aren't tracking ( ID: " + inp.id + ") but they are in frame.")
+        print(">>> TRACKING: We aren't tracking ( ID:" + inp.id + ") but they are in frame.")
     print(">>> PROCESSES: Finished Processing object, moving on.")
 
 # QUIT() - Request to Close Connections, Clean-up
