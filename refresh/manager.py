@@ -91,16 +91,16 @@ async def __internal_hazard_on():
 async def __internal_hazard_off():
     await rvr.led_control.set_all_leds_color(color = Colors.white)
 async def __internal_hazard():
-    while hazard:
-        __internal_hazard_on()
-        await asyncio.wait(1)
-        __internal_hazard_off()
-        await asyncio.wait(1)
+    __internal_hazard_on()
+    await asyncio.wait(1)
+    __internal_hazard_off()
+    await asyncio.wait(1)
 
 async def start_hazard():
     global hazard
     hazard = True
-    loop2.run_until_complete(__internal_hazard())
+    while hazard:
+        loop.run_until_complete(__internal_hazard)
 
 async def always_hazard(yesorno):
     global alwaysHazard
@@ -109,8 +109,8 @@ async def always_hazard(yesorno):
 async def cancel_hazard():
     global alwaysHazard
     global hazard
-    alwaysHazard = False
     hazard = False
+    alwaysHazard = False
     await rvr.led_control.turn_leds_off()
 
 async def battery_percentage():
