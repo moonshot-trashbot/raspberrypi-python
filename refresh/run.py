@@ -102,7 +102,6 @@ async def process(inp: _models.Detection or None):
     else:
         print(">>> TRACKING: We aren't tracking ( ID: " + inp.id + ") but they are in frame.")
     print(">>> PROCESSES: Finished Processing object, moving on.")
-    pass
 
 # QUIT() - Request to Close Connections, Clean-up
 async def quit():
@@ -118,7 +117,8 @@ async def coreRobot():
     while True:
         x = await reaccess()
         if(x is not None and x is not {}):
-            await process(x)
+            process(x)
+            print("Quick processing")
 
 def coreSocket():
     listens.accept(addition)
