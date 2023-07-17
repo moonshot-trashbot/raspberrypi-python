@@ -53,16 +53,16 @@ def left_turn():
     time.sleep(0.1)
     drive_forward_seconds(
         10,
-        -45,
-        0
+        270,
+        0.1
     )
 def right_turn():
     rvr.drive_control.reset_heading()
     time.sleep(0.1)
     drive_forward_seconds(
         10,
-        45,
-        0
+        90,
+        0.1
     )
 
 # CLOSE() - Delete and Close Connection
