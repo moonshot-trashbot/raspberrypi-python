@@ -62,7 +62,7 @@ async def drive_forward_seconds(spee, head, tim):
 
 async def left_turn(num):
     num = abs(num)
-    print("Left " + num)
+    print("Left", num)
     await rvr.drive_control.reset_heading()
     await drive_forward_seconds(
         10,
@@ -71,7 +71,7 @@ async def left_turn(num):
     )
 async def right_turn(num):
     num = abs(num)
-    print("Right " + num)
+    print("Right", num)
     await rvr.drive_control.reset_heading()
     time.sleep(0.1)
     await drive_forward_seconds(
