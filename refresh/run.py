@@ -41,11 +41,14 @@ lastBattery = int(time.time())-20
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
     global save
+    global run
     global recent
     global lastBattery
     if((time.time() - lastBattery) > 20):
         battery_percentage = await manager.battery_percentage()
-    global run
+        print(">>> BATTERY PERCENTAGE: ", (str(battery_percentage) + "%"))
+        if(battery_percentage <= 30): await manager.start_hazard()
+        await manager.always_hazard(True)
     if(save.__len__() > 0):
         await manager.cancel_hazard()
         x = save.pop(0)

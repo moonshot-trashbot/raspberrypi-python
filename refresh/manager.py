@@ -41,16 +41,27 @@ async def open():
     await asyncio.sleep(2)
     await leds_green()
 
+hazard = False
+alwaysHazard = False
+
 # (ALL LED FUNCTIONS)
 async def leds_reset():
+    always_hazard(False)
+    cancel_hazard()
     await rvr.led_control.turn_leds_off()
     await asyncio.sleep(1)
 async def leds_red():
-    await rvr.led_control.set_all_leds_color(color = Colors.red)
-    await asyncio.sleep(1)
+    global alwaysHazard
+    if(alwaysHazard == False):
+        await cancel_hazard()
+        await rvr.led_control.set_all_leds_color(color = Colors.red)
+        await asyncio.sleep(1)
 async def leds_green():
-    await rvr.led_control.set_all_leds_color(color = Colors.green)
-    await asyncio.sleep(1)
+    global alwaysHazard
+    if(alwaysHazard == False):
+        await cancel_hazard()
+        await rvr.led_control.set_all_leds_color(color = Colors.green)
+        await asyncio.sleep(1)
 
 async def drive_forward_seconds(spee, head, tim):
     await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
@@ -91,9 +102,14 @@ async def start_hazard():
     hazard = True
     loop2.run_until_complete(__internal_hazard())
 
+async def always_hazard(yesorno):
+    global alwaysHazard
+    alwaysHazard = yesorno
 
 async def cancel_hazard():
+    global alwaysHazard
     global hazard
+    alwaysHazard = False
     hazard = False
     await leds_green()
 
