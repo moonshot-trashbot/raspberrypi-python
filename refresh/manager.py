@@ -45,6 +45,24 @@ def leds_green():
     global rvr
     rvr.led_control.set_all_leds_rgb(Colors.GREEN)
 
+def drive_forward_seconds(spee, head, tim):
+    rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
+
+def left_turn():
+    rvr.drive_control.reset_heading()
+    drive_forward_seconds(
+        10,
+        45,
+        0
+    )
+def right_turn():
+    rvr.drive_control.reset_heading()
+    drive_forward_seconds(
+        10,
+        315,
+        0
+    )
+
 # CLOSE() - Delete and Close Connection
 def close():
     global rvr

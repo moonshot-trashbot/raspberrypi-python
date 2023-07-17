@@ -77,9 +77,12 @@ def addition(inp):
 
 # PROCESS(Input) - Run Single Instruction
 def process(inp):
+    if(inp is None): return
     print(">>> PROCESSES: Starting processing of following object...")
-    print("\t", inp)
-    time.sleep(5)
+    print("   ", inp)
+    manager.left_turn()
+    manager.right_turn()
+    time.sleep(1)
     print(">>> PROCESSES: (Fake: Finished Processing, moving on.)")
     pass
 
