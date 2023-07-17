@@ -37,7 +37,7 @@ rvr = SpheroRvrAsync(
 # OPEN() - Create and Setup Connection
 async def open():
     await rvr.wake()
-    await asyncio.sleep(2)
+    await time.sleep(2)
     await leds_green()
 
 hazard = False
@@ -48,25 +48,25 @@ async def leds_reset():
     always_hazard(False)
     cancel_hazard()
     await rvr.led_control.turn_leds_off()
-    await asyncio.sleep(1)
+    await time.sleep(1)
 async def leds_red():
     global alwaysHazard
     if(alwaysHazard is False):
         await cancel_hazard()
-        await asyncio.sleep(0.1)
+        await time.sleep(0.1)
         await rvr.led_control.set_all_leds_color(color = Colors.red)
-        await asyncio.sleep(0.1)
+        await time.sleep(0.1)
 async def leds_green():
     global alwaysHazard
     if(alwaysHazard is False):
         await cancel_hazard()
-        await asyncio.sleep(0.1)
+        await time.sleep(0.1)
         await rvr.led_control.set_all_leds_color(color = Colors.green)
-        await asyncio.sleep(0.1)
+        await time.sleep(0.1)
 
 async def drive_forward_seconds(spee, head, tim):
     await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
-    await asyncio.sleep(1)
+    await time.sleepp(1)
 
 async def left_turn(num):
     num = abs(num)
@@ -90,14 +90,14 @@ async def right_turn(num):
 async def __internal_hazard_on():
     await rvr.led_control.set_all_leds_color(color = Colors.yellow)
 async def __internal_hazard_off():
-    await rvr.led_control.set_all_leds_color(color = Colors.white)
+    await rvr.led_control.turn_leds_off()
 async def __internal_hazard():
     global hazard
     if(hazard is False): return
     __internal_hazard_on()
-    await asyncio.wait(1)
+    await time.sleep(5)
     __internal_hazard_off()
-    await asyncio.wait(1)
+    await time.sleep(5)
 
 async def start_hazard():
     global hazard
@@ -119,7 +119,7 @@ async def cancel_hazard():
 
 async def battery_percentage():
     x = await rvr.get_battery_percentage()
-    asyncio.wait(0.1)
+    time.sleep(0.1)
 
 # CLOSE() - Delete and Close Connection
 async def close():
