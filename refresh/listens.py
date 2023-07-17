@@ -5,7 +5,7 @@ global host
 global port
 global sock
 
-host = "127.0.0.1"
+host = "0.0.0.0"
 port = 420
 sock = socket.socket()
 cont = True
