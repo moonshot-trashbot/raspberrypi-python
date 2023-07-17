@@ -48,17 +48,18 @@ def reaccess():
         recent = int(time.time())
         return x
     else:
+        if(sec <= 60): return
         final = 300
         sec = int(time.time()) - recent
         if(sec <= (final - 180)):
-            print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 5s]")
-            time.sleep(5)
+            print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
+            time.sleep(2)
         elif(sec <= (final - 120)):
+            print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 5s]")
+            time.sleep(5)
+        elif(sec < (final - 60)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 10s]")
             time.sleep(10)
-        elif(sec < (final - 60)):
-            print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 20s]")
-            time.sleep(20)
         else:
             if(sec >= final):
                 run = False
