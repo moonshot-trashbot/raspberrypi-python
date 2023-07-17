@@ -32,7 +32,7 @@ run = True
 stopb = False
 save = []
 recent = int(time.time())
-lastBattery = int(time.time())-20
+lastBattery = (int(time.time())-20)
 
 # ----------------------------------------
 # PUBLIC FUNCTIONS
@@ -44,11 +44,7 @@ async def reaccess():
     global run
     global recent
     global lastBattery
-    if((time.time() - lastBattery) > 20):
-        battery_percentage = await manager.battery_percentage()
-        print(">>> BATTERY PERCENTAGE: ", (str(battery_percentage) + "%"))
-        manager.always_hazard(True)
-        if(battery_percentage <= 30): manager.start_hazard()
+    lbm = int(time.time()) - lastBattery
     if(save.__len__() > 0):
         await manager.cancel_hazard()
         x = save.pop(0)
@@ -76,6 +72,12 @@ async def reaccess():
                 print(">>> NOTICE: Finished processing, inactive for over 5 minutes, shutting down.")
                 await quit()
                 return
+    if(lbm > 20):
+        battery_percentage = await manager.battery_percentage()
+        print(">>> BATTERY PERCENTAGE: ", (str(battery_percentage) + "%"))
+        manager.always_hazard(True)
+        if(battery_percentage <= 30): await manager.start_hazard()
+        lastBattery = int(time.time())
 
 # ADDITIOn(Input) - Add Item to Process Queue
 def addition(inp):

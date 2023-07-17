@@ -118,7 +118,8 @@ async def cancel_hazard():
     await rvr.led_control.turn_leds_off()
 
 async def battery_percentage():
-    return await rvr.get_battery_percentage()
+    x = await rvr.get_battery_percentage()
+    asyncio.wait(0.1)
 
 # CLOSE() - Delete and Close Connection
 async def close():
