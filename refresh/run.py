@@ -72,12 +72,13 @@ async def reaccess():
 
 # ADDITIOn(Input) - Add Item to Process Queue
 def addition(inp):
-    if(inp == "" or inp == "{}"): return Exception("No input data.")
     global save
+    if(inp == "" or inp == "[]"): return Exception("No input data.")
     jso = json.loads(inp)
-    new = _models.Detection(jso)
-    save.append(new)
-    return
+    for x in jso:
+        new = _models.Detection(x)
+        save.append(new)
+        return
 
 moveaplifier = 0.133
 tracking = -1
@@ -120,11 +121,10 @@ async def quit():
 async def coreRobot():
     while True:
         x = await reaccess()
-        if(x is not None and x is not []):
-            for y in x:
-                print("Quick processing")
-                await process(y)
-                print("Quick processing end")
+        if(x is not None and x is not {}):
+            print("Quick processing")
+            await process(x)
+            print("Quick processing end")
 
 def coreSocket():
     listens.accept(addition)
