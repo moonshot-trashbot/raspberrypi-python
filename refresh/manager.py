@@ -111,7 +111,7 @@ async def cancel_hazard():
     global hazard
     alwaysHazard = False
     hazard = False
-    await leds_green()
+    await rvr.led_control.turn_leds_off()
 
 async def battery_percentage():
     return await rvr.get_battery_percentage()
