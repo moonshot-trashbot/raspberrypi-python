@@ -96,9 +96,12 @@ async def process(inp: _models.Detection or None):
     if((int(time.time()) - lastChance) > 5): tracking = inp.id
     if(tracking == inp.id):
         lastChance = int(time.time())
+        num = inp.center[0]
         num = num * moveaplifier
-        await manager.left_turn(10)
-        await manager.right_turn(10)
+        if(num < 0):
+            await manager.left_turn(10)
+        else:
+            `await manager.right_turn(10)
         print(">>> TRACKING: Turned to continue following (", tracking , ").")
     else:
         print(">>> TRACKING: We aren't tracking ( ID:" + inp.id + ") but they are in frame.")
