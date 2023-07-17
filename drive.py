@@ -20,6 +20,7 @@ def drive_forward_seconds(spee, head, tim):
         "heading": head,
         "time_to_drive": tim
     })
+    time.sleep(tim + 0.5)
 
 # import sys
 # import time
