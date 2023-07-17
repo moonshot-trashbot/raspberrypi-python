@@ -38,10 +38,10 @@ def leds_reset():
     rvr.led_control.turn_leds_off()
     time.sleep(0.1)
 def leds_red():
-    rvr.led_control.set_all_leds_rgb(color = Colors.red)
+    rvr.led_control.set_all_leds_color(color = Colors.red)
     time.sleep(0.1)
 def leds_green():
-    rvr.led_control.set_all_leds_rgb(color = Colors.green)
+    rvr.led_control.set_all_leds_color(color = Colors.green)
     time.sleep(0.1)
 
 def drive_forward_seconds(spee, head, tim):
