@@ -120,10 +120,11 @@ async def quit():
 async def coreRobot():
     while True:
         x = await reaccess()
-        if(x is not None and x is not {}):
-            print("Quick processing")
-            await process(x)
-            print("Quick processing end")
+        if(x is not None and x is not []):
+            for y in x:
+                print("Quick processing")
+                await process(y)
+                print("Quick processing end")
 
 def coreSocket():
     listens.accept(addition)
