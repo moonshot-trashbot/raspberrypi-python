@@ -91,7 +91,7 @@ async def process(inp: _models.Detection or None):
     print(">>> PROCESSES: Starting processing of following object...")
     await manager.leds_red()
     print("Manager leds red")
-    if(inp is None or inp is not _models.Detection): return
+    if(inp is None): return
     if(tracking == -1): tracking = inp.id
     if((int(time.time()) - lastChance) > 5): tracking = inp.id
     if(tracking == inp.id):
