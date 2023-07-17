@@ -101,7 +101,7 @@ async def process(inp: _models.Detection or None):
         if(num < 0):
             await manager.left_turn(10)
         else:
-            `await manager.right_turn(10)
+            await manager.right_turn(10)
         print(">>> TRACKING: Turned to continue following (", tracking , ").")
     else:
         print(">>> TRACKING: We aren't tracking ( ID:" + inp.id + ") but they are in frame.")
