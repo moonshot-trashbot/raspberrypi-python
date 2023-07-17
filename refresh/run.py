@@ -32,7 +32,7 @@ run = True
 stopb = False
 save = []
 recent = int(time.time())
-
+lastBattery = int(time.time())-20
 
 # ----------------------------------------
 # PUBLIC FUNCTIONS
@@ -42,8 +42,12 @@ recent = int(time.time())
 async def reaccess():
     global save
     global recent
+    global lastBattery
+    if((time.time() - lastBattery) > 20):
+        battery_percentage = await manager.battery_percentage()
     global run
     if(save.__len__() > 0):
+        await manager.cancel_hazard()
         x = save.pop(0)
         recent = int(time.time())
         return x
@@ -56,6 +60,7 @@ async def reaccess():
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             time.sleep(2)
         elif(sec <= (final - 120)):
+            await manager.start_hazard()
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 5s]")
             time.sleep(5)
         elif(sec < (final - 60)):
@@ -63,6 +68,7 @@ async def reaccess():
             time.sleep(10)
         else:
             if(sec >= final):
+                await manager.cancel_hazard()
                 run = False
                 print(">>> NOTICE: Finished processing, inactive for over 5 minutes, shutting down.")
                 await quit()
@@ -96,6 +102,9 @@ async def process(inp: _models.Detection or None):
         num = num * moveaplifier
         await manager.left_turn(10)
         await manager.right_turn(10)
+        print(">>> TRACKING: Turned to continue following (", tracking , ").")
+    else:
+        print(">>> TRACKING: We aren't tracking ( ID: " + inp.id + ") but they are in frame.")
     print(">>> PROCESSES: Finished Processing object, moving on.")
     pass
 

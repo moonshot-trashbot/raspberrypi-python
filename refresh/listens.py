@@ -33,4 +33,5 @@ def accept(callback):
             chunks.append(strng)
 
 def close():
+    sock.shutdown(socket.SHUT_WR)
     return

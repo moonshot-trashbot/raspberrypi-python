@@ -28,6 +28,7 @@ rvr = SpheroRvrAsync(
         loop
     )
 )
+loop2 = asyncio.new_event_loop()
 
 
 # ----------------------------------------
@@ -57,6 +58,7 @@ async def drive_forward_seconds(spee, head, tim):
 
 async def left_turn(num):
     num = abs(num)
+    print("Left " + num)
     await rvr.drive_control.reset_heading()
     await drive_forward_seconds(
         10,
@@ -65,12 +67,38 @@ async def left_turn(num):
     )
 async def right_turn(num):
     num = abs(num)
+    print("Right " + num)
     await rvr.drive_control.reset_heading()
     await drive_forward_seconds(
         10,
         num,
         0.1
     )
+
+async def __internal_hazard_on():
+    await rvr.led_control.set_all_leds_color(color = Colors.yellow)
+async def __internal_hazard_off():
+    await rvr.led_control.set_all_leds_color(color = Colors.white)
+async def __internal_hazard():
+    while hazard:
+        __internal_hazard_on()
+        await asyncio.wait(1)
+        __internal_hazard_off()
+        await asyncio.wait(1)
+
+async def start_hazard():
+    global hazard
+    hazard = True
+    loop2.run_until_complete(__internal_hazard())
+
+
+async def cancel_hazard():
+    global hazard
+    hazard = False
+    await leds_green()
+
+async def battery_percentage():
+    return await rvr.get_battery_percentage()
 
 # CLOSE() - Delete and Close Connection
 async def close():
