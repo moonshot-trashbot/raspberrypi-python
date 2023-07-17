@@ -30,7 +30,7 @@ rvr = SpheroRvrObserver()
 # OPEN() - Create and Setup Connection
 def open():
     rvr.wake()
-    time.sleep(2)
+    time.sleep(2.1)
     leds_green()
 
 # (ALL LED FUNCTIONS)
@@ -46,7 +46,7 @@ def leds_green():
 
 def drive_forward_seconds(spee, head, tim):
     rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
-    time.sleep(tim)
+    time.sleep(tim + 0.5)
 
 def left_turn():
     rvr.drive_control.reset_heading()
@@ -69,5 +69,6 @@ def right_turn():
 def close():
     global rvr
     leds_reset()
+    time.sleep(0.1)
     rvr.close()
     time.sleep(0.1)
