@@ -101,11 +101,12 @@ async def __internal_hazard():
 
 async def start_hazard():
     global hazard
-    hazard = True
-    while hazard:
-        loop.run_until_complete(__internal_hazard)
+    if(hazard is False):
+        hazard = True
+        while hazard:
+            loop.run_until_complete(__internal_hazard)
 
-async def always_hazard(yesorno):
+def always_hazard(yesorno):
     global alwaysHazard
     alwaysHazard = yesorno
 
