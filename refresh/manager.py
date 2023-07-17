@@ -45,28 +45,18 @@ alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
 async def leds_reset():
-    always_hazard(False)
-    cancel_hazard()
     await rvr.led_control.turn_leds_off()
     time.sleep(1)
 async def leds_red():
-    global alwaysHazard
-    if(alwaysHazard is False):
-        await cancel_hazard()
-        time.sleep(0.1)
-        await rvr.led_control.set_all_leds_color(color = Colors.red)
-        time.sleep(0.1)
+    await rvr.led_control.set_all_leds_color(color = Colors.red)
+    time.sleep(0.1)
 async def leds_green():
-    global alwaysHazard
-    if(alwaysHazard is False):
-        await cancel_hazard()
-        time.sleep(0.1)
-        await rvr.led_control.set_all_leds_color(color = Colors.green)
-        time.sleep(0.1)
+    await rvr.led_control.set_all_leds_color(color = Colors.green)
+    time.sleep(0.1)
 
 async def drive_forward_seconds(spee, head, tim):
     await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
-    time.sleepp(1)
+    time.sleep(1)
 
 async def left_turn(num):
     num = abs(num)
@@ -81,6 +71,7 @@ async def right_turn(num):
     num = abs(num)
     print("Right " + num)
     await rvr.drive_control.reset_heading()
+    time.sleep(0.1)
     await drive_forward_seconds(
         10,
         num,
@@ -94,9 +85,9 @@ async def __internal_hazard_off():
 async def __internal_hazard():
     global hazard
     if(hazard is False): return
-    __internal_hazard_on()
+    await __internal_hazard_on()
     time.sleep(5)
-    __internal_hazard_off()
+    await __internal_hazard_off()
     time.sleep(5)
 
 async def start_hazard():
@@ -120,6 +111,7 @@ async def cancel_hazard():
 async def battery_percentage():
     x = await rvr.get_battery_percentage()
     time.sleep(0.1)
+    return x
 
 # CLOSE() - Delete and Close Connection
 async def close():
