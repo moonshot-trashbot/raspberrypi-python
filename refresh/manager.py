@@ -81,9 +81,10 @@ async def right_turn(num):
     )
 
 async def sh_secondary():
+    nevl = asyncio.new_event_loop()
     rvr = SpheroRvrAsync(
         dal=SerialAsyncDal(
-            asyncio.new_event_loop()
+            loop=nevl
         ))
     while get_hazard():
         ti1 = 0.2
