@@ -106,6 +106,7 @@ def get_hazard():
 
 def start_hazard():
     global hazard
+    global hThread
     global alwaysHazard
     hazard = True
     hThread.start()
@@ -117,6 +118,7 @@ def always_hazard(yesorno):
 
 async def cancel_hazard():
     global hazard
+    global hThread
     global alwaysHazard
     hazard = False
     alwaysHazard = False
@@ -124,6 +126,8 @@ async def cancel_hazard():
     hThread = _classes.StoppableThread(target = sh_secondary_wrapper)
 
 def battery_percentage_handler_hazard(battery_percentage):
+    global hazard
+    global hThread
     bp = battery_percentage_handler(battery_percentage)
     if(bp < 40):
         if(hazard is False):
