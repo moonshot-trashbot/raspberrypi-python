@@ -26,11 +26,12 @@ import manager
 import listens
 
 global run
-global stopb
 global recent
+global green
+global faround
 
+green = False
 run = True
-stopb = False
 save = []
 recent = int(time.time())
 lastBattery = (int(time.time())-58)
@@ -39,22 +40,27 @@ lastBattery = (int(time.time())-58)
 # PUBLIC FUNCTIONS
 # ----------------------------------------
 
-green = False
 
 async def battery(dosum):
     time.sleep(0.05)
     print("Start bat")
     bp = manager.battery_percentage(dosum)
 
+def get_faround():
+    global faround
+    return faround
+
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
     global save
     global run
     global recent
+    global faround
     global lastBattery
     global green
     lbm = int(time.time()) - lastBattery
     if(lbm >= 60):
+        faround = False
         await battery(True)
         lastBattery = int(time.time())
     if(save.__len__() > 0):
@@ -67,14 +73,21 @@ async def reaccess():
         if(sec >= 10):
             if(green is False):
                 green = True
-                await manager.leds_purple()
-                loop.run_until_complete(manager.move_sequence())
                 await battery(False)
+                def faround():
+                    await manager.leds_purple()
+                    manager.set_faround(True)
+                    loop = asyncio.new_event_loop()
+                    loop.run_until_complete(manager.move_sequence())
+                x = _classes.StoppableThread(target = faround)
+                x.join()
+                x.start()
         if(sec <= 60): return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             time.sleep(2)
         elif(sec <= (final - 120)):
+            manager.set_faround(False)
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 5s]")
             time.sleep(5)
         elif(sec < (final - 60)):

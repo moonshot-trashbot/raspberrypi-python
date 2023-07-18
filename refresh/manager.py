@@ -83,9 +83,17 @@ async def right_turn(num):
         0.1
     )
 
+async def get_faround():
+    global faround
+    return faround
+
+async def set_faround(to):
+    global faround
+    faround = to
+
 async def move_sequence():
     global rvr
-    while get_hazard():
+    while get_faround():
         await drive_forward_seconds(range(10, 25), range(45, 200), 0)
         time.sleep(range(1, 4))
         await drive_forward_seconds(range(10, 25), range(200, 359), 0)
