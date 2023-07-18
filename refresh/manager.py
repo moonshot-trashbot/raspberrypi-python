@@ -79,7 +79,9 @@ async def right_turn(num):
 
 async def sh_secondary():
     rvrObs = SpheroRvrObserver()
+    print("Trying to start a loop for led sequence for hazard, line 82")
     while get_hazard():
+        print("Trying led sequence for hazard, line 84")
         rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(1)
         rvrObs.led_control.set_all_leds_color(color = Colors.white)
