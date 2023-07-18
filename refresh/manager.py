@@ -87,7 +87,11 @@ async def sh_secondary():
         rvrObs.led_control.set_all_leds_color(color = Colors.white)
         time.sleep(1)
 
-hThread = _classes.StoppableThread(target = sh_secondary)
+def sh_secondary_wrapper():
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(sh_secondary())
+
+hThread = _classes.StoppableThread(target = sh_secondary_wrapper)
 
 def get_hazard():
     global hazard
@@ -110,7 +114,7 @@ async def cancel_hazard():
     hazard = False
     alwaysHazard = False
     hThread.stop()
-    hThread = _classes.StoppableThread(target = sh_secondary)
+    hThread = _classes.StoppableThread(target = sh_secondary_wrapper)
 
 def battery_percentage_handler(battery_percentage):
     global hThread
