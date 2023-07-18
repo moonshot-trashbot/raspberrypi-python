@@ -46,13 +46,10 @@ alwaysHazard = False
 # (ALL LED FUNCTIONS)
 async def leds_reset():
     await rvr.led_control.turn_leds_off()
-    time.sleep(0.1)
 async def leds_red():
     await rvr.led_control.set_all_leds_color(color = Colors.red)
-    time.sleep(0.1)
 async def leds_green():
     await rvr.led_control.set_all_leds_color(color = Colors.green)
-    time.sleep(0.1)
 
 async def drive_forward_seconds(spee, head, tim):
     await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
@@ -110,7 +107,6 @@ async def cancel_hazard():
 
 async def battery_percentage():
     x = await rvr.get_battery_percentage()
-    time.sleep(0.1)
     return x
 
 # CLOSE() - Delete and Close Connection

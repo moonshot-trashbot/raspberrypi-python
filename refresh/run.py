@@ -58,7 +58,8 @@ async def reaccess():
         sec = int(time.time()) - recent
         if(sec >= 10):
             if(green is False):
-                green = True;
+                green = True
+                print(">>> BATTERY: The battery is currently", str(await manager.battery_percentage()) + "%", "full!")
                 await manager.leds_green()
         if(sec <= 60): return
         if(sec <= (final - 180)):
