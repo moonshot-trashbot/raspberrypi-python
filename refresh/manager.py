@@ -47,10 +47,13 @@ alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
 async def leds_reset():
+    if(get_hazard()): return
     await rvr.led_control.turn_leds_off()
 async def leds_red():
+    if(get_hazard()): return
     await rvr.led_control.set_all_leds_color(color = Colors.red)
 async def leds_green():
+    if(get_hazard()): return
     await rvr.led_control.set_all_leds_color(color = Colors.green)
 
 async def drive_forward_seconds(spee, head, tim):
@@ -79,13 +82,16 @@ async def right_turn(num):
 
 async def sh_secondary():
     rvrObs = SpheroRvrObserver()
-    print("Trying to start a loop for led sequence for hazard, line 82")
+    lastHazardHard = 0
     while get_hazard():
-        print("Trying led sequence for hazard, line 84")
+        lastHazardHard += 1
         rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(1)
+        time.sleep(0.05)
         rvrObs.led_control.set_all_leds_color(color = Colors.white)
-        time.sleep(1)
+        time.sleep(0.05)
+        if(lastHazardHard == 5):
+            time.sleep(10)
+            lastHazardHard = -1
 
 def sh_secondary_wrapper():
     loop = asyncio.new_event_loop()
