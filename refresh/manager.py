@@ -94,7 +94,7 @@ async def sh_secondary():
             time.sleep(ti1*8)
             await drive_forward_seconds(25, 0, 0)
             time.sleep(ti1*3)
-        asyncio.get_event_loop().run_until_complete(move_sequence)
+        asyncio.get_event_loop().run_until_complete(move_sequence())
         time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
