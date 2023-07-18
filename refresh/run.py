@@ -77,7 +77,9 @@ async def reaccess():
                 await manager.leds_purple()
                 def faround():
                     manager.set_faround(True)
-                    asyncio.new_event_loop().run_until_complete(manager.move_sequence())
+                    newl = asyncio.new_event_loop()
+                    asyncio.set_event_loop(newl)
+                    newl.run_until_complete(manager.move_sequence())
                 x = _classes.StoppableThread(target = faround)
                 x.start()
                 x.join()

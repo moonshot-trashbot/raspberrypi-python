@@ -110,7 +110,6 @@ async def sh_secondary():
     while get_hazard():
         ti1 = 1.5
         ti2 = 1.25
-        asyncio.get_event_loop().run_until_complete(move_sequence())
         time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
