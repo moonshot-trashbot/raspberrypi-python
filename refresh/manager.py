@@ -47,7 +47,7 @@ alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
 async def leds_reset():
-    if(get_hazard()): return
+    await rvr.led_control.turn_leds_off()
     await rvr.led_control.turn_leds_off()
 async def leds_red():
     if(get_hazard()): return
@@ -105,9 +105,7 @@ async def sh_secondary():
         await rvr.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-        set_hazard(False)
         time.sleep(8)
-        set_hazard(True)
 
 def sh_secondary_wrapper():
     loop = asyncio.new_event_loop()
