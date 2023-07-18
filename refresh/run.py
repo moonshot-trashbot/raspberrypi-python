@@ -158,7 +158,7 @@ async def stop(error):
             traceback.print_tb(error.__traceback__, 5)
         await manager.close()
         listens.close()
-    exit(130)
+    return await exit(130)
 
 async def main():
     try:
