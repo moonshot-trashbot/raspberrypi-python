@@ -83,16 +83,28 @@ async def right_turn(num):
 async def sh_secondary():
     rvrObs = SpheroRvrObserver()
     while get_hazard():
-        x = 0
-        while x < 5:
-            time.sleep(0.3)
-            rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
-            time.sleep(0.05)
-            rvrObs.led_control.set_all_leds_color(color = Colors.orange)
-            x += 1
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        time.sleep(0.3)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         set_hazard(False)
-        rvrObs.led_control.set_all_leds_color(color = Colors.green)
-        time.sleep(3)
+        time.sleep(8)
         set_hazard(True)
 
 def sh_secondary_wrapper():
