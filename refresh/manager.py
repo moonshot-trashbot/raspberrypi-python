@@ -88,7 +88,7 @@ async def __internal_hazard():
     await __internal_hazard_off()
     time.sleep(5)
 
-async def start_hazard():
+def start_hazard():
     global hazard
     if(hazard is False):
         hazard = True
