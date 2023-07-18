@@ -106,6 +106,7 @@ async def cancel_hazard():
     await rvr.led_control.turn_leds_off()
 
 async def battery_percentage():
+    time.sleep(0.1)
     x = await rvr.get_battery_percentage()
     return x
 
