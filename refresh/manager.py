@@ -117,18 +117,24 @@ async def cancel_hazard():
     hThread.stop()
     hThread = _classes.StoppableThread(target = sh_secondary_wrapper)
 
+def battery_percentage_handler_hazard(battery_percentage):
+    bp = battery_percentage_handler(battery_percentage)
+    if(bp < 40):
+        if(hazard is False):
+            if(hThread is not None):
+                start_hazard()
 def battery_percentage_handler(battery_percentage):
     global hThread
     bp = battery_percentage["percentage"]
     if(bp is None): return
     bp = int(bp)
     print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
-    if(bp < 40):
-        if(hazard is False):
-            if(hThread is not None):
-                start_hazard()
-def battery_percentage():
-    rvrObs.get_battery_percentage(handler=battery_percentage_handler)
+    return bp
+def battery_percentage(action):
+    if(action is True):
+        rvrObs.get_battery_percentage(handler=battery_percentage_handler_hazard)
+    else:
+        rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
 # CLOSE() - Delete and Close Connection
 async def close():
