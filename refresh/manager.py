@@ -82,18 +82,17 @@ async def right_turn(num):
 
 async def sh_secondary():
     rvrObs = SpheroRvrObserver()
-    lastHazardHard = 0
     while get_hazard():
-        lastHazardHard += 1
-        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(0.33)
-        rvrObs.led_control.turn_leds_off()
-        time.sleep(0.33)
-        if(lastHazardHard == 6):
-            set_hazard(False)
-            time.sleep(5)
-            set_hazard(True)
-            lastHazardHard = 0
+        x = 0
+        while x < 5:
+            rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+            time.sleep(0.33)
+            rvrObs.led_control.turn_leds_off()
+            time.sleep(0.25)
+            x += 1
+        set_hazard(False)
+        time.sleep(5)
+        set_hazard(True)
 
 def sh_secondary_wrapper():
     loop = asyncio.new_event_loop()
@@ -104,6 +103,11 @@ hThread = _classes.StoppableThread(target = sh_secondary_wrapper)
 
 def get_hazard():
     global hazard
+    return hazard
+
+def set_hazard(setto):
+    global hazard
+    hazard = setto
     return hazard
 
 def start_hazard():
