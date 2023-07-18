@@ -94,7 +94,7 @@ def start_hazard():
     if(hThread.is_alive() == False):
         hThread.start()
     else:
-        hThread = _classes.StoppableThread(start_hazard())
+        hThread = _classes.StoppableThread(target = start_hazard)
 
 def always_hazard(yesorno):
     global alwaysHazard
@@ -116,7 +116,7 @@ def battery_percentage_handler(battery_percentage):
     if(bp < 40):
         if(hazard is False):
             if(hThread is not None):
-                await start_hazard()
+                start_hazard()
 def battery_percentage():
     rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
