@@ -89,7 +89,7 @@ def get_faround():
     global faround
     return faround
 
-async def set_faround(to):
+def set_faround(to):
     global faround
     faround = to
 
