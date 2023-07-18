@@ -149,9 +149,9 @@ async def stop(error):
     global run
     run = False
     if(error is False):
-        print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors.")
+        print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors! This shutdown should take a few seconds.")
     else:
-        print(">>> TRACEBACK: Now forcing the program to close down... (check error log?)")
+        print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
         print(error)
         traceback.print_tb(error.__traceback__, 5)
     await manager.close()
@@ -174,14 +174,11 @@ async def main():
         t1.join()
         t2.join()
     except KeyboardInterrupt as e:
-        # signal.signal(signal.SIGINT, signal.SIG_IGN)
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)
-        # t2.terminate()
-        # t1.terminate()
     except Exception as e:
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(e)
-        # t2.terminate()
-        # t1.terminate()
 
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
