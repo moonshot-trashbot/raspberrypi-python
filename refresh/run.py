@@ -156,8 +156,10 @@ async def coreRobot():
             await process(x)
             print("Quick processing end")
 
+server_object = HTTPServer(server_address=('0.0.0.0', 80), RequestHandlerClass=CGIHTTPRequestHandler)
+
 def coreSocket():
-    server_object = HTTPServer(server_address=('0.0.0.0', 80), RequestHandlerClass=CGIHTTPRequestHandler)
+    global server_object
     server_object.serve_forever()
     listens.accept(addition)
 
@@ -173,6 +175,7 @@ t2 = _classes.StoppableThread(target = coreSocket)
 # STOP(Error) - Must Close Connections, Clean-up
 async def stop(error):
     global run
+    global server_object
     run = False
     if(error is False):
         print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors! This shutdown should take a few seconds.")
@@ -180,8 +183,8 @@ async def stop(error):
         print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
         print(error)
         traceback.print_tb(error.__traceback__, 5)
+    server_object.close()
     await manager.close()
-    listens.close()
     try:
         sys.exit(130)
     except SystemExit:
