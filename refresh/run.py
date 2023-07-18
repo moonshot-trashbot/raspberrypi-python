@@ -176,12 +176,12 @@ async def main():
     except KeyboardInterrupt as e:
         # signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)
-        exit()
+        exit(130)
         # t2.terminate()
         # t1.terminate()
     except Exception as e:
         await stop(e)
-        exit()
+        exit(130)
         # t2.terminate()
         # t1.terminate()
 
