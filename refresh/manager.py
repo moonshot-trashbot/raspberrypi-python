@@ -86,14 +86,15 @@ async def right_turn(num):
 async def move_sequence():
     global rvr
     while get_hazard():
-        await drive_forward_seconds(25, 90, 0)
-        time.sleep(4)
-        await drive_forward_seconds(25, 217, 0)
-        time.sleep(1)
-        await drive_forward_seconds(25, 45, 0)
-        time.sleep(3)
-        await drive_forward_seconds(25, 0, 0)
-        time.sleep(2)
+        await drive_forward_seconds(range(10, 25), range(45, 200), 0)
+        time.sleep(range(1, 4))
+        await drive_forward_seconds(range(10, 25), range(200, 359), 0)
+        time.sleep(range(1, 4))
+        await drive_forward_seconds(range(10, 25), range(20, 359), 0)
+        time.sleep(range(1, 4))
+        await drive_forward_seconds(range(10, 25), range(10, 35), 0)
+        time.sleep(range(1, 4))
+        await drive_forward_seconds(range(10, 25), 0, 0)
 
 async def sh_secondary():
     global rvr
