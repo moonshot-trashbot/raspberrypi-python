@@ -85,7 +85,7 @@ async def sh_secondary():
         rvrObs.led_control.set_all_leds_color(color = Colors.white)
         time.sleep(1)
 
-hThread = _classes.StoppableThread(sh_secondary())
+hThread = _classes.StoppableThread(target = sh_secondary)
 
 def start_hazard():
     global hazard
