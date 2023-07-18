@@ -33,7 +33,7 @@ run = True
 stopb = False
 save = []
 recent = int(time.time())
-lastBattery = (int(time.time())-15)
+lastBattery = (int(time.time())-58)
 
 # ----------------------------------------
 # PUBLIC FUNCTIONS
@@ -54,8 +54,7 @@ async def reaccess():
     global lastBattery
     global green
     lbm = int(time.time()) - lastBattery
-    print("DEBUG_LBM", lbm)
-    if(lbm >= 20):
+    if(lbm >= 60):
         await battery(True)
         lastBattery = int(time.time())
     if(save.__len__() > 0):
