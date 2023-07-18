@@ -20,9 +20,9 @@ import json
 import time
 import asyncio
 import _models
+import _classes
 import manager
 import listens
-from threading import Thread
 
 global run
 global stopb
@@ -140,8 +140,8 @@ def coreRobotWrapper():
         coreRobot()
     )
 
-t2 = Thread(target = coreSocket)
-t1 = Thread(target = coreRobotWrapper)
+t1 = _classes.StoppableThread(target = coreRobotWrapper)
+t2 = _classes.StoppableThread(target = coreSocket)
 
 # STOP(Error) - Must Close Connections, Clean-up
 async def stop(error):
@@ -158,7 +158,9 @@ async def stop(error):
             traceback.print_tb(error.__traceback__, 5)
         await manager.close()
         listens.close()
-    return
+    if(not t1.stopped()): t1.stop()
+    if(not t2.stopped()): t2.stop()
+    return exit(130)
 
 async def main():
     try:
