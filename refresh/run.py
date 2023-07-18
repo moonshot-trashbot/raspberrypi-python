@@ -80,9 +80,9 @@ async def reaccess():
                     newl = asyncio.new_event_loop()
                     asyncio.set_event_loop(newl)
                     newl.run_until_complete(manager.move_sequence())
-                x = _classes.StoppableThread(target = faround)
-                x.start()
-                x.join()
+                # x = _classes.StoppableThread(target = faround)
+                # x.start()
+                # x.join()
         if(sec <= 60): return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
