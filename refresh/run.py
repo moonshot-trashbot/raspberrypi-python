@@ -164,23 +164,23 @@ async def stop(error):
 
 async def main():
     try:
-        print("Calling open - manager")
-        await manager.open()
-        print("Calling open - listener")
-        listens.open()
-    finally:
         try:
-            t1.start()
-            t2.start()
-        except KeyboardInterrupt as e:
-            signal.signal(signal.SIGINT, signal.SIG_IGN)
-            await stop(False)
-            # t2.terminate()
-            # t1.terminate()
-        except Exception as e:
-            await stop(e)
-            # t2.terminate()
-            # t1.terminate()
+            print("Calling open - manager")
+            await manager.open()
+            print("Calling open - listener")
+            listens.open()
+        finally:
+                t1.start()
+                t2.start()
+    except KeyboardInterrupt as e:
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        await stop(False)
+        # t2.terminate()
+        # t1.terminate()
+    except Exception as e:
+        await stop(e)
+        # t2.terminate()
+        # t1.terminate()
 
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
