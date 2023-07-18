@@ -91,7 +91,6 @@ async def __internal_hazard():
 async def start_hazard():
     global hazard
     if(hazard is False):
-        global hazard
         hazard = True
         while hazard:
             await __internal_hazard()
