@@ -146,21 +146,16 @@ t2 = _classes.StoppableThread(target = coreSocket)
 
 # STOP(Error) - Must Close Connections, Clean-up
 async def stop(error):
-    global stopb
     global run
-    if(stopb is False):
-        stopb = True
-        run = False
-        if(error is False):
-            print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors.")
-        else:
-            print(">>> TRACEBACK: Now forcing the program to close down... (check error log?)")
-            print(error)
-            traceback.print_tb(error.__traceback__, 5)
-        await manager.close()
-        listens.close()
-        t1.stop()
-        t2.stop()
+    run = False
+    if(error is False):
+        print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors.")
+    else:
+        print(">>> TRACEBACK: Now forcing the program to close down... (check error log?)")
+        print(error)
+        traceback.print_tb(error.__traceback__, 5)
+    await manager.close()
+    listens.close()
     try:
         sys.exit(130)
     except SystemExit:
