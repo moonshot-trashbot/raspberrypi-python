@@ -29,9 +29,10 @@ def accept(callback):
                 if(chunkjoin != ""):
                     callback(chunkjoin)
                     chunks = []
+                return
             strng = str(data.decode('utf-8'))
             chunks.append(strng)
 
 def close():
-    sock.shutdown(socket.SHUT_WR)
+    sock.close()
     return
