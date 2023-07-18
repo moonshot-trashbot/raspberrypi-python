@@ -43,6 +43,7 @@ async def open():
     await leds_green()
 
 hazard = False
+faround = False
 alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
