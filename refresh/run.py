@@ -170,8 +170,10 @@ async def main():
             print("Calling open - listener")
             listens.open()
         finally:
-                t1.start()
-                t2.start()
+            t1.start()
+            t2.start()
+        t1.join()
+        t2.join()
     except KeyboardInterrupt as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)
