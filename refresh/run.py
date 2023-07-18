@@ -129,7 +129,6 @@ async def process(inp: _models.Detection or None):
 # QUIT() - Request to Close Connections, Clean-up
 async def quit():
     await stop(False)
-    sys.exit(130)
 
 
 # ----------------------------------------
