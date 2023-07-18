@@ -96,16 +96,18 @@ async def set_faround(to):
 async def move_sequence():
     global rvr
     while get_faround():
-        await drive_forward_seconds(random.randint(10, 25), random.randint(45, 200), 0)
+        await left_turn(random.randint(10, 25))
+        time.sleep(random.randint(0.3, 7))
+        await right_turn(random.randint(45, 180))
+        time.sleep(random.randint(2, 4))
+        await right_turn(random.randint(45, 180))
+        time.sleep(random.randint(1, 2))
+        await left_turn(random.randint(45, 180))
+        time.sleep(random.randint(3, 8))
+        await left_turn(random.randint(45, 180))
         time.sleep(random.randint(1, 4))
-        await drive_forward_seconds(random.randint(10, 25), random.randint(200, 359), 0)
-        time.sleep(random.randint(1, 4))
-        await drive_forward_seconds(random.randint(10, 25), random.randint(20, 359), 0)
-        time.sleep(random.randint(1, 4))
-        await drive_forward_seconds(random.randint(10, 25), random.randint(10, 35), 0)
-        time.sleep(random.randint(1, 4))
-        await drive_forward_seconds(random.randint(10, 25), 0, 0)
-        time.sleep(random.randint(1, 4))
+        await drive_forward_seconds(250, 0, 0)
+        time.sleep(0.5)
 
 async def sh_secondary():
     global rvr
