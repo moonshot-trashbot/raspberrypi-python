@@ -77,8 +77,7 @@ async def reaccess():
                 await manager.leds_purple()
                 def faround():
                     manager.set_faround(True)
-                    loop = asyncio.new_event_loop()
-                    loop.run_until_complete(manager.move_sequence())
+                    asyncio.new_event_loop().run_until_complete(manager.move_sequence())
                 x = _classes.StoppableThread(target = faround)
                 x.join()
                 x.start()
@@ -183,7 +182,7 @@ async def stop(error):
     except SystemExit:
         os._exit(130)
 
-async def main(loop):
+async def main():
     try:
         try:
             print("Calling open - manager")
@@ -205,5 +204,5 @@ async def main(loop):
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
     loop.run_until_complete(
-        main(loop)
+        main()
     )
