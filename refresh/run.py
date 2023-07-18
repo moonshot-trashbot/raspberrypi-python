@@ -41,6 +41,9 @@ lastBattery = (int(time.time())-20)
 
 green = False
 
+async def battery():
+    print(">>> BATTERY: The battery is currently", str(await manager.battery_percentage()) + "%", "full!")
+
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
     global save
@@ -49,6 +52,9 @@ async def reaccess():
     global lastBattery
     global green
     lbm = int(time.time()) - lastBattery
+    if(lbm >= 20):
+        await battery()
+        lastBattery = int(time.time())
     if(save.__len__() > 0):
         x = save.pop(0)
         recent = int(time.time())
@@ -59,7 +65,7 @@ async def reaccess():
         if(sec >= 10):
             if(green is False):
                 green = True
-                print(">>> BATTERY: The battery is currently", str(await manager.battery_percentage()) + "%", "full!")
+                await battery()
                 await manager.leds_green()
         if(sec <= 60): return
         if(sec <= (final - 180)):
