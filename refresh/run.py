@@ -47,6 +47,7 @@ async def battery():
     bp = await manager.battery_percentage()
     print("DEBUG_BP", bp)
     print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
+    return
 
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
