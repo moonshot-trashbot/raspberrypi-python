@@ -38,12 +38,15 @@ lastBattery = (int(time.time())-20)
 # PUBLIC FUNCTIONS
 # ----------------------------------------
 
+green = False
+
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
     global save
     global run
     global recent
     global lastBattery
+    global green
     lbm = int(time.time()) - lastBattery
     if(save.__len__() > 0):
         x = save.pop(0)
@@ -52,7 +55,10 @@ async def reaccess():
     else:
         final = 300
         sec = int(time.time()) - recent
-        if(sec <= 5): await manager.leds_green()
+        if(sec >= 10):
+            if(green is False):
+                green = True;
+                await manager.leds_green()
         if(sec <= 60): return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
@@ -102,9 +108,9 @@ async def process(inp: _models.Detection or None):
             await manager.left_turn(10)
         else:
             await manager.right_turn(10)
-        print(">>> TRACKING: Turned to continue following (", tracking , ").")
+        print(">>> TRACKING: Turned to continue following (", tracking, ").")
     else:
-        print(">>> TRACKING: We aren't tracking ( ID:" + inp.id + ") but they are in frame.")
+        print(">>> TRACKING: We aren't tracking ( ID:", inp.id, ") but they are in frame.")
     print(">>> PROCESSES: Finished Processing object, moving on.")
 
 # QUIT() - Request to Close Connections, Clean-up
@@ -150,6 +156,7 @@ async def stop(error):
             print(">>> TRACEBACK: Now forcing the program to close down... (check error log?)")
             print(error)
             traceback.print_tb(error.__traceback__, 5)
+        await manager.leds_reset()
         await manager.close()
         listens.close()
         sys.exit(0)
