@@ -83,8 +83,8 @@ async def right_turn(num):
 async def sh_secondary():
     global rvr
     while get_hazard():
-        ti1 = 0.25
-        ti2 = 0.50
+        ti1 = 0.50
+        ti2 = 0.25
         time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
