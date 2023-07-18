@@ -78,14 +78,18 @@ async def right_turn(num):
     )
 
 async def sh_secondary():
-    global hazard
-    while hazard:
+    rvrObs = SpheroRvrObserver()
+    while get_hazard():
         rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(1)
         rvrObs.led_control.set_all_leds_color(color = Colors.white)
         time.sleep(1)
 
 hThread = _classes.StoppableThread(target = sh_secondary)
+
+def get_hazard():
+    global hazard
+    return hazard
 
 def start_hazard():
     global hazard
