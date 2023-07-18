@@ -76,15 +76,17 @@ async def right_turn(num):
         0.1
     )
 
+async def sh_secondary():
+    global hazard
+    while hazard:
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        time.sleep(1)
+        rvrObs.led_control.set_all_leds_color(color = Colors.white)
+        time.sleep(1)
 async def start_hazard():
     global hazard
-    if(hazard is False):
-        hazard = True
-        while hazard:
-            rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
-            time.sleep(1)
-            rvrObs.led_control.set_all_leds_color(color = Colors.white)
-            time.sleep(1)
+    hazard = True
+    loop.run_until_complete(sh_secondary())
 
 def always_hazard(yesorno):
     global alwaysHazard
