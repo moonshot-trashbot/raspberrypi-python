@@ -85,9 +85,9 @@ async def sh_secondary():
     while get_hazard():
         x = 0
         while x < 5:
-            time.sleep(0.2)
+            time.sleep(0.3)
             rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
-            time.sleep(0.005)
+            time.sleep(0.05)
             rvrObs.led_control.set_all_leds_color(color = Colors.orange)
             x += 1
         set_hazard(False)
