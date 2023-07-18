@@ -85,13 +85,14 @@ async def sh_secondary():
     while get_hazard():
         x = 0
         while x < 5:
+            time.sleep(0.005)
             rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
             time.sleep(0.25)
             rvrObs.led_control.turn_leds_off()
-            time.sleep(0.05)
             x += 1
         set_hazard(False)
-        time.sleep(5)
+        rvrObs.led_control.set_all_leds_color(color = Colors.purple)
+        time.sleep(3)
         set_hazard(True)
 
 def sh_secondary_wrapper():
