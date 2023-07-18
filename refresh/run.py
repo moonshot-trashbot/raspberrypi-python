@@ -54,6 +54,7 @@ async def reaccess():
     global lastBattery
     global green
     lbm = int(time.time()) - lastBattery
+    print("DEBUG_LBM", lbm)
     if(lbm >= 20):
         await battery()
         lastBattery = int(time.time())
