@@ -52,6 +52,9 @@ async def leds_reset():
 async def leds_red():
     if(get_hazard()): return
     await rvr.led_control.set_all_leds_color(color = Colors.red)
+async def leds_purple():
+    if(get_hazard()): return
+    await rvr.led_control.set_all_leds_color(color = Colors.pink)
 async def leds_green():
     if(get_hazard()): return
     await rvr.led_control.set_all_leds_color(color = Colors.green)
@@ -117,7 +120,6 @@ async def sh_secondary():
 def sh_secondary_wrapper():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    loop.run_until_complete(move_sequence())
     loop.run_until_complete(sh_secondary())
 
 hThread = _classes.StoppableThread(target = sh_secondary_wrapper)

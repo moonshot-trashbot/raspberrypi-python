@@ -67,8 +67,9 @@ async def reaccess():
         if(sec >= 10):
             if(green is False):
                 green = True
+                await manager.leds_purple()
+                loop.run_until_complete(manager.move_sequence())
                 await battery(False)
-                await manager.leds_green()
         if(sec <= 60): return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
@@ -169,7 +170,7 @@ async def stop(error):
     except SystemExit:
         os._exit(130)
 
-async def main():
+async def main(loop):
     try:
         try:
             print("Calling open - manager")
@@ -191,5 +192,5 @@ async def main():
 if __name__ == '__main__':
     loop = asyncio.new_event_loop()
     loop.run_until_complete(
-        main()
+        main(loop)
     )
