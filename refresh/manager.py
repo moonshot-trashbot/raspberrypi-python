@@ -144,5 +144,6 @@ def battery_percentage(action):
 
 # CLOSE() - Delete and Close Connection
 async def close():
+    await cancel_hazard()
     await leds_reset()
     await rvr.close()
