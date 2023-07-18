@@ -16,6 +16,7 @@
 import traceback
 import signal
 import sys
+import os
 import json
 import time
 import asyncio
@@ -158,9 +159,12 @@ async def stop(error):
             traceback.print_tb(error.__traceback__, 5)
         await manager.close()
         listens.close()
-    if(not t1.stopped()): t1.stop()
-    if(not t2.stopped()): t2.stop()
-    return exit(130)
+        t1.stop()
+        t2.stop()
+    try:
+        sys.exit(130)
+    except SystemExit:
+        os._exit(130)
 
 async def main():
     try:
