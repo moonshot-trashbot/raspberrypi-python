@@ -88,7 +88,8 @@ async def sh_secondary():
         time.sleep(1)
 
 def sh_secondary_wrapper():
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     loop.run_until_complete(sh_secondary())
 
 hThread = _classes.StoppableThread(target = sh_secondary_wrapper)
