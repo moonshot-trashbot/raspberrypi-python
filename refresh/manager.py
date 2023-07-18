@@ -86,13 +86,13 @@ async def sh_secondary():
         time.sleep(1)
 
 hThread = _classes.StoppableThread(target = sh_secondary)
-hThread.join()
 
 def start_hazard():
     global hazard
     global alwaysHazard
     hazard = True
     hThread.start()
+    hThread.join()
 
 def always_hazard(yesorno):
     global alwaysHazard
@@ -105,7 +105,6 @@ async def cancel_hazard():
     alwaysHazard = False
     hThread.stop()
     hThread = _classes.StoppableThread(target = sh_secondary)
-    hThread.join()
 
 def battery_percentage_handler(battery_percentage):
     global hThread
