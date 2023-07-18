@@ -74,8 +74,8 @@ async def reaccess():
             if(green is False):
                 green = True
                 await battery(False)
+                await manager.leds_purple()
                 def faround():
-                    await manager.leds_purple()
                     manager.set_faround(True)
                     loop = asyncio.new_event_loop()
                     loop.run_until_complete(manager.move_sequence())
