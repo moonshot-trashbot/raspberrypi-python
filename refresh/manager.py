@@ -18,6 +18,7 @@ import sys
 import asyncio
 import time
 import _models
+import _classes
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
@@ -83,30 +84,39 @@ async def sh_secondary():
         time.sleep(1)
         rvrObs.led_control.set_all_leds_color(color = Colors.white)
         time.sleep(1)
-async def start_hazard():
+
+hThread = _classes.StoppableThread(sh_secondary())
+
+def start_hazard():
     global hazard
+    global alwaysHazard
     hazard = True
-    loop.run_until_complete(sh_secondary())
+    if(hThread.is_alive() == False):
+        hThread.start()
+    else:
+        hThread = _classes.StoppableThread(start_hazard())
 
 def always_hazard(yesorno):
     global alwaysHazard
     alwaysHazard = yesorno
 
 async def cancel_hazard():
-    global alwaysHazard
     global hazard
+    global alwaysHazard
     hazard = False
     alwaysHazard = False
-    await leds_green()
+    if(hThread.stopped() == False): hThread.stop()
 
 def battery_percentage_handler(battery_percentage):
+    global hThread
     bp = battery_percentage["percentage"]
     if(bp is None): return
     bp = int(bp)
     print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
     if(bp < 40):
         if(hazard is False):
-            loop.run_until_complete(start_hazard())
+            if(hThread is not None):
+                await start_hazard()
 def battery_percentage():
     rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
