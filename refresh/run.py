@@ -158,8 +158,7 @@ async def stop(error):
             traceback.print_tb(error.__traceback__, 5)
         await manager.close()
         listens.close()
-        sys.exit(0)
-    return None
+    exit(130)
 
 async def main():
     try:
@@ -176,12 +175,10 @@ async def main():
     except KeyboardInterrupt as e:
         # signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)
-        exit(130)
         # t2.terminate()
         # t1.terminate()
     except Exception as e:
         await stop(e)
-        exit(130)
         # t2.terminate()
         # t1.terminate()
 
