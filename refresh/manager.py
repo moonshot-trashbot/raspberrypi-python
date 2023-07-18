@@ -106,9 +106,12 @@ async def cancel_hazard():
     alwaysHazard = False
     await rvr.led_control.turn_leds_off()
 
-def battery_percentage_handler(bp):
-    print("DEBUG_BP", bp)
+def battery_percentage_handler(battery_percentage):
+    bp = battery_percentage["percentage"]
+    if(bp is None): return
+    bp = int(bp)
     print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
+    if(bp < 40): start_hazard()
 def battery_percentage():
     rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
