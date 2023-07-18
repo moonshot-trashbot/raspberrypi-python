@@ -78,22 +78,23 @@ async def right_turn(num):
 
 async def __internal_hazard_on():
     await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-    time.sleep(1)
+    time.sleep(0.33)
 async def __internal_hazard_off():
     await rvr.led_control.turn_leds_off()
-    time.sleep(1)
+    time.sleep(0.33)
 async def __internal_hazard():
     global hazard
     if(hazard is False): return
     await __internal_hazard_on()
     await __internal_hazard_off()
 
-def start_hazard():
+async def start_hazard():
     global hazard
     if(hazard is False):
+        global hazard
         hazard = True
         while hazard:
-            loop.run_until_complete(__internal_hazard())
+            await __internal_hazard()
 
 def always_hazard(yesorno):
     global alwaysHazard
@@ -104,14 +105,16 @@ async def cancel_hazard():
     global hazard
     hazard = False
     alwaysHazard = False
-    await rvr.led_control.turn_leds_off()
+    await leds_green()
 
 def battery_percentage_handler(battery_percentage):
     bp = battery_percentage["percentage"]
     if(bp is None): return
     bp = int(bp)
     print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
-    if(bp < 40 and hazard is False): loop.run_until_complete(start_hazard())
+    if(bp < 40):
+        if(hazard is False):
+            loop.run_until_complete(start_hazard())
 def battery_percentage():
     rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
