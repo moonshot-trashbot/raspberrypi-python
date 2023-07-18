@@ -78,7 +78,6 @@ def addition(inp):
     for x in jso:
         new = _models.Detection(x)
         save.append(new)
-        return
 
 moveaplifier = 0.133
 tracking = -1
@@ -121,7 +120,7 @@ async def quit():
 async def coreRobot():
     while True:
         x = await reaccess()
-        if(x is not None and x is not {}):
+        if(x is not None):
             print("Quick processing")
             await process(x)
             print("Quick processing end")
