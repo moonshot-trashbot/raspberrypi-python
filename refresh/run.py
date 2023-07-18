@@ -41,10 +41,10 @@ lastBattery = (int(time.time())-15)
 
 green = False
 
-async def battery():
+async def battery(dosum):
     time.sleep(0.05)
     print("Start bat")
-    bp = manager.battery_percentage()
+    bp = manager.battery_percentage(dosum)
 
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
@@ -56,7 +56,7 @@ async def reaccess():
     lbm = int(time.time()) - lastBattery
     print("DEBUG_LBM", lbm)
     if(lbm >= 20):
-        await battery()
+        await battery(True)
         lastBattery = int(time.time())
     if(save.__len__() > 0):
         x = save.pop(0)
@@ -68,7 +68,7 @@ async def reaccess():
         if(sec >= 10):
             if(green is False):
                 green = True
-                await battery()
+                await battery(False)
                 await manager.leds_green()
         if(sec <= 60): return
         if(sec <= (final - 180)):
