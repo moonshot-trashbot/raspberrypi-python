@@ -33,7 +33,7 @@ run = True
 stopb = False
 save = []
 recent = int(time.time())
-lastBattery = (int(time.time())-20)
+lastBattery = (int(time.time())-15)
 
 # ----------------------------------------
 # PUBLIC FUNCTIONS
