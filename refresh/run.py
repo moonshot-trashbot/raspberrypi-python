@@ -42,7 +42,9 @@ lastBattery = (int(time.time())-20)
 green = False
 
 async def battery():
-    print(">>> BATTERY: The battery is currently", str(await manager.battery_percentage()) + "%", "full!")
+    bp = await manager.battery_percentage()
+    print("DEBUG_BP", bp)
+    print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
 
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
