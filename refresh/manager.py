@@ -76,24 +76,15 @@ async def right_turn(num):
         0.1
     )
 
-async def __internal_hazard_on():
-    await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-    time.sleep(0.33)
-async def __internal_hazard_off():
-    await rvr.led_control.turn_leds_off()
-    time.sleep(0.33)
-async def __internal_hazard():
-    global hazard
-    if(hazard is False): return
-    await __internal_hazard_on()
-    await __internal_hazard_off()
-
 async def start_hazard():
     global hazard
     if(hazard is False):
         hazard = True
         while hazard:
-            await __internal_hazard()
+            rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+            time.sleep(1)
+            rvrObs.led_control.set_all_leds_color(color = Colors.white)
+            time.sleep(1)
 
 def always_hazard(yesorno):
     global alwaysHazard
