@@ -97,7 +97,7 @@ async def move_sequence():
     global rvr
     while get_faround():
         await left_turn(random.randint(10, 25))
-        time.sleep(random.randint(0.3, 7))
+        time.sleep(random.randint(0, 5))
         await right_turn(random.randint(45, 180))
         time.sleep(random.randint(2, 4))
         await right_turn(random.randint(45, 180))
