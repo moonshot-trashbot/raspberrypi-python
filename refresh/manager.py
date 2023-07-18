@@ -84,7 +84,7 @@ async def sh_secondary():
     global rvr
     while get_hazard():
         ti1 = 1.5
-        ti2 = 0.25
+        ti2 = 1.25
         time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
@@ -100,6 +100,10 @@ async def sh_secondary():
         time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(8)
+        drive_forward_seconds(254, 90, 3)
+        drive_forward_seconds(10, 30, 10)
+        drive_forward_seconds(254, 45, 10)
+        drive_forward_seconds(10, 0, 10)
 
 def sh_secondary_wrapper():
     loop = asyncio.new_event_loop()
