@@ -85,12 +85,6 @@ async def sh_secondary():
     while get_hazard():
         ti1 = 0.25
         ti2 = 0.50
-        time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.orange)
-        time.sleep(ti2)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
