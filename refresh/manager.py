@@ -17,6 +17,7 @@
 import sys
 import asyncio
 import time
+import random
 import _models
 import _classes
 
@@ -95,16 +96,16 @@ async def set_faround(to):
 async def move_sequence():
     global rvr
     while get_faround():
-        await drive_forward_seconds(range(10, 25), range(45, 200), 0)
-        time.sleep(range(1, 4))
-        await drive_forward_seconds(range(10, 25), range(200, 359), 0)
-        time.sleep(range(1, 4))
-        await drive_forward_seconds(range(10, 25), range(20, 359), 0)
-        time.sleep(range(1, 4))
-        await drive_forward_seconds(range(10, 25), range(10, 35), 0)
-        time.sleep(range(1, 4))
-        await drive_forward_seconds(range(10, 25), 0, 0)
-        time.sleep(range(1, 4))
+        await drive_forward_seconds(random.randint(10, 25), random.randint(45, 200), 0)
+        time.sleep(random.randint(1, 4))
+        await drive_forward_seconds(random.randint(10, 25), random.randint(200, 359), 0)
+        time.sleep(random.randint(1, 4))
+        await drive_forward_seconds(random.randint(10, 25), random.randint(20, 359), 0)
+        time.sleep(random.randint(1, 4))
+        await drive_forward_seconds(random.randint(10, 25), random.randint(10, 35), 0)
+        time.sleep(random.randint(1, 4))
+        await drive_forward_seconds(random.randint(10, 25), 0, 0)
+        time.sleep(random.randint(1, 4))
 
 async def sh_secondary():
     global rvr
