@@ -83,28 +83,28 @@ async def right_turn(num):
 async def sh_secondary():
     global rvr
     while get_hazard():
-        ti1 = 0.5
-        ti2 = 0.3
+        ti1 = 0.45
+        ti2 = 0.25
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(ti2)
+        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(ti2)
+        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(ti2)
+        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(ti2)
+        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
-        time.sleep(ti2)
         await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        time.sleep(ti2)
+        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
         set_hazard(False)
         time.sleep(8)
         set_hazard(True)
