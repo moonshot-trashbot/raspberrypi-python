@@ -89,11 +89,11 @@ async def sh_secondary():
         time.sleep(0.33)
         rvrObs.led_control.turn_leds_off()
         time.sleep(0.33)
-        if(lastHazardHard == 5):
+        if(lastHazardHard == 6):
             set_hazard(False)
             time.sleep(5)
             set_hazard(True)
-            lastHazardHard = -1
+            lastHazardHard = 0
 
 def sh_secondary_wrapper():
     loop = asyncio.new_event_loop()
