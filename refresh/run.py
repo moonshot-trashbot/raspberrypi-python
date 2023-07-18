@@ -24,6 +24,7 @@ import _models
 import _classes
 import manager
 import listens
+from http.server import HTTPServer, CGIHTTPRequestHandler
 
 global run
 global recent
@@ -156,6 +157,8 @@ async def coreRobot():
             print("Quick processing end")
 
 def coreSocket():
+    server_object = HTTPServer(server_address=('0.0.0.0', 80), RequestHandlerClass=CGIHTTPRequestHandler)
+    server_object.serve_forever()
     listens.accept(addition)
 
 def coreRobotWrapper():
