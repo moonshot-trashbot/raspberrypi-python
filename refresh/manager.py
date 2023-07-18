@@ -85,7 +85,7 @@ async def right_turn(num):
         0.1
     )
 
-async def get_faround():
+def get_faround():
     global faround
     return faround
 
