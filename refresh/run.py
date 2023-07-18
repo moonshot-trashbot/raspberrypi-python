@@ -156,7 +156,6 @@ async def stop(error):
             print(">>> TRACEBACK: Now forcing the program to close down... (check error log?)")
             print(error)
             traceback.print_tb(error.__traceback__, 5)
-        await manager.leds_reset()
         await manager.close()
         listens.close()
         sys.exit(0)
