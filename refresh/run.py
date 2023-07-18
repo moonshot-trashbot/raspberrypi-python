@@ -44,10 +44,7 @@ green = False
 async def battery():
     time.sleep(0.05)
     print("Start bat")
-    bp = await manager.battery_percentage()
-    print("DEBUG_BP", bp)
-    print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
-    return
+    bp = manager.battery_percentage()
 
 # REACCESS() - Get Next Processable Entry
 async def reaccess():

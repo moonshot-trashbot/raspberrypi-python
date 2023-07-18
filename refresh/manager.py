@@ -20,7 +20,7 @@ import time
 import _models
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
-from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets
+from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
 
 loop = asyncio.get_event_loop()
 rvr = SpheroRvrAsync(
@@ -28,6 +28,7 @@ rvr = SpheroRvrAsync(
         loop
     )
 )
+rvrObs = SpheroRvrObserver()
 
 
 # ----------------------------------------
@@ -105,10 +106,11 @@ async def cancel_hazard():
     alwaysHazard = False
     await rvr.led_control.turn_leds_off()
 
-async def battery_percentage():
-    time.sleep(0.1)
-    x = await rvr.get_battery_percentage()
-    return x
+def battery_percentage_handler(bp):
+    print("DEBUG_BP", bp)
+    print(">>> BATTERY: The battery is currently", str(bp) + "%", "full!")
+def battery_percentage():
+    rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
 # CLOSE() - Delete and Close Connection
 async def close():
