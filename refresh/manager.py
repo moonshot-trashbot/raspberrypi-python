@@ -45,8 +45,6 @@ alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
 async def leds_reset():
-    await rvr.led_control.set_all_leds_color(color = Colors.white)
-    time.sleep(0.1)
     await rvr.led_control.turn_leds_off()
     time.sleep(0.1)
 async def leds_red():
