@@ -172,7 +172,7 @@ async def main():
         await manager.open()
         print("Calling open - listener")
         while run:
-            x = await listens.accept()
+            x = listens.accept()
             await process(x)
             time.sleep(0.1)
     except KeyboardInterrupt as e:
