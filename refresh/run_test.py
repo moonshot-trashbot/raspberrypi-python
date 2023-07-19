@@ -180,7 +180,7 @@ async def main():
         while run:
             y = listens.accept()
             if(y is not None and y is not ""):
-                jso = json.loads(x)
+                jso = json.loads(y)
                 if(jso is not None and jso == []):
                     for x in jso: await parse(x)
     except KeyboardInterrupt as e:
