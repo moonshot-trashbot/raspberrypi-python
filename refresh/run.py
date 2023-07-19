@@ -161,7 +161,8 @@ server_object = HTTPServer(server_address=('0.0.0.0', 80), RequestHandlerClass=C
 def coreSocket():
     global server_object
     server_object.serve_forever()
-    listens.accept(addition)
+    while run:
+        listens.accept(addition)
 
 def coreRobotWrapper():
     loop = asyncio.new_event_loop()
