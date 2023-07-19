@@ -102,7 +102,7 @@ async def reaccess():
                 await quit()
                 return
 
-# ADDITIOn(Input) - Add Item to Process Queue
+# ADDITION(Input) - Add Item to Process Queue
 def addition(inp):
     global save
     if(inp == "" or inp == "[]"): return Exception("No input data.")
@@ -182,7 +182,9 @@ async def main():
             if(y is not None and y is not ""):
                 jso = json.loads(y)
                 if(jso is not None and jso == []):
-                    for x in jso: await parse(x)
+                    for x in jso:
+                        z = await parse(x)
+                        print("Break 1")
     except KeyboardInterrupt as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)
