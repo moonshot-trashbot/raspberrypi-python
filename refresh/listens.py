@@ -11,7 +11,7 @@ def accept(callback):
     message = sock.recv().decode("utf-8")
     print(">>> SOCKET: Receiving input from... please wait.")
     print("RAW MSG", message)
-    callback(message)
+    return message
 
 def close():
     sock.term()
