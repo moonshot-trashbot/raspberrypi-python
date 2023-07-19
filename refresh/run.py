@@ -156,7 +156,7 @@ async def coreRobot():
             await process(x)
             print("Quick processing end")
 
-server_object = HTTPServer(server_address=('0.0.0.0', 80), RequestHandlerClass=CGIHTTPRequestHandler)
+server_object = HTTPServer(server_address=('127.0.0.1', 80), RequestHandlerClass=CGIHTTPRequestHandler)
 
 def coreSocket():
     global server_object
@@ -196,7 +196,6 @@ async def main():
             print("Calling open - manager")
             await manager.open()
             print("Calling open - listener")
-            listens.open()
         finally:
             t1.start()
             t2.start()
