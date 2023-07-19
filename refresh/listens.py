@@ -4,7 +4,7 @@ import zmq
 
 context = zmq.Context()
 sock = context.socket(zmq.PULL)
-sock.bind("tcp://*:420")
+sock.connect("tcp://*:420")
 cont = True
 
 def open():
