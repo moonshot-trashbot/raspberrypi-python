@@ -14,5 +14,4 @@ def accept():
     return message
 
 def close():
-    sock.term()
-    return
+    pass
