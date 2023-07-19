@@ -132,7 +132,7 @@ async def process(inp: _models.Detection or None):
     if((int(time.time()) - lastChance) > 5): tracking = inp.id
     if(tracking == inp.id):
         lastChance = int(time.time())
-        num = inp.center[0]
+        num = int(inp.center[0])
         num = num * moveaplifier
         if(num < 0):
             await manager.right_turn(num)
