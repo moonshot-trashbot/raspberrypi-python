@@ -13,7 +13,7 @@ def open():
 
 def accept(callback):
     while cont:
-        message = sock.rec()
+        message = sock.recv()
         print(">>> SOCKET: Receiving input from... please wait.")
         print("RAW MSG", message)
         callback(message)
