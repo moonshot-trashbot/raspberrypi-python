@@ -3,7 +3,7 @@ import time
 import zmq
 
 context = zmq.Context()
-sock = context.socket(zmq.REP)
+sock = context.socket(zmq.REQ)
 sock.bind("tcp://*:420")
 cont = True
 
