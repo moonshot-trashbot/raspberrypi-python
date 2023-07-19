@@ -181,7 +181,7 @@ async def main():
             y = listens.accept()
             if(y is not None and y is not ""):
                 jso = json.loads(y)
-                if(jso is not None and jso == []):
+                if(jso is not None and jso != []):
                     for x in jso:
                         z = await parse(x)
                         print("Break 1")
