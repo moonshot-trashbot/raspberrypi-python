@@ -171,7 +171,6 @@ async def main():
         print("Calling open - manager")
         await manager.open()
         print("Calling open - listener")
-        await listens.open()
         while run:
             x = await listens.accept()
             await process(x)

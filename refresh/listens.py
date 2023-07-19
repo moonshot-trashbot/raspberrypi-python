@@ -7,10 +7,6 @@ sock = context.socket(zmq.PULL)
 sock.bind("tcp://*:420")
 cont = True
 
-def open():
-    global sock
-    pass
-
 def accept(callback):
     message = sock.recv().decode("utf-8")
     print(">>> SOCKET: Receiving input from... please wait.")
