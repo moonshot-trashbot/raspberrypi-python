@@ -183,7 +183,7 @@ async def stop(error):
         print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
         print(error)
         traceback.print_tb(error.__traceback__, 5)
-    server_object.close()
+    server_object.shutdown()
     await manager.close()
     try:
         sys.exit(130)
