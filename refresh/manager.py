@@ -71,8 +71,8 @@ async def left_turn(num):
     await rvr.drive_control.reset_heading()
     await drive_forward_seconds(
         10,
-        360-num,
-        0.1
+        int(360-int(num)),
+        0
     )
 async def right_turn(num):
     num = abs(num)
@@ -81,8 +81,8 @@ async def right_turn(num):
     time.sleep(0.1)
     await drive_forward_seconds(
         10,
-        num,
-        0.1
+        int(num),
+        0
     )
 
 def get_faround():
