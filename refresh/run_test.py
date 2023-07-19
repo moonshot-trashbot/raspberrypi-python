@@ -115,6 +115,12 @@ moveaplifier = 0.133
 tracking = -1
 lastChance = int(time.time())-5
 
+async def parse(inp: str):
+    if(inp is None or inp is "" or inp is "[]"): return None
+    done = json.loads(inp)
+    if(done is None or done is {}): return None
+    return await process(done)
+
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
     print(inp)
@@ -173,7 +179,7 @@ async def main():
         print("Calling open - listener")
         while run:
             x = listens.accept()
-            await process(x)
+            await parse(x)
             time.sleep(0.1)
     except KeyboardInterrupt as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
