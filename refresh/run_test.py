@@ -166,7 +166,7 @@ async def stop(error):
         print(error)
         traceback.print_tb(error.__traceback__, 5)
     await manager.close()
-    await listens.close()
+    listens.close()
     try:
         sys.exit(130)
     except SystemExit:
