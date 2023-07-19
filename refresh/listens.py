@@ -1,4 +1,3 @@
-import socket
 import json
 import time
 import zmq
@@ -10,8 +9,7 @@ cont = True
 
 def open():
     global sock
-    sock.bind((host, port))
-    sock.listen()
+    sock.bind("tcp://*:420")
 
 def accept(callback):
     while cont:
@@ -21,5 +19,5 @@ def accept(callback):
         callback(message)
 
 def close():
-    sock.close()
+    sock.term()
     return
