@@ -111,7 +111,7 @@ def addition(inp):
         new = _models.Detection(x)
         save.append(new)
 
-moveaplifier = 0.133
+moveaplifier = 0.0133
 tracking = -1
 lastChance = int(time.time())-5
 
@@ -135,9 +135,9 @@ async def process(inp: _models.Detection or None):
         num = int(inp.center[0])
         num = num * moveaplifier
         if(num < 0):
-            await manager.right_turn(num)
-        else:
             await manager.left_turn(num)
+        else:
+            await manager.right_turn(num)
         print(">>> TRACKING: Turned to continue following (", tracking, ").")
     else:
         print(">>> TRACKING: We aren't tracking ( ID:", inp.id, ") but they are in frame.")
