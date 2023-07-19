@@ -116,9 +116,9 @@ tracking = -1
 lastChance = int(time.time())-5
 
 async def parse(inp: str):
-    if(inp is None or inp is "" or inp is "[]"): return None
+    if(inp is None or inp is "" or inp is "\{\}"): return None
     done = json.loads(inp)
-    if(done is None or done is {}): return None
+    if(done is None): return None
     return await process(done)
 
 # PROCESS(Input) - Run Single Instruction [Async]
@@ -178,9 +178,11 @@ async def main():
         await manager.open()
         print("Calling open - listener")
         while run:
-            x = listens.accept()
-            await parse(x)
-            time.sleep(0.1)
+            y = listens.accept()
+            if(y is not None and y is not ""):
+                jso = json.loads(x)
+                if(jso is not None and jso == []):
+                    for x in jso: await parse(x)
     except KeyboardInterrupt as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)
