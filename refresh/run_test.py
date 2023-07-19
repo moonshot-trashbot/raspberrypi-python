@@ -116,10 +116,8 @@ tracking = -1
 lastChance = int(time.time())-5
 
 async def parse(inp: str):
-    if(inp is None or inp is "" or inp is "\{\}"): return None
-    done = json.loads(inp)
-    if(done is None): return None
-    return await process(done)
+    if(inp is None or inp is {}): return None
+    return await process(_models.Detection(inp))
 
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
