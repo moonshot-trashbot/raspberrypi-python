@@ -34,6 +34,9 @@ def queue_next():
 queing = True
 
 async def run():
+    rvr.wake()
+    time.sleep(2)
+    rvr.drive_control.reset_heading()
     global queing
     global rvr
     while queing:
