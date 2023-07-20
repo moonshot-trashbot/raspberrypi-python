@@ -16,7 +16,6 @@
 import sys
 import asyncio
 import driving
-import debugs
 import asyncio
 import time
 import random
@@ -28,11 +27,6 @@ from sphero_sdk import Colors
 # ----------------------------------------
 # PUBLIC FUNCTIONS
 # ----------------------------------------
-
-debugs2 = debugs
-def get_debugs():
-    global debugs2
-    return debugs2
 
 # OPEN() - Create and Setup Connection
 def open():

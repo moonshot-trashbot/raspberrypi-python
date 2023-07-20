@@ -3,6 +3,12 @@ import asyncio
 import time
 import _classes
 
+import debugs
+debugs2 = debugs
+def get_debugs():
+    global debugs2
+    return debugs2
+
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
 

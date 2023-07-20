@@ -61,6 +61,8 @@ global recent
 global green
 global faround
 
+manager.get_debugs()
+
 green = False
 run = True
 save = []
