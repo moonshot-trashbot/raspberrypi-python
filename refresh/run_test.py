@@ -63,7 +63,6 @@ lastBattery = (int(time.time())-58)
 
 async def battery(dosum):
     time.sleep(0.05)
-    print("Start bat")
     bp = manager.battery_percentage(dosum)
 
 def get_faround():
@@ -137,12 +136,9 @@ async def parse(inp: str):
 
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
-    print(inp)
     global tracking
     global lastChance
-    print(">>> PROCESSES: Starting processing of following object...")
     manager.leds_red()
-    print("Manager leds red")
     if(inp is None): return
     if(obj_id == -1): return
     obj_id = inp.id
@@ -160,7 +156,6 @@ async def process(inp: _models.Detection or None):
         print(">>> TRACKING: We turned to continue tracking (", tracking, "). Debug...", "\nCXY:", center_x, center_y, "\nHEADCHANGE", heading_change)
     else:
         print(">>> TRACKING: We aren't tracking box ( ID:", inp.id, ") but it is in frame.")
-    print(">>> PROCESSES: Finished Processing object, moving on.")
 
 # QUIT() - Request to Close Connections, Clean-up
 async def quit():
@@ -192,20 +187,17 @@ async def stop(error):
 async def main():
     global run
     try:
-        print("Calling open - manager")
+        print(">>> OPENING: Hardware Manager")
         manager.open()
-        print("Calling open - listener")
+        print(">>> OPENING: Socket Listener")
         run = True
         while run:
-            print("Trying accept")
             y = listens.accept()
             if(y is None): return None
-            print("... from Trying accept: not none")
             jso = json.loads(y)
             if(jso is None): return None
             for x in jso:
                 z = await parse(x)
-                print("Break 1")
     except KeyboardInterrupt as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)

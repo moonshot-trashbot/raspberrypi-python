@@ -10,7 +10,6 @@ cont = True
 def accept():
     message = sock.recv().decode("utf-8")
     print(">>> SOCKET: Receiving input from... please wait.")
-    print("RAW MSG", message)
     return message
 
 def close():
