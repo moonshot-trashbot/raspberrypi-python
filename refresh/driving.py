@@ -32,7 +32,7 @@ def queue_next():
 queing = True
 
 async def run():
-    while queue.__len__ > 0:
+    while queue.__len__() > 0:
         x = queue_next()
         if(x is not None):
             if(x["speed"] < 50): x["speed"] = 50
