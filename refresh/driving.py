@@ -6,7 +6,7 @@ import _classes
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import SpheroRvrAsync, SerialAsyncDal
 
-loop = asyncio.new_event_loop()
+loop = asyncio.get_event_loop()
 rvr = SpheroRvrAsync(
     dal=SerialAsyncDal(
         loop

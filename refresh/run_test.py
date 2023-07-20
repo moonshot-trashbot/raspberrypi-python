@@ -144,6 +144,7 @@ async def process(inp: _models.Detection or None):
     manager.leds_red()
     print("Manager leds red")
     if(inp is None): return
+    if(obj_id == -1): return
     obj_id = inp.id
     obj_class = inp.type
     center_x, center_y = inp.center
@@ -151,7 +152,6 @@ async def process(inp: _models.Detection or None):
     if(tracking == obj_id or tracking == -1):
         tracking = obj_id
         lastChance = int(time.time())
-
         heading_change = calculate_heading(center_x, center_y)
         if heading_change > 0:
             manager.right_turn(abs(heading_change))
