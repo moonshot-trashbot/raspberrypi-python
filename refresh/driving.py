@@ -13,15 +13,14 @@ rvr = SpheroRvrAsync(
     )
 )
 
-global queue
 queue = []
 
 def drive_forward_seconds(spee, head, time):
     global queue
     queue.append({
-        "speed":spee,
-        "heading":head,
-        "time_to_drive":time
+        "speed": spee,
+        "heading": head,
+        "time_to_drive": time
     })
 
 def queue_next():
