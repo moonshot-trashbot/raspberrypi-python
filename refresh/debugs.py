@@ -1,9 +1,10 @@
 import pygame
-import screeninfo
+from screeninfo import get_monitors
 
-if(screeninfo.get_monitors().__len__() < 1): exit(0)
+screenWidth = 360
+for m in get_monitors():
+    screenWidth = m.width - 100
 
-screenWidth = screeninfo.get_monitors()[0].width - 100
 screenHeight = 810
 
 camChange = screenWidth/1280
