@@ -101,7 +101,8 @@ async def reaccess():
     if(save.__len__() > 0):
         x = save.pop(0)
         recent = int(time.time())
-        return x
+        await process(x)
+        return
     else:
         final = 300
         sec = int(time.time()) - recent
@@ -117,7 +118,7 @@ async def reaccess():
                     newl.run_until_complete(manager.move_sequence())
         if(sec <= 60):
             randomize()
-            return None
+            return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             randomize()
@@ -215,7 +216,7 @@ async def main():
         print(">>> OPENING: Socket Listener")
         run = True
         while run:
-            reaccess()
+            asyncio.get_event_loop().run_until_complete(reaccess())
             y = listens.accept()
             if(y is None): return None
             jso = json.loads(y)
