@@ -54,7 +54,6 @@ daemon = _classes.StoppableThread(target = run_wrapper)
 
 def open():
     daemon.start()
-    daemon.join()
 
 def close():
     global daemon
