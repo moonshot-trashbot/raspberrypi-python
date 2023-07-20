@@ -111,11 +111,6 @@ async def reaccess():
                 green = True
                 await battery(False)
                 manager.leds_purple()
-                def faround():
-                    manager.set_faround(True)
-                    newl = asyncio.new_event_loop()
-                    asyncio.set_event_loop(newl)
-                    newl.run_until_complete(manager.move_sequence())
         if(sec <= 60):
             randomize()
             return
@@ -216,9 +211,7 @@ async def main():
         print(">>> OPENING: Socket Listener")
         run = True
         while run:
-            loowp = asyncio.new_event_loop()
-            asyncio.set_event_loop(loowp)
-            loowp.run_until_complete(reaccess())
+            await reaccess()
             y = listens.accept()
             if(y is None): return None
             jso = json.loads(y)
