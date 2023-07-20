@@ -1,12 +1,11 @@
-import pygame
-import Xlib
-import Xlib.display
+# import pygame
+# import Xlib
+# import Xlib.display
 
-screenWidth = Xlib.display.Display().screen().root.get_geometry().width
+# screenWidth = Xlib.display.Display().screen().root.get_geometry().width
+# screenHeight = (screenWidth/16)*9
 
-screenHeight = 810
-
-camChange = screenWidth/1280
+# camChange = screenWidth/1280
 
 pygame.init()
 screen = pygame.display.set_mode((screenWidth, screenHeight))
