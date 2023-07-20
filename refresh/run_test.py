@@ -199,7 +199,7 @@ async def main():
         while run:
             print("Trying accept")
             y = listens.accept()
-            if(y is not None): return None
+            if(y is None): return None
             print("... from Trying accept: not none")
             jso = json.loads(y)
             if(jso is None): return None
