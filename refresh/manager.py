@@ -72,9 +72,13 @@ def heading_shift(num):
         while(currentHeading < -358):
             currentHeading += 359
 
+def heading_get():
+    global currentHeading
+    return currentHeading
+
 async def drive_forward_seconds(spee, head, tim):
     heading_shift(head)
-    await driving.drive_control.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
+    await driving.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
     time.sleep(0.1 + tim)
 
 async def left_turn(num):

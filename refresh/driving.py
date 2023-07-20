@@ -44,6 +44,7 @@ async def run():
             time.sleep(x["time_to_drive"] + 0.05)
         else:
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
+            time.sleep(1)
 
 def run_wrapper():
     loop2 = asyncio.new_event_loop()
