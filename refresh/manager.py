@@ -55,7 +55,7 @@ def leds_purple():
     time.sleep(0.1)
 def leds_green():
     if(get_hazard()): return
-    driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.green)
+    driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.green)
     time.sleep(0.1)
 
 currentHeading = 0
@@ -124,19 +124,19 @@ def sh_secondary():
         ti1 = 1.5
         ti2 = 1.25
         time.sleep(ti2)
-        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(8)
 
 def sh_secondary_wrapper():
@@ -193,14 +193,14 @@ def battery_percentage_handler(battery_percentage):
     return bp
 def battery_percentage(action):
     if(action is True):
-        driving.get_rvrObs.get_battery_percentage(handler=battery_percentage_handler_hazard)
+        driving.get_rvrObs().get_battery_percentage(handler=battery_percentage_handler_hazard)
     else:
-        driving.get_rvrObs.get_battery_percentage(handler=battery_percentage_handler)
+        driving.get_rvrObs().get_battery_percentage(handler=battery_percentage_handler)
 
 # CLOSE() - Delete and Close Connection
 def close():
     cancel_hazard()
     leds_reset()
     driving.close()
-    driving.get_rvrObs.close()
+    driving.get_rvrObs().close()
     time.sleep(1)
