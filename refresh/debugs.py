@@ -1,7 +1,8 @@
 import pygame
-import screeninfo
+from screeninfo import get_monitors, Enumerator
 
-screenWidth = screeninfo.get_monitors(screeninfo.Enumerator.X11)[0].width
+
+screenWidth = get_monitors(Enumerator.Xinerama)[0].width
 screenHeight = (screenWidth/16)*9
 
 camChange = screenWidth/1280
