@@ -29,9 +29,10 @@ from sphero_sdk import Colors
 # PUBLIC FUNCTIONS
 # ----------------------------------------
 
+debugs2 = debugs
 def get_debugs():
-    global debugs
-    return debugs
+    global debugs2
+    return debugs2
 
 # OPEN() - Create and Setup Connection
 def open():
