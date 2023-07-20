@@ -35,9 +35,15 @@ queing = True
 
 async def run():
     global queing
+    global rvr
     while queing:
         x = queue_next()
         if(x is not None):
+            if(x["speed"] < 0): x["speed"] = 0
+            if(x["speed"] > 255): x["speed"] = 255
+            if(x["heading"] < 0): x["heading"] = 0
+            if(x["heading"] > 359): x["heading"] = 359
+            print(">>> ERROR: QUEUE TRYING:", x)
             await rvr.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
             time.sleep(x["time_to_drive"] + 0.05)
         else:
@@ -46,6 +52,7 @@ async def run():
 
 def run_wrapper():
     loop2 = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop2)
     loop2.run_until_complete(run())
 
 global daemon
