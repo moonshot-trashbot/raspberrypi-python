@@ -1,5 +1,6 @@
 import pygame
 from screeninfo import get_monitors, Enumerator
+import _classes
 
 screenWidth = int(get_monitors(Enumerator.Xinerama)[0].width)
 screenHeight = int((screenWidth/16)*9)
@@ -73,4 +74,7 @@ def main():
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
-main()
+
+thr = _classes.StoppableThread(target=main)
+thr.start()
+thr.join()
