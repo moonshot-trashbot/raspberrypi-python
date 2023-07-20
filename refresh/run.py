@@ -216,7 +216,7 @@ async def main():
         print(">>> OPENING: Socket Listener")
         run = True
         while run:
-            loowp = asyncio.net_event_loop()
+            loowp = asyncio.new_event_loop()
             asyncio.set_event_loop(loowp)
             loowp.run_until_complete(reaccess())
             y = listens.accept()
