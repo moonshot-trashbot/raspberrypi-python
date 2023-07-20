@@ -78,7 +78,7 @@ def heading_get():
 
 def drive_forward_seconds(spee, head, tim):
     heading_shift(head)
-    driving.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
+    driving.drive_forward_seconds(spee, heading_get(), tim)
 
 def left_turn(num):
     num = abs(int(num)) * -1
