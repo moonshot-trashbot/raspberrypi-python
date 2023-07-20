@@ -32,11 +32,11 @@ def queue_next():
 queing = True
 
 async def run():
-    rvr.wake()
+    global rvrObs
+    rvrObs.wake()
     time.sleep(2)
-    rvr.drive_control.reset_heading()
+    rvrObs.drive_control.reset_heading()
     global queing
-    global rvr
     while queing:
         x = queue_next()
         if(x is not None):
@@ -45,7 +45,7 @@ async def run():
             if(x["heading"] < 0): x["heading"] = 0
             if(x["heading"] > 359): x["heading"] = 359
             print(">>> QUEUE TRYING:", x)
-            await rvr.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
+            await rvrObs.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
             time.sleep(x["time_to_drive"] + 0.5)
         else:
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
