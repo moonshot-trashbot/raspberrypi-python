@@ -152,7 +152,7 @@ def addition(inp):
 
 async def parse(inp: str):
     if(inp is None or inp is {}): return None
-    return await process(_models.Detection(inp))
+    return await save.append(_models.Detection(inp))
 
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
@@ -215,6 +215,7 @@ async def main():
         print(">>> OPENING: Socket Listener")
         run = True
         while run:
+            reaccess()
             y = listens.accept()
             if(y is None): return None
             jso = json.loads(y)
