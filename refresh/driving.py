@@ -45,7 +45,7 @@ async def run():
             if(x["heading"] < 0): x["heading"] = 0
             if(x["heading"] > 359): x["heading"] = 359
             print(">>> QUEUE TRYING:", x)
-            await rvrObs.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
+            rvrObs.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
             time.sleep(x["time_to_drive"] + 0.5)
         else:
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
