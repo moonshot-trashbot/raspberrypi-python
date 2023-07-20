@@ -29,6 +29,8 @@ def queue_next():
     queue = queue.pop(0)
     return queue
 
+queing = True
+
 async def run():
     global queing
     while queing:
