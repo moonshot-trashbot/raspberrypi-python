@@ -20,17 +20,30 @@ import os
 import json
 import time
 import asyncio
+import math
 import _models
 import _classes
 import manager
 import listens
-from http.server import HTTPServer, CGIHTTPRequestHandler
 
-camWidth = 1280
-camHeight = 720
+def calculate_heading(center_x, center_y):
+    # The width and height of the frame shot
+    frame_width = 1280
+    frame_height = 720
 
-midwayX = int(camWidth/2)
-midwayY = int(camHeight/2)
+    # Center of the frame
+    frame_center_x = frame_width / 2
+    frame_center_y = frame_height / 2
+
+    # Calculate the difference in x and y coordinates from the center of the frame
+    delta_x = center_x - frame_center_x
+    delta_y = center_y - frame_center_y
+
+    # Calculate the angle (in degrees) to rotate the robot
+    angle_rad = math.atan2(delta_y, delta_x)
+    angle_deg = math.degrees(angle_rad)
+
+    return angle_deg
 
 global run
 global recent
@@ -43,10 +56,10 @@ save = []
 recent = int(time.time())
 lastBattery = (int(time.time())-58)
 
+
 # ----------------------------------------
 # PUBLIC FUNCTIONS
 # ----------------------------------------
-
 
 async def battery(dosum):
     time.sleep(0.05)
@@ -87,9 +100,6 @@ async def reaccess():
                     newl = asyncio.new_event_loop()
                     asyncio.set_event_loop(newl)
                     newl.run_until_complete(manager.move_sequence())
-                # x = _classes.StoppableThread(target = faround)
-                # x.start()
-                # x.join()
         if(sec <= 60): return
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
@@ -134,17 +144,20 @@ async def process(inp: _models.Detection or None):
     await manager.leds_red()
     print("Manager leds red")
     if(inp is None): return
-    if(tracking == -1): tracking = inp.id
-    if((int(time.time()) - lastChance) > 5): tracking = inp.id
-    if(tracking == inp.id):
+    obj_id = inp["id"]
+    obj_class = inp["type"]
+    center_x, center_y = inp["center"]
+    if((int(time.time()) - lastChance) > 5): tracking = None
+    if(tracking == obj_id or tracking == -1):
+        tracking = obj_id
         lastChance = int(time.time())
-        num = int(inp.center[0])
-        num = num * moveaplifier
-        if(num < midwayX):
-            await manager.left_turn(num)
+
+        heading_change = calculate_heading(center_x, center_y)
+        if heading_change < 0:
+            manager.turn_left(abs(heading_change))
         else:
-            await manager.right_turn(num)
-        print(">>> TRACKING: We turned to continue tracking (", tracking, ").")
+            manager.turn_right(heading_change)
+        print(">>> TRACKING: We turned to continue tracking (", tracking, "). Debug...", "\nCXY:", center_x, center_y, "\nHEADCHANGE", heading_change)
     else:
         print(">>> TRACKING: We aren't tracking box ( ID:", inp.id, ") but it is in frame.")
     print(">>> PROCESSES: Finished Processing object, moving on.")
