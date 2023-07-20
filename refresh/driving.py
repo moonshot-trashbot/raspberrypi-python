@@ -1,6 +1,7 @@
 import sys
 import asyncio
 import time
+import _classes
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import SpheroRvrAsync, SerialAsyncDal
@@ -31,6 +32,7 @@ def queue_next():
 async def run():
     global queing
     while queing:
+        run()
         x = queue_next()
         if(x is not None):
             await rvr.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
@@ -38,12 +40,22 @@ async def run():
         else:
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
 
-def open():
+def run_wrapper():
     loop2 = asyncio.new_event_loop()
     loop2.run_until_complete(run())
 
+global daemon
+daemon = _classes.StoppableThread(target = run_wrapper)
+
+def open():
+    daemon.start()
+    daemon.join()
+
 def close():
+    global daemon
     global queue
     global queing
+    if(daemon.stopped() == False)
+    daemon.stop()
     queue = []
     queing = False
