@@ -65,10 +65,9 @@ currentHeading = 0
 def heading_shift(num):
     global currentHeading
     currentHeading = currentHeading + num
-    if(currentHeading > 0):
+    while(currentHeading > 359 or currentHeading < -359):
         while(currentHeading > 358):
             currentHeading -= 359
-    else:
         while(currentHeading < -358):
             currentHeading += 359
 
