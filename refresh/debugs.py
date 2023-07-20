@@ -44,6 +44,7 @@ def main():
     global xMid
     global yMid
     global running
+    global head
     global stripeCenterY
     global stripeCenterX
     global stripeCenterY
