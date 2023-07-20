@@ -160,12 +160,12 @@ async def process(inp: _models.Detection or None):
     if(obj_id == -1): return
     obj_class = inp.type
     center_x, center_y = inp.center
-    debugs.stripechange(center_x, center_y)
     if((int(time.time()) - lastChance) > 5): tracking = -1
     if(tracking == obj_id or tracking == -1):
         tracking = obj_id
         lastChance = int(time.time())
         heading_change = calculate_heading(center_x)
+        debugs.stripechange(center_x, center_y)
         if heading_change > 0:
             debugs.headchange(abs(heading_change) * -1)
             manager.right_turn(abs(heading_change))
