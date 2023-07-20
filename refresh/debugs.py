@@ -1,9 +1,12 @@
 import pygame
+import screeninfo
 
-screenWidth = 1440
+if(screeninfo.get_monitors().__len__() < 1): exit(0)
+
+screenWidth = screeninfo.get_monitors()[0].width - 100
 screenHeight = 810
 
-camChange = 1440/1280
+camChange = screenWidth/1280
 
 pygame.init()
 screen = pygame.display.set_mode((screenWidth, screenHeight))

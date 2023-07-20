@@ -16,15 +16,35 @@
 import traceback
 import signal
 import sys
+import debugs
 import os
 import json
 import time
 import asyncio
+import math
 import _models
 import _classes
 import manager
 import listens
-from http.server import HTTPServer, CGIHTTPRequestHandler
+
+def calculate_heading(center_x, center_y):
+    # The width and height of the frame shot
+    frame_width = 1280
+    frame_height = 720
+
+    # Center of the frame
+    frame_center_x = frame_width / 2
+    frame_center_y = frame_height / 2
+
+    # Calculate the difference in x and y coordinates from the center of the frame
+    delta_x = center_x - frame_center_x
+    delta_y = center_y - frame_center_y
+
+    # Calculate the angle (in degrees) to rotate the robot
+    angle_rad = math.atan2(delta_y, delta_x)
+    angle_deg = math.degrees(angle_rad)
+
+    return angle_deg
 
 global run
 global recent
@@ -37,14 +57,13 @@ save = []
 recent = int(time.time())
 lastBattery = (int(time.time())-58)
 
+
 # ----------------------------------------
 # PUBLIC FUNCTIONS
 # ----------------------------------------
 
-
 async def battery(dosum):
     time.sleep(0.05)
-    print("Start bat")
     bp = manager.battery_percentage(dosum)
 
 def get_faround():
@@ -81,10 +100,7 @@ async def reaccess():
                     newl = asyncio.new_event_loop()
                     asyncio.set_event_loop(newl)
                     newl.run_until_complete(manager.move_sequence())
-                # x = _classes.StoppableThread(target = faround)
-                # x.start()
-                # x.join()
-        if(sec <= 60): return
+        if(sec <= 60): return None
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             time.sleep(2)
@@ -102,7 +118,7 @@ async def reaccess():
                 await quit()
                 return
 
-# ADDITIOn(Input) - Add Item to Process Queue
+# ADDITION(Input) - Add Item to Process Queue
 def addition(inp):
     global save
     if(inp == "" or inp == "[]"): return Exception("No input data.")
@@ -111,33 +127,39 @@ def addition(inp):
         new = _models.Detection(x)
         save.append(new)
 
-moveaplifier = 0.133
+moveaplifier = 0.0133
 tracking = -1
 lastChance = int(time.time())-5
 
+async def parse(inp: str):
+    if(inp is None or inp is {}): return None
+    return await process(_models.Detection(inp))
+
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
-    print(inp)
     global tracking
     global lastChance
-    print(">>> PROCESSES: Starting processing of following object...")
     manager.leds_red()
-    print("Manager leds red")
     if(inp is None): return
-    if(tracking == -1): tracking = inp.id
-    if((int(time.time()) - lastChance) > 5): tracking = inp.id
-    if(tracking == inp.id):
+    obj_id = inp.id
+    if(obj_id == -1): return
+    obj_class = inp.type
+    center_x, center_y = inp.center
+    debugs.stripechange(center_x, center_y)
+    if((int(time.time()) - lastChance) > 5): tracking = -1
+    if(tracking == obj_id or tracking == -1):
+        tracking = obj_id
         lastChance = int(time.time())
-        num = inp.center[0]
-        num = num * moveaplifier
-        if(num < 0):
-            manager.left_turn(10)
+        heading_change = calculate_heading(center_x, center_y)
+        if heading_change > 0:
+            debugs.headchange(abs(heading_change) * -1)
+            manager.right_turn(abs(heading_change))
         else:
-            manager.right_turn(10)
-        print(">>> TRACKING: Turned to continue following (", tracking, ").")
+            debugs.headchange(abs(heading_change))
+            manager.left_turn(abs(heading_change))
+        print(">>> TRACKING: We turned to continue tracking (", tracking, "). Debug...", "\nCXY:", center_x, center_y, "\nHEADCHANGE", heading_change)
     else:
-        print(">>> TRACKING: We aren't tracking ( ID:", inp.id, ") but they are in frame.")
-    print(">>> PROCESSES: Finished Processing object, moving on.")
+        print(">>> TRACKING: We aren't tracking box ( ID:", inp.id, ") but it is in frame.")
 
 # QUIT() - Request to Close Connections, Clean-up
 async def quit():
@@ -147,31 +169,6 @@ async def quit():
 # ----------------------------------------
 # MAIN INSTRUCTION
 # ----------------------------------------
-
-async def coreRobot():
-    while True:
-        x = await reaccess()
-        if(x is not None):
-            print("Quick processing")
-            await process(x)
-            print("Quick processing end")
-
-server_object = HTTPServer(server_address=('0.0.0.0', 80), RequestHandlerClass=CGIHTTPRequestHandler)
-
-def coreSocket():
-    global server_object
-    server_object.serve_forever()
-    while run:
-        listens.accept(addition)
-
-def coreRobotWrapper():
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(
-        coreRobot()
-    )
-
-t1 = _classes.StoppableThread(target = coreRobotWrapper)
-t2 = _classes.StoppableThread(target = coreSocket)
 
 # STOP(Error) - Must Close Connections, Clean-up
 async def stop(error):
@@ -183,25 +180,28 @@ async def stop(error):
     else:
         print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
         print(error)
-        traceback.print_tb(error.__traceback__, 5)
-    server_object.shutdown()
+        traceback.print_tb(error.__traceback__, 10)
     manager.close()
+    listens.close()
     try:
         sys.exit(130)
     except SystemExit:
         os._exit(130)
 
 async def main():
+    global run
     try:
-        try:
-            print("Calling open - manager")
-            manager.open()
-            print("Calling open - listener")
-        finally:
-            t1.start()
-            t2.start()
-        t1.join()
-        t2.join()
+        print(">>> OPENING: Hardware Manager")
+        manager.open()
+        print(">>> OPENING: Socket Listener")
+        run = True
+        while run:
+            y = listens.accept()
+            if(y is None): return None
+            jso = json.loads(y)
+            if(jso is None): return None
+            for x in jso:
+                z = await parse(x)
     except KeyboardInterrupt as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)

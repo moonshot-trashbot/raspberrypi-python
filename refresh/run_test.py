@@ -24,7 +24,6 @@ import asyncio
 import math
 import _models
 import _classes
-import manager
 import listens
 
 def calculate_heading(center_x, center_y):
@@ -64,7 +63,6 @@ lastBattery = (int(time.time())-58)
 
 async def battery(dosum):
     time.sleep(0.05)
-    bp = manager.battery_percentage(dosum)
 
 def get_faround():
     global faround
@@ -94,18 +92,14 @@ async def reaccess():
             if(green is False):
                 green = True
                 await battery(False)
-                manager.leds_purple()
                 def faround():
-                    manager.set_faround(True)
                     newl = asyncio.new_event_loop()
                     asyncio.set_event_loop(newl)
-                    newl.run_until_complete(manager.move_sequence())
         if(sec <= 60): return None
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             time.sleep(2)
         elif(sec <= (final - 120)):
-            manager.set_faround(False)
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 5s]")
             time.sleep(5)
         elif(sec < (final - 60)):
@@ -139,7 +133,6 @@ async def parse(inp: str):
 async def process(inp: _models.Detection or None):
     global tracking
     global lastChance
-    manager.leds_red()
     if(inp is None): return
     obj_id = inp.id
     if(obj_id == -1): return
@@ -153,10 +146,8 @@ async def process(inp: _models.Detection or None):
         heading_change = calculate_heading(center_x, center_y)
         if heading_change > 0:
             debugs.headchange(abs(heading_change) * -1)
-            manager.right_turn(abs(heading_change))
         else:
             debugs.headchange(abs(heading_change))
-            manager.left_turn(abs(heading_change))
         print(">>> TRACKING: We turned to continue tracking (", tracking, "). Debug...", "\nCXY:", center_x, center_y, "\nHEADCHANGE", heading_change)
     else:
         print(">>> TRACKING: We aren't tracking box ( ID:", inp.id, ") but it is in frame.")
@@ -181,7 +172,6 @@ async def stop(error):
         print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
         print(error)
         traceback.print_tb(error.__traceback__, 10)
-    manager.close()
     listens.close()
     try:
         sys.exit(130)
@@ -192,7 +182,6 @@ async def main():
     global run
     try:
         print(">>> OPENING: Hardware Manager")
-        manager.open()
         print(">>> OPENING: Socket Listener")
         run = True
         while run:
