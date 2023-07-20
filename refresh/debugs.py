@@ -46,7 +46,7 @@ def quit():
 
 def headchange(num):
     global head
-    head = num
+    head = int(num)
 
 def stripechange(x, y):
     global camChange
@@ -54,5 +54,5 @@ def stripechange(x, y):
     global stripeCenterY
     x = x * camChange
     y = y * camChange
-    stripeCenterX = x
-    stripeCenterY = y
+    stripeCenterX = int(x)
+    stripeCenterY = int(y)
