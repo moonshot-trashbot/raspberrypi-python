@@ -115,7 +115,9 @@ async def reaccess():
                     newl = asyncio.new_event_loop()
                     asyncio.set_event_loop(newl)
                     newl.run_until_complete(manager.move_sequence())
-        if(sec <= 60): return None
+        if(sec <= 60):
+            randomize()
+            return None
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             randomize()
@@ -123,11 +125,9 @@ async def reaccess():
         elif(sec <= (final - 120)):
             manager.set_faround(False)
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 5s]")
-            randomize()
             time.sleep(5)
         elif(sec < (final - 60)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 10s]")
-            randomize()
             time.sleep(10)
         else:
             if(sec >= final):
