@@ -78,8 +78,7 @@ def heading_get():
 
 async def drive_forward_seconds(spee, head, tim):
     heading_shift(head)
-    await driving.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
-    time.sleep(0.1 + tim)
+    driving.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
 
 async def left_turn(num):
     num = abs(int(num)) * -1
