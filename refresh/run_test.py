@@ -181,7 +181,7 @@ async def stop(error):
     else:
         print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
         print(error)
-        traceback.print_tb(error.__traceback__, 5)
+        traceback.print_tb(error.__traceback__, 10)
     manager.close()
     listens.close()
     try:

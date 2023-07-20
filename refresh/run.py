@@ -197,7 +197,6 @@ async def main():
             print("Calling open - manager")
             manager.open()
             print("Calling open - listener")
-            listens.open()
         finally:
             t1.start()
             t2.start()
