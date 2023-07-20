@@ -44,18 +44,18 @@ faround = False
 alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
-async def leds_reset():
+def leds_reset():
     rvrObs.led_control.turn_leds_off()
     time.sleep(0.1)
-async def leds_red():
+def leds_red():
     if(get_hazard()): return
     rvrObs.led_control.set_all_leds_color(color = Colors.red)
     time.sleep(0.1)
-async def leds_purple():
+def leds_purple():
     if(get_hazard()): return
     rvrObs.led_control.set_all_leds_color(color = Colors.pink)
     time.sleep(0.1)
-async def leds_green():
+def leds_green():
     if(get_hazard()): return
     rvrObs.led_control.set_all_leds_color(color = Colors.green)
     time.sleep(0.1)
@@ -80,7 +80,7 @@ def drive_forward_seconds(spee, head, tim):
     heading_shift(head)
     driving.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
 
-async def left_turn(num):
+def left_turn(num):
     num = abs(int(num)) * -1
     print("Left", num)
     drive_forward_seconds(
@@ -88,7 +88,7 @@ async def left_turn(num):
         num,
         0
     )
-async def right_turn(num):
+def right_turn(num):
     num = abs(int(num))
     print("Right", num)
     drive_forward_seconds(
@@ -105,23 +105,23 @@ def set_faround(to):
     global faround
     faround = to
 
-async def move_sequence():
+def move_sequence():
     global rvr
     while get_faround():
-        await left_turn(random.randint(10, 25))
+        left_turn(random.randint(10, 25))
         time.sleep(random.randint(0, 5))
-        await right_turn(random.randint(45, 180))
+        right_turn(random.randint(45, 180))
         time.sleep(random.randint(2, 4))
-        await right_turn(random.randint(45, 180))
+        right_turn(random.randint(45, 180))
         time.sleep(random.randint(1, 2))
-        await left_turn(random.randint(45, 180))
+        left_turn(random.randint(45, 180))
         time.sleep(random.randint(3, 8))
-        await left_turn(random.randint(45, 180))
+        left_turn(random.randint(45, 180))
         time.sleep(random.randint(1, 4))
         drive_forward_seconds(250, 0, 0)
         time.sleep(0.5)
 
-async def sh_secondary():
+def sh_secondary():
     global rvr
     while get_hazard():
         ti1 = 1.5
@@ -170,7 +170,7 @@ def always_hazard(yesorno):
     global alwaysHazard
     alwaysHazard = yesorno
 
-async def cancel_hazard():
+def cancel_hazard():
     global hazard
     global hThread
     global alwaysHazard
@@ -201,9 +201,9 @@ def battery_percentage(action):
         rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
 # CLOSE() - Delete and Close Connection
-async def close():
-    await cancel_hazard()
-    await leds_reset()
+def close():
+    cancel_hazard()
+    leds_reset()
     driving.close()
     rvrObs.close()
     time.sleep(1)

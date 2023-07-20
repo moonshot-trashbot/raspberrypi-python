@@ -94,7 +94,7 @@ async def reaccess():
             if(green is False):
                 green = True
                 await battery(False)
-                await manager.leds_purple()
+                manager.leds_purple()
                 def faround():
                     manager.set_faround(True)
                     newl = asyncio.new_event_loop()
@@ -141,7 +141,7 @@ async def process(inp: _models.Detection or None):
     global tracking
     global lastChance
     print(">>> PROCESSES: Starting processing of following object...")
-    await manager.leds_red()
+    manager.leds_red()
     print("Manager leds red")
     if(inp is None): return
     obj_id = inp["id"]
@@ -182,7 +182,7 @@ async def stop(error):
         print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
         print(error)
         traceback.print_tb(error.__traceback__, 5)
-    await manager.close()
+    manager.close()
     listens.close()
     try:
         sys.exit(130)
@@ -193,7 +193,7 @@ async def main():
     global run
     try:
         print("Calling open - manager")
-        await manager.open()
+        manager.open()
         print("Calling open - listener")
         run = True
         while run:
