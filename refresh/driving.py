@@ -51,6 +51,7 @@ async def run():
             elif(x["type"] == "turn_either_degrees"):
                 func = rvrObs.drive_control.turn_right_degrees
                 if(x["amount"] < 0): func = rvrObs.drive_control.turn_left_degrees
+                x["amount"] = abs(x["amount"])
                 func(heading=x["heading"], amount=x["amount"])
         else:
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
