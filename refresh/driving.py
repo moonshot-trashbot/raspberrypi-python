@@ -55,7 +55,6 @@ def close():
     global daemon
     global queue
     global queing
-    if(daemon.stopped() == False)
-    daemon.stop()
+    if(daemon.stopped() == False): daemon.stop()
     queue = []
     queing = False
