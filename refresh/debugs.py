@@ -35,7 +35,7 @@ while running:
             xgen += ((head)*4)
         if(head >= 180 and head >= 259):
             xgen -= ((360-head)*4)
-    vec = pygame.Vector2(xgen, 345)
+    vec = [int(xgen), int(345)]
     pygame.draw.circle(screen, pygame.Color(150, 150, 0), vec, 20, 1)
 
     pygame.display.flip()
