@@ -12,8 +12,10 @@ clock = pygame.time.Clock()
 running = True
 head = 0
 
-stripeCenterX = 720
-stripeCenterY = 405
+xMid = int(screenWidth/2)
+yMid = int(screenHeight/2)
+stripeCenterX = xMid
+stripeCenterY = yMid
 
 while running:
     for event in pygame.event.get():
@@ -22,7 +24,7 @@ while running:
 
     screen.fill(pygame.Color(0, 0, 0))
 
-    rectnormal = pygame.Rect(100, 400, 1080, 10)
+    rectnormal = pygame.Rect(int((screenWidth - (360*4))/2), 400, 360*4, 10)
     pygame.draw.rect(screen, pygame.Color(255, 255, 255), rectnormal, 1)
 
     if(stripeCenterX < 8): stripeCenterX = -8
