@@ -212,6 +212,7 @@ async def main():
         run = True
         while run:
             await reaccess()
+            await driving.run()
             y = listens.accept()
             if(y is None): return None
             jso = json.loads(y)

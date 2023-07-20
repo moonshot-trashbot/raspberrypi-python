@@ -32,12 +32,7 @@ def queue_next():
 queing = True
 
 async def run():
-    global rvrObs
-    rvrObs.wake()
-    time.sleep(2)
-    rvrObs.drive_control.reset_heading()
-    global queing
-    while queing:
+    while queue.__len__ > 0:
         x = queue_next()
         if(x is not None):
             if(x["speed"] < 50): x["speed"] = 50
@@ -51,22 +46,8 @@ async def run():
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
             time.sleep(1)
 
-def run_wrapper():
-    loop2 = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop2)
-    loop2.run_until_complete(run())
-
-global daemon
-daemon = _classes.StoppableThread(target = run_wrapper)
-
-def open():
-    daemon.start()
-    daemon.join()
-
 def close():
-    global daemon
     global queue
     global queing
-    if(daemon.stopped() == False): daemon.stop()
     queue = []
     queing = False
