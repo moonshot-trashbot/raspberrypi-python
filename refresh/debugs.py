@@ -25,7 +25,6 @@ while running:
     screen.fill(pygame.Color(0, 0, 0))
 
     rectnormal = pygame.Rect(int((screenWidth - (360*4))/2), 400, 360*4, 10)
-    rectnormal.fill(pygame.Color(255, 255, 255))
     pygame.draw.rect(screen, pygame.Color(255, 255, 255), rectnormal)
 
     if(stripeCenterX < 8): stripeCenterX = -8
@@ -36,10 +35,10 @@ while running:
     xgen = xMid
     if(head <= 90 or head >= 180):
         if(head >= 0 and head <= 90):
-            xgen += ((head)*4)
+            xgen = xMid + ((head)*4)
         if(head >= 180 and head >= 259):
-            xgen -= ((360-head)*4)
-    vec = [int(xgen), int(345)]
+            xgen = xMid - ((360-head)*4)
+    vec = [int(xgen), int(yMid-10)]
     pygame.draw.circle(screen, pygame.Color(150, 150, 0), vec, 20)
 
     pygame.display.flip()
