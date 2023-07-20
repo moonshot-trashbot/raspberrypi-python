@@ -15,12 +15,14 @@
 
 import traceback
 import signal
+import random
 import sys
 import debugs
 import os
 import json
 import time
 import asyncio
+import driving
 import math
 import _models
 import _classes
@@ -79,6 +81,10 @@ def get_faround():
     global faround
     return faround
 
+def randomize():
+    turn = random.randint(45, 315)
+    driving.drive_forward_seconds(5, turn, 0)
+
 # REACCESS() - Get Next Processable Entry
 async def reaccess():
     global save
@@ -112,13 +118,16 @@ async def reaccess():
         if(sec <= 60): return None
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
+            randomize()
             time.sleep(2)
         elif(sec <= (final - 120)):
             manager.set_faround(False)
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 5s]")
+            randomize()
             time.sleep(5)
         elif(sec < (final - 60)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every 10s]")
+            randomize()
             time.sleep(10)
         else:
             if(sec >= final):
