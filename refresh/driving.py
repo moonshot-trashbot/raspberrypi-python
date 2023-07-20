@@ -39,8 +39,8 @@ async def run():
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
 
 def open():
-    global loop
-    loop.run_until_complete(run())
+    loop2 = asyncio.new_event_loop()
+    loop2.run_until_complete(run())
 
 def close():
     global queue
