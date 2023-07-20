@@ -77,4 +77,3 @@ def main():
 
 thr = _classes.StoppableThread(target=main)
 thr.start()
-thr.join()
