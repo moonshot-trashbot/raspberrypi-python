@@ -190,18 +190,22 @@ async def stop(error):
         os._exit(130)
 
 async def main():
+    global run
     try:
         print("Calling open - manager")
         await manager.open()
         print("Calling open - listener")
+        run = True
         while run:
+            print("Trying accept")
             y = listens.accept()
-            if(y is not None and y is not ""):
-                jso = json.loads(y)
-                if(jso is not None and jso != []):
-                    for x in jso:
-                        z = await parse(x)
-                        print("Break 1")
+            if(y is not None): return None
+            print("... from Trying accept: not none")
+            jso = json.loads(y)
+            if(jso is None): return None
+            for x in jso:
+                z = await parse(x)
+                print("Break 1")
     except KeyboardInterrupt as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(False)

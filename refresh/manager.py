@@ -33,10 +33,10 @@ rvrObs = SpheroRvrObserver()
 # ----------------------------------------
 
 # OPEN() - Create and Setup Connection
-async def open():
+def open():
     rvrObs.wake()
     time.sleep(2)
-    await leds_green()
+    leds_green()
     driving.open()
 
 hazard = False
