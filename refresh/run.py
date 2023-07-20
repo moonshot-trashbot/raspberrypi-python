@@ -75,7 +75,7 @@ async def reaccess():
             if(green is False):
                 green = True
                 await battery(False)
-                await manager.leds_purple()
+                manager.leds_purple()
                 def faround():
                     manager.set_faround(True)
                     newl = asyncio.new_event_loop()
@@ -121,7 +121,7 @@ async def process(inp: _models.Detection or None):
     global tracking
     global lastChance
     print(">>> PROCESSES: Starting processing of following object...")
-    await manager.leds_red()
+    manager.leds_red()
     print("Manager leds red")
     if(inp is None): return
     if(tracking == -1): tracking = inp.id
@@ -131,9 +131,9 @@ async def process(inp: _models.Detection or None):
         num = inp.center[0]
         num = num * moveaplifier
         if(num < 0):
-            await manager.left_turn(10)
+            manager.left_turn(10)
         else:
-            await manager.right_turn(10)
+            manager.right_turn(10)
         print(">>> TRACKING: Turned to continue following (", tracking, ").")
     else:
         print(">>> TRACKING: We aren't tracking ( ID:", inp.id, ") but they are in frame.")
@@ -185,7 +185,7 @@ async def stop(error):
         print(error)
         traceback.print_tb(error.__traceback__, 5)
     server_object.shutdown()
-    await manager.close()
+    manager.close()
     try:
         sys.exit(130)
     except SystemExit:
@@ -195,7 +195,7 @@ async def main():
     try:
         try:
             print("Calling open - manager")
-            await manager.open()
+            manager.open()
             print("Calling open - listener")
             listens.open()
         finally:
