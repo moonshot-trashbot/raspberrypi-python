@@ -1,9 +1,8 @@
 import pygame
-from screeninfo import get_monitors
+import Xlib
+import Xlib.display
 
-screenWidth = 360
-for m in get_monitors():
-    screenWidth = m.width - 100
+screenWidth = Xlib.display.Display().screen().root.get_geometry().width
 
 screenHeight = 810
 
