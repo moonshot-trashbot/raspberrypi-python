@@ -127,19 +127,19 @@ async def sh_secondary():
         ti1 = 1.5
         ti2 = 1.25
         time.sleep(ti2)
-        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(8)
 
 def sh_secondary_wrapper():
