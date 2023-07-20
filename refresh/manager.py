@@ -16,20 +16,15 @@
 
 import sys
 import asyncio
+import driving
+import asyncio
 import time
 import random
-import _models
 import _classes
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
 
-loop = asyncio.get_event_loop()
-rvr = SpheroRvrAsync(
-    dal=SerialAsyncDal(
-        loop
-    )
-)
 rvrObs = SpheroRvrObserver()
 
 
@@ -39,9 +34,10 @@ rvrObs = SpheroRvrObserver()
 
 # OPEN() - Create and Setup Connection
 async def open():
-    await rvr.wake()
+    rvrObs.wake()
     time.sleep(2)
     await leds_green()
+    driving.open()
 
 hazard = False
 faround = False
@@ -49,42 +45,54 @@ alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
 async def leds_reset():
-    await rvr.led_control.turn_leds_off()
-    await rvr.led_control.turn_leds_off()
+    rvrObs.led_control.turn_leds_off()
+    time.sleep(0.1)
 async def leds_red():
     if(get_hazard()): return
-    await rvr.led_control.set_all_leds_color(color = Colors.red)
+    rvrObs.led_control.set_all_leds_color(color = Colors.red)
+    time.sleep(0.1)
 async def leds_purple():
     if(get_hazard()): return
-    await rvr.led_control.set_all_leds_color(color = Colors.pink)
+    rvrObs.led_control.set_all_leds_color(color = Colors.pink)
+    time.sleep(0.1)
 async def leds_green():
     if(get_hazard()): return
-    await rvr.led_control.set_all_leds_color(color = Colors.green)
+    rvrObs.led_control.set_all_leds_color(color = Colors.green)
+    time.sleep(0.1)
+
+currentHeading = 0
+
+def heading_shift(num):
+    global currentHeading
+    currentHeading = currentHeading + num
+    if(currentHeading > 0):
+        while(currentHeading > 358):
+            currentHeading -= 359
+    else:
+        while(currentHeading < -358):
+            currentHeading += 359
 
 async def drive_forward_seconds(spee, head, tim):
-    await rvr.drive_control.drive_forward_seconds(speed = spee, heading = head, time_to_drive = tim)
-    time.sleep(1)
+    heading_shift(head)
+    await driving.drive_control.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
+    time.sleep(0.1 + tim)
 
 async def left_turn(num):
-    num = abs(num)
-    await rvr.drive_control.reset_heading()
+    num = abs(int(num)) * -1
     print("Left", num)
     await drive_forward_seconds(
         10,
-        int(360-int(num)),
+        num,
         0
     )
-    time.sleep(0.1)
 async def right_turn(num):
-    num = abs(num)
-    await rvr.drive_control.reset_heading()
+    num = abs(int(num))
     print("Right", num)
     await drive_forward_seconds(
         10,
-        int(num),
+        num,
         0
     )
-    time.sleep(0.1)
 
 def get_faround():
     global faround
@@ -116,19 +124,19 @@ async def sh_secondary():
         ti1 = 1.5
         ti2 = 1.25
         time.sleep(ti2)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
+        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        await rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
+        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        await rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
+        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        await rvr.led_control.set_all_leds_color(color = Colors.orange)
+        await rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        await rvr.led_control.set_all_leds_color(color = Colors.yellow)
+        await rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(8)
 
 def sh_secondary_wrapper():
@@ -193,4 +201,6 @@ def battery_percentage(action):
 async def close():
     await cancel_hazard()
     await leds_reset()
-    await rvr.close()
+    driving.close()
+    rvrObs.close()
+    time.sleep(1)
