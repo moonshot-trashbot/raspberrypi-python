@@ -80,11 +80,11 @@ def heading_get():
 
 def drive_forward_seconds(spee, head, tim):
     if(tim == 0):
-        debugs.headchange(heading_shift_fake(head))
+        driving.get_debugs().headchange(heading_shift_fake(head))
         driving.turn_either_degrees(heading_get(), heading_shift(head))
     else:
         heading_shift(head)
-        debugs.headchange(heading_get())
+        driving.get_debugs().headchange(heading_get())
         driving.drive_forward_seconds(spee, heading_get(), tim)
 
 def left_turn(num):
