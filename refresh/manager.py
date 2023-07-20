@@ -36,6 +36,8 @@ rvrObs = SpheroRvrObserver()
 def open():
     rvrObs.wake()
     time.sleep(2)
+    rvrObs.drive_control.reset_heading()
+    time.sleep(1)
     leds_green()
     driving.open()
 
