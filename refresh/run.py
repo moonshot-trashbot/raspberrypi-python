@@ -148,7 +148,7 @@ def addition(inp):
 
 async def parse(inp: str):
     if(inp is None or inp is {}): return None
-    return await save.append(_models.Detection(inp))
+    return save.append(_models.Detection(inp))
 
 # PROCESS(Input) - Run Single Instruction [Async]
 async def process(inp: _models.Detection or None):
