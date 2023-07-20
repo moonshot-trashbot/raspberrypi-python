@@ -216,7 +216,9 @@ async def main():
         print(">>> OPENING: Socket Listener")
         run = True
         while run:
-            asyncio.get_event_loop().run_until_complete(reaccess())
+            loowp = asyncio.net_event_loop()
+            asyncio.set_event_loop(loowp)
+            loowp.run_until_complete(reaccess())
             y = listens.accept()
             if(y is None): return None
             jso = json.loads(y)
