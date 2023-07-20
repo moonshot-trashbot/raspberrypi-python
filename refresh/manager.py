@@ -30,7 +30,6 @@ from sphero_sdk import Colors
 
 # OPEN() - Create and Setup Connection
 def open():
-    driving.open()
     driving.get_rvrObs().wake()
     time.sleep(2)
     driving.get_rvrObs().drive_control.reset_heading()
