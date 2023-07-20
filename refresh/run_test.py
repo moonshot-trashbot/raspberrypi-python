@@ -26,6 +26,12 @@ import manager
 import listens
 from http.server import HTTPServer, CGIHTTPRequestHandler
 
+camWidth = 1280
+camHeight = 720
+
+midwayX = int(camWidth/2)
+midwayY = int(camHeight/2)
+
 global run
 global recent
 global green
@@ -134,13 +140,13 @@ async def process(inp: _models.Detection or None):
         lastChance = int(time.time())
         num = int(inp.center[0])
         num = num * moveaplifier
-        if(num < 0):
+        if(num < midwayX):
             await manager.left_turn(num)
         else:
             await manager.right_turn(num)
-        print(">>> TRACKING: Turned to continue following (", tracking, ").")
+        print(">>> TRACKING: We turned to continue tracking (", tracking, ").")
     else:
-        print(">>> TRACKING: We aren't tracking ( ID:", inp.id, ") but they are in frame.")
+        print(">>> TRACKING: We aren't tracking box ( ID:", inp.id, ") but it is in frame.")
     print(">>> PROCESSES: Finished Processing object, moving on.")
 
 # QUIT() - Request to Close Connections, Clean-up

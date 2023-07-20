@@ -76,14 +76,14 @@ def heading_get():
     global currentHeading
     return currentHeading
 
-async def drive_forward_seconds(spee, head, tim):
+def drive_forward_seconds(spee, head, tim):
     heading_shift(head)
     driving.drive_forward_seconds(speed = spee, heading = heading_get(), time_to_drive = tim)
 
 async def left_turn(num):
     num = abs(int(num)) * -1
     print("Left", num)
-    await drive_forward_seconds(
+    drive_forward_seconds(
         10,
         num,
         0
@@ -91,7 +91,7 @@ async def left_turn(num):
 async def right_turn(num):
     num = abs(int(num))
     print("Right", num)
-    await drive_forward_seconds(
+    drive_forward_seconds(
         10,
         num,
         0
@@ -118,7 +118,7 @@ async def move_sequence():
         time.sleep(random.randint(3, 8))
         await left_turn(random.randint(45, 180))
         time.sleep(random.randint(1, 4))
-        await drive_forward_seconds(250, 0, 0)
+        drive_forward_seconds(250, 0, 0)
         time.sleep(0.5)
 
 async def sh_secondary():
