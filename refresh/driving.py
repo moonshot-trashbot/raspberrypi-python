@@ -37,7 +37,6 @@ queing = True
 async def run():
     global queing
     while queing:
-        run()
         x = queue_next()
         if(x is not None):
             await rvr.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
