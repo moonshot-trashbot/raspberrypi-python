@@ -13,7 +13,6 @@
 # PRE-CONFIGURATION
 # ----------------------------------------
 
-
 import sys
 import asyncio
 import driving
@@ -21,6 +20,9 @@ import asyncio
 import time
 import random
 import _classes
+
+sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
+from sphero_sdk import Colors
 
 # ----------------------------------------
 # PUBLIC FUNCTIONS
@@ -31,7 +33,7 @@ def open():
     driving.open()
     driving.get_rvrObs().wake()
     time.sleep(2)
-    driving.get_rvrObs().rvrObs.drive_control.reset_heading()
+    driving.get_rvrObs().drive_control.reset_heading()
     time.sleep(1)
     leds_green()
 
