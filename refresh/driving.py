@@ -4,14 +4,12 @@ import time
 import _classes
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
-from sphero_sdk import SpheroRvrAsync, SerialAsyncDal
+from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
 
-loop = asyncio.get_event_loop()
-rvr = SpheroRvrAsync(
-    dal=SerialAsyncDal(
-        loop
-    )
-)
+rvrObs = SpheroRvrObserver()
+def get_rvrObs():
+    global rvrObs
+    return rvrObs
 
 queue = []
 

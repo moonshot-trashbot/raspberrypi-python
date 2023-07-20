@@ -22,24 +22,18 @@ import time
 import random
 import _classes
 
-sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
-from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
-
-rvrObs = SpheroRvrObserver()
-
-
 # ----------------------------------------
 # PUBLIC FUNCTIONS
 # ----------------------------------------
 
 # OPEN() - Create and Setup Connection
 def open():
-    rvrObs.wake()
+    driving.open()
+    driving.get_rvrObs().wake()
     time.sleep(2)
-    rvrObs.drive_control.reset_heading()
+    driving.get_rvrObs().rvrObs.drive_control.reset_heading()
     time.sleep(1)
     leds_green()
-    driving.open()
 
 hazard = False
 faround = False
@@ -47,19 +41,19 @@ alwaysHazard = False
 
 # (ALL LED FUNCTIONS)
 def leds_reset():
-    rvrObs.led_control.turn_leds_off()
+    driving.get_rvrObs().led_control.turn_leds_off()
     time.sleep(0.1)
 def leds_red():
     if(get_hazard()): return
-    rvrObs.led_control.set_all_leds_color(color = Colors.red)
+    driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.red)
     time.sleep(0.1)
 def leds_purple():
     if(get_hazard()): return
-    rvrObs.led_control.set_all_leds_color(color = Colors.pink)
+    driving.get_rvrObs().led_control.set_all_leds_color(color = Colors.pink)
     time.sleep(0.1)
 def leds_green():
     if(get_hazard()): return
-    rvrObs.led_control.set_all_leds_color(color = Colors.green)
+    driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.green)
     time.sleep(0.1)
 
 currentHeading = 0
@@ -128,19 +122,19 @@ def sh_secondary():
         ti1 = 1.5
         ti2 = 1.25
         time.sleep(ti2)
-        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(ti1)
-        rvrObs.led_control.set_all_leds_color(color = Colors.orange)
+        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.orange)
         time.sleep(ti2)
-        rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
+        driving.get_rvrObs.led_control.set_all_leds_color(color = Colors.yellow)
         time.sleep(8)
 
 def sh_secondary_wrapper():
@@ -197,14 +191,14 @@ def battery_percentage_handler(battery_percentage):
     return bp
 def battery_percentage(action):
     if(action is True):
-        rvrObs.get_battery_percentage(handler=battery_percentage_handler_hazard)
+        driving.get_rvrObs.get_battery_percentage(handler=battery_percentage_handler_hazard)
     else:
-        rvrObs.get_battery_percentage(handler=battery_percentage_handler)
+        driving.get_rvrObs.get_battery_percentage(handler=battery_percentage_handler)
 
 # CLOSE() - Delete and Close Connection
 def close():
     cancel_hazard()
     leds_reset()
     driving.close()
-    rvrObs.close()
+    driving.get_rvrObs.close()
     time.sleep(1)
