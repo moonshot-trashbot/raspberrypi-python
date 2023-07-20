@@ -42,6 +42,7 @@ def stripechange(x, y):
 def main():
     global xMid
     global yMid
+    global running
     global stripeCenterY
     global stripeCenterX
     global stripeCenterY
