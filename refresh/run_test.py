@@ -99,7 +99,7 @@ async def reaccess():
                     newl = asyncio.new_event_loop()
                     asyncio.set_event_loop(newl)
                     newl.run_until_complete(manager.move_sequence())
-        if(sec <= 60): return
+        if(sec <= 60): return None
         if(sec <= (final - 180)):
             print(">>> PROCESSES: THERE IS NO QUEUE LEFT, IN", (str(300 - sec) + "s"),  "I WILL TURN OFF. [Checking every: 2s]")
             time.sleep(2)
@@ -140,8 +140,8 @@ async def process(inp: _models.Detection or None):
     global lastChance
     manager.leds_red()
     if(inp is None): return
-    if(obj_id == -1): return
     obj_id = inp.id
+    if(obj_id == -1): return
     obj_class = inp.type
     center_x, center_y = inp.center
     if((int(time.time()) - lastChance) > 5): tracking = -1
