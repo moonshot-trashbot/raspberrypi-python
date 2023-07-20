@@ -118,18 +118,19 @@ async def reaccess():
                 await quit()
                 return
 
+tracking = -1
+lastChance = int(time.time())-5
+
 # ADDITION(Input) - Add Item to Process Queue
 def addition(inp):
     global save
+    global tracking
     if(inp == "" or inp == "[]"): return Exception("No input data.")
     jso = json.loads(inp)
+    if (jso.__len__() == 1): tracking = jso[0].id
     for x in jso:
         new = _models.Detection(x)
         save.append(new)
-
-moveaplifier = 0.0133
-tracking = -1
-lastChance = int(time.time())-5
 
 async def parse(inp: str):
     if(inp is None or inp is {}): return None
