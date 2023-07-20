@@ -19,10 +19,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill("black")
+    screen.fill("white")
 
     rectnormal = pygame.Rect(100, 400, 1080, 10)
-    pygame.draw.rect(screen, "white", rectnormal, 1)
+    pygame.draw.rect(screen, "black", rectnormal, 1)
 
     if(stripeCenterX < 8): stripeCenterX = -8
     if(stripeCenterX > (screenWidth-8)): stripeCenterX = screenWidth-8
