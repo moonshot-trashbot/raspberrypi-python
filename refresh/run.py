@@ -61,7 +61,7 @@ global recent
 global green
 global faround
 
-manager.get_debugs()
+driving.get_debugs()
 
 green = False
 run = True
@@ -166,7 +166,7 @@ async def process(inp: _models.Detection or None):
         tracking = obj_id
         lastChance = int(time.time())
         heading_change = calculate_heading(center_x)
-        manager.get_debugs().stripechange(center_x, center_y)
+        driving.get_debugs().stripechange(center_x, center_y)
         if heading_change > 0:
             manager.right_turn(abs(heading_change))
         else:
