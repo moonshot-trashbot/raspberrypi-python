@@ -27,24 +27,33 @@ import _classes
 import manager
 import listens
 
-def calculate_heading(center_x, center_y):
-    # The width and height of the frame shot
+def custom_exponential_heading(x):
+    k = 0.02  # Adjust this value to control the smoothness of the transition
+    x0 = 167.5  # The midpoint between 20 and 315
+    y_min = 20  # The value at x = 20
+    y_max = 45  # The value at x = 315
+
+    return y_min + (y_max - y_min) / (1 + math.exp(-k * (x - x0)))
+
+def custom_exponential_forward(x):
+    k = 0.02  # Adjust this value to control the smoothness of the transition
+    x0 = 167.5  # The midpoint between 20 and 315
+    y_min = 20  # The value at x = 20
+    y_max = 45  # The value at x = 315
+
+    return y_min + (y_max - y_min) / (1 + math.exp(-k * (x - x0)))
+
+def calculate_heading(center_x):
     frame_width = 1280
-    frame_height = 720
-
-    # Center of the frame
     frame_center_x = frame_width / 2
-    frame_center_y = frame_height / 2
-
-    # Calculate the difference in x and y coordinates from the center of the frame
     delta_x = center_x - frame_center_x
+    return custom_exponential_heading(delta_x)
+
+def calculate_forward(center_y):
+    frame_height = 720
+    frame_center_y = frame_height / 2
     delta_y = center_y - frame_center_y
-
-    # Calculate the angle (in degrees) to rotate the robot
-    angle_rad = math.atan2(delta_y, delta_x)
-    angle_deg = math.degrees(angle_rad)
-
-    return angle_deg
+    return custom_exponential_forward(delta_y)
 
 global run
 global recent
@@ -151,7 +160,7 @@ async def process(inp: _models.Detection or None):
     if(tracking == obj_id or tracking == -1):
         tracking = obj_id
         lastChance = int(time.time())
-        heading_change = calculate_heading(center_x, center_y)
+        heading_change = calculate_heading(center_x)
         if heading_change > 0:
             debugs.headchange(abs(heading_change) * -1)
             manager.right_turn(abs(heading_change))
