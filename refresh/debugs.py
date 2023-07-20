@@ -19,15 +19,15 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill("white")
+    screen.fill(pygame.Color(0, 0, 0))
 
     rectnormal = pygame.Rect(100, 400, 1080, 10)
-    pygame.draw.rect(screen, "black", rectnormal, 1)
+    pygame.draw.rect(screen, pygame.Color(255, 255, 255), rectnormal, 1)
 
     if(stripeCenterX < 8): stripeCenterX = -8
     if(stripeCenterX > (screenWidth-8)): stripeCenterX = screenWidth-8
     rectstripe = pygame.Rect(stripeCenterX-8, 0, 16, screenHeight)
-    pygame.draw.rect(screen, "green", rectstripe, 1)
+    pygame.draw.rect(screen, pygame.Color(0, 255, 0), rectstripe, 1)
 
     xgen = 720
     if(head <= 90 or head >= 180):
