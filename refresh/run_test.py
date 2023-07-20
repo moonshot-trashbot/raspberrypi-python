@@ -147,7 +147,7 @@ async def process(inp: _models.Detection or None):
     obj_id = inp.id
     obj_class = inp.type
     center_x, center_y = inp.center
-    if((int(time.time()) - lastChance) > 5): tracking = None
+    if((int(time.time()) - lastChance) > 5): tracking = -1
     if(tracking == obj_id or tracking == -1):
         tracking = obj_id
         lastChance = int(time.time())
