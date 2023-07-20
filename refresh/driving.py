@@ -26,8 +26,11 @@ def drive_forward_seconds(spee, head, time):
 
 def queue_next():
     global queue
-    queue = queue.pop(0)
-    return queue
+    if(queue.__len__() > 0):
+        queue = queue.pop(0)
+        return queue
+    else:
+        return None
 
 queing = True
 
