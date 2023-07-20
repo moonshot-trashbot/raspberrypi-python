@@ -67,14 +67,18 @@ def heading_shift(num):
             currentHeading -= 359
         while(currentHeading < -358):
             currentHeading += 359
+    return currentHeading
 
 def heading_get():
     global currentHeading
     return currentHeading
 
 def drive_forward_seconds(spee, head, tim):
-    heading_shift(head)
-    driving.drive_forward_seconds(spee, heading_get(), tim)
+    if(tim == 0):
+        driving.turn_either_degrees(heading_get(), heading_shift(head))
+    else:
+        heading_shift(head)
+        driving.drive_forward_seconds(spee, heading_get(), tim)
 
 def left_turn(num):
     num = abs(int(num)) * -1
