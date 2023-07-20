@@ -17,7 +17,6 @@ import traceback
 import signal
 import random
 import sys
-import debugs
 import os
 import json
 import time
@@ -165,12 +164,10 @@ async def process(inp: _models.Detection or None):
         tracking = obj_id
         lastChance = int(time.time())
         heading_change = calculate_heading(center_x)
-        debugs.stripechange(center_x, center_y)
+        manager.get_debugs().stripechange(center_x, center_y)
         if heading_change > 0:
-            debugs.headchange(abs(heading_change) * -1)
             manager.right_turn(abs(heading_change))
         else:
-            debugs.headchange(abs(heading_change))
             manager.left_turn(abs(heading_change))
         print(">>> TRACKING: We turned to continue tracking (", tracking, "). Debug...", "\nCXY:", center_x, center_y, "\nHEADCHANGE", heading_change)
     else:

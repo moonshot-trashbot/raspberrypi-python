@@ -49,10 +49,12 @@ async def run():
                 rvrObs.drive_control.drive_forward_seconds(speed=x["speed"], heading=x["heading"], time_to_drive=x["time_to_drive"])
                 time.sleep(x["time_to_drive"] + 0.1)
             elif(x["type"] == "turn_either_degrees"):
-                func = rvrObs.drive_control.turn_right_degrees
-                if(x["amount"] < 0): func = rvrObs.drive_control.turn_left_degrees
-                x["amount"] = abs(x["amount"])
-                func(heading=x["heading"], amount=x["amount"])
+                if(x["amount"] < 0):
+                    x["amount"] = abs(x["amount"])
+                    rvrObs.drive_control.turn_left_degrees(heading=x["heading"], amount=x["amount"])
+                else:
+                    rvrObs.drive_control.turn_right_degrees(heading=x["heading"], amount=x["amount"])
+                time.sleep(0.5)
         else:
             print(">>> ERROR: QUEUE IS NONETYPE IN RUN() FUNCTION.")
             time.sleep(1)

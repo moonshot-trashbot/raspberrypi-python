@@ -16,6 +16,7 @@
 import sys
 import asyncio
 import driving
+import debugs
 import asyncio
 import time
 import random
@@ -27,6 +28,10 @@ from sphero_sdk import Colors
 # ----------------------------------------
 # PUBLIC FUNCTIONS
 # ----------------------------------------
+
+def get_debugs():
+    global debugs
+    return debugs
 
 # OPEN() - Create and Setup Connection
 def open():
@@ -59,14 +64,19 @@ def leds_green():
 
 currentHeading = 0
 
+def heading_shift_fake(num):
+    calc = heading_get() + num
+    while(calc > 359 or calc < -359):
+        while(calc > 358):
+            calc -= 359
+        while(calc < -358):
+            calc += 359
+    return calc
+
 def heading_shift(num):
     global currentHeading
-    currentHeading = currentHeading + num
-    while(currentHeading > 359 or currentHeading < -359):
-        while(currentHeading > 358):
-            currentHeading -= 359
-        while(currentHeading < -358):
-            currentHeading += 359
+    calc = heading_shift_fake(num)
+    currentHeading = currentHeading + calc
     return currentHeading
 
 def heading_get():
@@ -75,9 +85,11 @@ def heading_get():
 
 def drive_forward_seconds(spee, head, tim):
     if(tim == 0):
+        debugs.headchange(heading_shift_fake(head))
         driving.turn_either_degrees(heading_get(), heading_shift(head))
     else:
         heading_shift(head)
+        debugs.headchange(heading_get())
         driving.drive_forward_seconds(spee, heading_get(), tim)
 
 def left_turn(num):
