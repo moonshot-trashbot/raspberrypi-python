@@ -76,9 +76,6 @@ async def runner():
 
     cont = True
 
-    time.sleep(2)
-    time.sleep(0.05)
-    time.sleep(0.05)
 
     def movement(x, y):
         global rvr
@@ -86,46 +83,33 @@ async def runner():
         if (x < 0): # turn right
             print("Break 1...")
             if (y < 0): ### turn forward
-                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y == 0): ### pivot in place
-                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y > 0): ### turn backward
-                time.sleep(2)
                 print("Break ^, pt. 2")
         elif (x == 0): # on target
             print("Break 2...")
             if (y < 0): ### drive forward
-                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y == 0): ### stopped
-                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y > 0): ### drive backward
-                time.sleep(2)
                 print("Break ^, pt. 2")
         elif (x > 0): # turn left
             print("Break 3...")
             if (y < 0): ### turn forward
-                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y == 0): ### pivot in place
-                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y > 0): ### turn backward
-                time.sleep(2)
                 print("Break ^, pt. 2")
-
-    time.sleep(2)
 
     while cont:
         rvr = SpheroRvrObserver()
-        time.sleep(2)
         message = sock.recv().decode("utf-8")
         if(message is not None):
             jso = json.loads(message)
-            time.sleep(2)
             if(jso.__len__() > 0):
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
@@ -141,17 +125,11 @@ try:
     asyncio.run(runner())
 except KeyboardInterrupt as e:
     cont = False
-    time.sleep(0.05)
-    time.sleep(1)
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(False)
 except Exception as e:
     cont = False
-    time.sleep(0.05)
-    time.sleep(1)
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(e)
 finally:
     cont = False
-    time.sleep(1)
-    time.sleep(1)
