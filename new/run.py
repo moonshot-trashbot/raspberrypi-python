@@ -121,7 +121,7 @@ async def runner():
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
                 print(">>> RAW", detect)
-                if(detect.frame != previousFrame and detect.area > 200):
+                if(detect.area > 200):
                     previousFrame = detect.frame
                     print(">>>", detect)
                     cxy = deltafy(detect.center[0], detect.center[1], detect.top)
