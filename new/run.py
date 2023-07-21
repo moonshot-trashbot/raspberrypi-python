@@ -96,7 +96,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.off.value,
                     right_duty_cycle=0
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y == 0): ### pivot in place
                 rvr.raw_motors(
@@ -105,7 +105,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.reverse.value,
                     right_duty_cycle=45
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y > 0): ### turn backward
                 rvr.raw_motors(
@@ -114,7 +114,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.reverse.value,
                     right_duty_cycle=45
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
         elif (x == 0): # on target
             print("Break 2...")
@@ -125,7 +125,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.forward.value,
                     right_duty_cycle=45
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y == 0): ### stopped
                 rvr.raw_motors(
@@ -134,7 +134,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.off.value,
                     right_duty_cycle=0
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y > 0): ### drive backward
                 rvr.raw_motors(
@@ -143,7 +143,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.reverse.value,
                     right_duty_cycle=45
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
         elif (x > 0): # turn left
             print("Break 3...")
@@ -154,7 +154,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.forward.value,
                     right_duty_cycle=45
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y == 0): ### pivot in place
                 rvr.raw_motors(
@@ -163,7 +163,7 @@ async def runner():
                     right_mode=RawMotorModesEnum.forward.value,
                     right_duty_cycle=45
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
             elif (y > 0): ### turn backward
                 rvr.raw_motors(
@@ -172,16 +172,26 @@ async def runner():
                     right_mode=RawMotorModesEnum.off.value,
                     right_duty_cycle=0
                 )
-                time.sleep(1)
+                time.sleep(2)
                 print("Break ^, pt. 2")
 
 
+    rvr.raw_motors(
+        left_mode=RawMotorModesEnum.forward.value,
+        left_duty_cycle=45,
+        right_mode=RawMotorModesEnum.off.value,
+        right_duty_cycle=45
+    )
+    time.sleep(2)
+
     while cont:
         rvr = SpheroRvrObserver()
+        time.sleep(2)
         message = sock.recv().decode("utf-8")
         if(message is not None):
             jso = json.loads(message)
             rvr.reset_yaw()
+            time.sleep(2)
             if(jso.__len__() > 0):
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
@@ -192,13 +202,7 @@ async def runner():
                     cxy = deltafy(detect.center[0], detect.center[1], detect.top)
                     debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
                     movement(cxy[0], cxy[1])
-                    rvr.raw_motors(
-                        left_mode=RawMotorModesEnum.forward.value,
-                        left_duty_cycle=45,
-                        right_mode=RawMotorModesEnum.off.value,
-                        right_duty_cycle=0
-                    )
-                    time.sleep(1)
+
 try:
     asyncio.run(runner())
 except KeyboardInterrupt as e:
