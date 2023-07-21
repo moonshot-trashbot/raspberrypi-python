@@ -60,7 +60,7 @@ def stop(error):
         os._exit(0)
         exit()
 
-def deltafy(xarr): return [int(xarr[0])-640, int(xarr[1])-360]
+def deltafy(xarr): return [1280-int(xarr[0]), 720-int(xarr[1])]
 
 async def runner():
     global cont
