@@ -60,6 +60,8 @@ def stop(error):
         os._exit(0)
         exit()
 
+def deltafy(xarr): return [xarr[0]-640, xarr[1]-360]
+
 async def runner():
     global cont
     global rvr
@@ -80,12 +82,16 @@ async def runner():
     while cont:
         message = sock.recv().decode("utf-8")
         print(">>> SOCKET: Receiving input from... please wait.")
-        print("RAW", message)
+        print(">>> RAW", message)
         if(message is None): return
         jso = json.loads(message)
-        for detectPre in jso:
+        if(jso.__len__() > 0):
+            detectPre = jso[0]
             detect = _models.Detection(detectPre)
-            print(detect)
+            print(">>>", detect)
+            cx, cy = deltafy(detect.center)
+            debugs.stripechange(cx, cy)
+            # if(cx > 0)
 
     sock.term()
     await rvr.led_control.turn_off_leds()
