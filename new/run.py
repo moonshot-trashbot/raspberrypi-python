@@ -109,22 +109,22 @@ async def runner():
         message = sock.recv().decode("utf-8")
         print(">>> SOCKET: Receiving input from... please wait.")
         print(">>> RAW", message)
-        if(message is None): return
-        jso = json.loads(message)
-        await rvr.reset_yaw()
-        if(jso.__len__() > 0):
-            detectPre = jso[0]
-            detect = _models.Detection(detectPre)
-            if(detect.frame == previousFrame): return
-            previousFrame = detect.frame
-            print(">>>", detect)
-            cxy = deltafy(detect.center[0], detect.center[1], detect.top)
-            debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
-            print(cxy)
-            if(cxy[0] > 0): await turnleft(8)
-            if(cxy[0] < 0): await turnright(8)
-            if(cxy[1] < 0): await goforward(1)
-            if(cxy[1] > 0): await gobackward(1)
+        if(message is not None):
+            jso = json.loads(message)
+            await rvr.reset_yaw()
+            if(jso.__len__() > 0):
+                detectPre = jso[0]
+                detect = _models.Detection(detectPre)
+                if(detect.frame != previousFrame):
+                    previousFrame = detect.frame
+                    print(">>>", detect)
+                    cxy = deltafy(detect.center[0], detect.center[1], detect.top)
+                    debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
+                    print(cxy)
+                    if(cxy[0] > 0): await turnleft(8)
+                    if(cxy[0] < 0): await turnright(8)
+                    if(cxy[1] < 0): await goforward(1)
+                    if(cxy[1] > 0): await gobackward(1)
 
     sock.term()
     await rvr.led_control.turn_off_leds()
