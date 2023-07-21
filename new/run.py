@@ -32,7 +32,7 @@ import zmq
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
 
-loop = asyncio.new_event_loop()
+loop = asyncio.get_event_loop()
 rvr = SpheroRvrAsync(
     dal=SerialAsyncDal(
         loop
