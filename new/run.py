@@ -112,7 +112,7 @@ async def runner():
             if(jso.__len__() > 0):
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
-                if(detect.frame != previousFrame):
+                if(detect.frame != previousFrame and detect.type is not 1):
                     previousFrame = detect.frame
                     print(">>>", detect)
                     cxy = deltafy(detect.center[0], detect.center[1], detect.top)
