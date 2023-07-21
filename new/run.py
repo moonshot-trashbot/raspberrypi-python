@@ -64,7 +64,7 @@ async def runner():
     global cont
     global rvr
     global sock
-    
+
     cont = True
 
     await rvr.wake()
@@ -83,7 +83,9 @@ async def runner():
         print("RAW", message)
         if(message is None): return
         jso = json.loads(message)
-        for detect in jso:
+        for detectPre in jso:
+            detect = _models.Detection(detectPre)
+            print(detect)
 
     sock.term()
     await rvr.led_control.turn_off_leds()
