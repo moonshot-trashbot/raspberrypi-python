@@ -84,3 +84,7 @@ async def main():
     except Exception as e:
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         await stop(e)
+
+thr = _classes.StoppableThread(target=main)
+thr.start()
+thr.join()
