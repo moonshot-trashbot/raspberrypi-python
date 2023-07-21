@@ -84,22 +84,22 @@ async def runner():
     async def turnleft(deg):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.turn_left_degrees(0, deg)
-        time.sleep(0.3)
+        await asyncio.wait(0.3)
         return
     async def turnright(deg):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.turn_right_degrees(0, deg)
-        time.sleep(0.3)
+        await asyncio.wait(0.3)
         return
     async def goforward(sec):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.drive_forward_seconds(45, 0, 1)
-        time.sleep(0.8)
+        await asyncio.sleep(0.8)
         return
     async def gobackward(sec):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.drive_backward_seconds(45, 0, 1)
-        time.sleep(0.8)
+        await asyncio.sleep(0.8)
         return
 
     while cont:
@@ -114,6 +114,7 @@ async def runner():
             print(">>>", detect)
             cxy = deltafy(detect.center[0], detect.center[1], detect.top)
             debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
+            print(cxy)
             if(cxy[0] > 0): await turnleft(8)
             if(cxy[0] < 0): await turnright(8)
             if(cxy[1] < 0): await goforward(1)
