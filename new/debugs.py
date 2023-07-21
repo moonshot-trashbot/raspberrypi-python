@@ -32,7 +32,7 @@ def stripechange(x, y):
     global stripeCenterY
     x = x * camChange
     y = y * camChange
-    shifty = (int(60*camChange)-60)/2
+    shifty = int(60*camChange)/2
     stripeCenterX = (screenWidth-x)+shifty
     stripeCenterY = y+shifty
 
