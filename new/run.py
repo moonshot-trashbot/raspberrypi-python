@@ -83,15 +83,19 @@ async def runner():
 
     async def turnleft(deg):
         await rvr.drive.turn_left_degrees(0, deg)
+        time.sleep(0.3)
         return
     async def turnright(deg):
         await rvr.drive.turn_right_degrees(0, deg)
+        time.sleep(0.3)
         return
     async def goforward(sec):
         await rvr.drive.drive_forward_seconds(45, 0, 1)
+        time.sleep(0.8)
         return
     async def gobackward(sec):
         await rvr.drive.drive_backward_seconds(45, 0, 1)
+        time.sleep(0.8)
         return
 
     while cont:
