@@ -2,8 +2,8 @@ import pygame
 from screeninfo import get_monitors, Enumerator
 import _classes
 
-screenWidth = int(int(int(get_monitors(Enumerator.Xinerama)[0].width/120)*120)/360)*360
-screenHeight = int((int(int(screenWidth/16*9)/120)*120)/360)*360
+screenWidth = int(get_monitors(Enumerator.Xinerama)[0].width/360)*360
+screenHeight = int(int(screenWidth/16*9)/360)*360
 
 camChange = screenWidth/1280
 cmult = int(screenWidth/360)
@@ -30,9 +30,9 @@ def stripechange(x, y):
     global camChange
     global stripeCenterX
     global stripeCenterY
-    x = x * camChange
+    x = x+60 * camChange
     y = y * camChange
-    shifty = (60*camChange)
+    shifty = (60*camChange)-((30*camChange)/2)
     stripeCenterX = (screenWidth-x)+shifty
     stripeCenterY = y+shifty
 
