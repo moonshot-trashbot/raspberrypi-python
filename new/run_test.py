@@ -114,12 +114,11 @@ async def runner():
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
                 print(">>> RAW", detect)
-                if(detect.area > 200):
-                    previousFrame = detect.frame
-                    print(">>>", detect)
-                    cxy = deltafy(detect.center[0], detect.center[1], detect.top)
-                    debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
-                    movement(cxy[0], cxy[1])
+                previousFrame = detect.frame
+                print(">>>", detect)
+                cxy = deltafy(detect.center[0], detect.center[1], detect.top)
+                debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
+                movement(cxy[0], cxy[1])
 
 try:
     asyncio.run(runner())
