@@ -177,7 +177,6 @@ async def runner():
 
 
     while cont:
-        global rvr
         message = sock.recv().decode("utf-8")
         if(message is not None):
             jso = json.loads(message)
