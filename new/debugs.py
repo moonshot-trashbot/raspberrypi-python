@@ -53,7 +53,7 @@ def main():
         rectnormal = pygame.Rect(int((screenWidth - (360*cmult))/2), yMid-2, 360*cmult, 4)
         pygame.draw.rect(screen, pygame.Color(255, 255, 255), rectnormal)
 
-        vec = [int(stripeCenterX-20), int(stripeCenterY-20)]
+        vec = [int(stripeCenterX), int(stripeCenterY)]
         pygame.draw.circle(screen, pygame.Color(255, 10, 177), vec, 20)
 
         xgen = xMid
@@ -62,7 +62,7 @@ def main():
         if(xgen < 5): xgen = -5
         if(xgen > (screenWidth-5)): xgen = screenWidth-5
         rectstripe = pygame.Rect(xgen-5, 0, 10, screenHeight)
-        pygame.draw.rect(screen, pygame.Color(255, 10, 177), rectstripe)
+        pygame.draw.rect(screen, pygame.Color(10, 255, 10), rectstripe)
 
         pygame.display.flip()
         dt = clock.tick(60) / 1000
