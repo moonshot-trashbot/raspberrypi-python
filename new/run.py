@@ -199,14 +199,10 @@ async def runner():
                         right_duty_cycle=0
                     )
                     time.sleep(1)
-
-    rvr.led_control.turn_leds_off()
-    time.sleep(0.05)
-    rvr.close()
-    time.sleep(1)
 try:
     asyncio.run(runner())
 except KeyboardInterrupt as e:
+    cont = False
     rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
@@ -214,6 +210,7 @@ except KeyboardInterrupt as e:
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(False)
 except Exception as e:
+    cont = False
     rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
@@ -221,7 +218,8 @@ except Exception as e:
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(e)
 finally:
-    rvr.led_control.turn_leds_off()
-    time.sleep(0.05)
-    rvr.close()
+    cont = False
     time.sleep(1)
+    rvr.led_control.turn_leds_off()
+    time.sleep(1)
+    rvr.close()
