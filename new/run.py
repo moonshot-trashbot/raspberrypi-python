@@ -60,7 +60,8 @@ def stop(error):
         os._exit(0)
         exit()
 
-def deltafy(xarr): return [(1280-int(xarr[0]))+60, int(xarr[1])+60]
+def deltafy(xarr1, xarr2, xarr2top):
+    return [int(int((1280-int(xarr1))/120)*120)+60, int(int(((int(xarr2)+xarr2top)/2)/120)*120)+60]
 
 async def runner():
     global cont
@@ -89,8 +90,8 @@ async def runner():
             detectPre = jso[0]
             detect = _models.Detection(detectPre)
             print(">>>", detect)
-            cxy = deltafy(detect.center)
-            debugs.stripechange(int(int(cxy[0]/120)*120), int(int(((cxy[1]+detect.top)/2)/120)*120))
+            cxy = deltafy(detect.center[0], detect.center[1], detect.top)
+            debugs.stripechange(cxy[0], cxy[1])
             # if(cx > 0)
 
     sock.term()
