@@ -90,11 +90,17 @@ async def runner():
         if(rs is None or not rs): rs = 0
         print(lm, ls, rm, rs)
         rvr.raw_motors(
-            left_mode=lm,
-            left_speed=ls,
-            right_mode=rm,
-            right_speed=rs
+            left_mode=RawMotorModesEnum.reverse.value,
+            left_speed=64,  # Valid speed values are 0-255
+            right_mode=RawMotorModesEnum.reverse.value,
+            right_speed=64  # Valid speed values are 0-255
         )
+        # rvr.raw_motors(
+        #     left_mode=lm,
+        #     left_speed=ls,
+        #     right_mode=rm,
+        #     right_speed=rs
+        # )
         time.sleep(1)
 
     def movement(x, y):
