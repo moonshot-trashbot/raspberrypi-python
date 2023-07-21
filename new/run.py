@@ -60,10 +60,13 @@ def stop(error):
         os._exit(0)
         exit()
 
+previousFrame = 0
+
 def deltafy(xarr1, xarr2, xarr2top):
     return [int((1280-int(xarr1))/120)-6, int(((int(xarr2)+xarr2top)/2)/120)-6]
 
 async def runner():
+    global previousFrame
     global cont
     global rvr
     global sock
@@ -112,6 +115,8 @@ async def runner():
         if(jso.__len__() > 0):
             detectPre = jso[0]
             detect = _models.Detection(detectPre)
+            if(detect.frame == previousFrame): return
+            previousFrame = detect.frame
             print(">>>", detect)
             cxy = deltafy(detect.center[0], detect.center[1], detect.top)
             debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
