@@ -55,8 +55,8 @@ def main():
 
         if(stripeCenterX < 25): stripeCenterX = -25
         if(stripeCenterX > (screenWidth-25)): stripeCenterX = screenWidth-25
-        rectstripe = pygame.Rect(stripeCenterX-25, 0, 50, screenHeight)
-        pygame.draw.rect(screen, pygame.Color(100, 255, 100), rectstripe)
+        rectstripe = pygame.Rect(stripeCenterX-10, 0, 20, screenHeight)
+        pygame.draw.rect(screen, pygame.Color(10, 255, 10), rectstripe)
 
         xgen = xMid
 
