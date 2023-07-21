@@ -16,11 +16,15 @@ class Detection:
         self.id = data["id"]
         self.frame = data["frame"]
         self.type = data["type"]
+        self.center = data["center"]
         self.left = data["left"]
         self.right = data["right"]
         self.top = data["top"]
         self.bottom = data["bottom"]
-        self.center = data["center"]
+        
+        self.width = 1280-self.left-self.right
+        self.height = 720-self.top-self.bottom
+        self.area = self.width * self.height
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
@@ -34,5 +38,8 @@ class Detection:
         build += "\n\tTop: " + str(self.top)
         build += "\n\tBottom " + str(self.bottom)
         build += "\n\tCenter " + str(self.center)
+        build += "\n\tWidth " + str(self.width)
+        build += "\n\tHeight " + str(self.height)
+        build += "\n\tArea " + str(self.area)
         build += "\n"
         return build
