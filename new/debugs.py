@@ -62,7 +62,7 @@ def main():
         pygame.draw.rect(screen, pygame.Color(10, 255, 10), rectstripe)
 
         vec = [int(stripeCenterX), int(stripeCenterY)]
-        pygame.draw.circle(screen, pygame.Color(255, 10, 177), vec, 20)
+        pygame.draw.circle(screen, pygame.Color(255, 10, 177), vec, 100)
 
         pygame.display.flip()
         dt = clock.tick(60) / 1000
