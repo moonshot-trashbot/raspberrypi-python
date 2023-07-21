@@ -55,10 +55,11 @@ def stop(error):
 def runner():
     global cont
 
-    async def main(loop):
+    async def main():
         global cont
         cont = True
 
+        loop = asyncio.new_event_loop()
         rvr = SpheroRvrAsync(
             dal=SerialAsyncDal(
                 loop
@@ -84,9 +85,7 @@ def runner():
         sock.term()
         await rvr.led_control.turn_off_leds()
         await rvr.close()
-
-    loop = asyncio.get_event_loop()
-    asyncio.run(main(loop))
+    asyncio.run(main())
 
 try:
     thr = _classes.StoppableThread(target=runner)
