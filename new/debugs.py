@@ -16,7 +16,7 @@ head = 0
 
 xMid = int(screenWidth/2)
 yMid = int(screenHeight/2)
-stripeCenterX = xMid-42
+stripeCenterX = xMid+42
 stripeCenterY = yMid
 
 def quit():
