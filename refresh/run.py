@@ -168,9 +168,9 @@ async def process(inp: _models.Detection or None):
         heading_change = calculate_heading(center_x)
         driving.get_debugs().stripechange(center_x, center_y)
         if heading_change > 50:
-            manager.right_turn(10)
-        elif heading_change < -50:
             manager.left_turn(10)
+        elif heading_change < -50:
+            manager.right_turn(10)
         print(">>> TRACKING: We turned to continue tracking (", tracking, "). Debug...", "\nCXY:", center_x, center_y, "\nHEADCHANGE", heading_change)
     else:
         print(">>> TRACKING: We aren't tracking box ( ID:", inp.id, ") but it is in frame.")
