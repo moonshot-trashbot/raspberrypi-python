@@ -85,21 +85,25 @@ async def runner():
     }
 
     async def turnleft(deg):
+        print(">>> LEFT")
         await rvr.drive_control.drive_forward_seconds(45, 359-deg, 0)
         time.sleep(0.3)
         await rvr.reset_yaw()
         return
     async def turnright(deg):
+        print(">>> RIGHT")
         await rvr.drive_control.drive_forward_seconds(45, deg, 0)
         time.sleep(0.3)
         await rvr.reset_yaw()
         return
     async def goforward(sec):
+        print(">>> FORWARD")
         await rvr.drive_control.drive_forward_seconds(45, 0, 1)
         time.sleep(0.8)
         await rvr.reset_yaw()
         return
     async def gobackward(sec):
+        print(">>> BACK")
         await rvr.drive_control.drive_backward_seconds(45, 0, 1)
         time.sleep(0.8)
         await rvr.reset_yaw()
