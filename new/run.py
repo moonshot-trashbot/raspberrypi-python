@@ -158,5 +158,6 @@ except Exception as e:
 finally:
     sock.term()
     rvr.led_control.turn_off_leds()
+    time.sleep(0.05)
     rvr.close()
     time.sleep(1)
