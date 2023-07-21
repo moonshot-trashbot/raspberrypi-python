@@ -177,6 +177,7 @@ async def runner():
 
 
     while cont:
+        rvr = SpheroRvrObserver()
         message = sock.recv().decode("utf-8")
         if(message is not None):
             jso = json.loads(message)
