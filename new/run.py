@@ -82,7 +82,7 @@ async def runner():
     }
 
     async def turnleft(deg):
-        await rvr.drive_control.drive_forward_seconds(45, deg, 0)
+        await rvr.drive_control.drive_forward_seconds(45, 359-deg, 0)
         time.sleep(0.3)
         await rvr.reset_yaw()
         return
@@ -108,6 +108,7 @@ async def runner():
         print(">>> RAW", message)
         if(message is None): return
         jso = json.loads(message)
+        await rvr.reset_yaw()
         if(jso.__len__() > 0):
             detectPre = jso[0]
             detect = _models.Detection(detectPre)
