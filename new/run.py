@@ -33,7 +33,6 @@ global rvr
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrObserver, RawMotorModesEnum
-rvr = SpheroRvrObserver()
 
 # loop = asyncio.get_event_loop()
 # rvr = SpheroRvrAsync(
