@@ -33,8 +33,8 @@ def stripechange(x, y):
     x = x * camChange
     y = y * camChange
     shifty = (int(60*camChange)/2)-30
-    stripeCenterX = (screenWidth-x)-shifty
-    stripeCenterY = y-shifty
+    stripeCenterX = (screenWidth-x)
+    stripeCenterY = y
 
 def main():
     global xMid
