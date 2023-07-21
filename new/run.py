@@ -71,9 +71,9 @@ async def runner():
     cont = True
 
     await rvr.wake()
-    await asyncio.sleep(2)
+    time.sleep(2)
     await rvr.led_control.set_all_leds_color(color = Colors.pink)
-    await asyncio.sleep(0.05)
+    time.sleep(0.05)
 
     tracking = {
         "id": None,
@@ -84,22 +84,22 @@ async def runner():
     async def turnleft(deg):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.turn_left_degrees(0, deg)
-        await asyncio.sleep(0.3)
+        time.sleep(0.3)
         return
     async def turnright(deg):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.turn_right_degrees(0, deg)
-        await asyncio.sleep(0.3)
+        time.sleep(0.3)
         return
     async def goforward(sec):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.drive_forward_seconds(45, 0, 1)
-        await asyncio.sleep(0.8)
+        time.sleep(0.8)
         return
     async def gobackward(sec):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.drive_backward_seconds(45, 0, 1)
-        await asyncio.sleep(0.8)
+        time.sleep(0.8)
         return
 
     while cont:
