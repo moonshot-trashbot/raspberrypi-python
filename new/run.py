@@ -142,7 +142,6 @@ async def runner():
                     debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
                     movement(cxy[0], cxy[1])
 
-    sock.term()
     rvr.led_control.turn_off_leds()
     time.sleep(0.05)
     rvr.close()
@@ -166,7 +165,6 @@ except Exception as e:
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(e)
 finally:
-    sock.term()
     rvr.led_control.turn_off_leds()
     time.sleep(0.05)
     rvr.close()
