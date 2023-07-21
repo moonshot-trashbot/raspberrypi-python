@@ -38,7 +38,6 @@ from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets,
 #         loop
 #     )
 # )
-rvr = SpheroRvrObserver()
 
 context = zmq.Context()
 sock = context.socket(zmq.PULL)
@@ -69,10 +68,10 @@ def deltafy(xarr1, xarr2, xarr2top):
 async def runner():
     global previousFrame
     global cont
-    global rvr
     global sock
 
     cont = True
+    rvr = SpheroRvrObserver()
 
     rvr.wake()
     time.sleep(2)
@@ -86,43 +85,43 @@ async def runner():
         if (x < 0): # turn right
             print("Break 1...")
             if (y < 0): ### turn forward
-                rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.off.value, 0)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.forward.value, left_speed=45, right_mode=RawMotorModesEnum.off.value, right_speed=0)
                 time.sleep(20)
                 print("Break ^, pt. 2")
             if (y == 0): ### pivot in place
-                rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.reverse.value, 45)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.forward.value, left_speed=45, right_mode=RawMotorModesEnum.reverse.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
             if (y > 0): ### turn backward
-                rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.reverse.value, 45)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.off.value, left_speed=0, right_mode=RawMotorModesEnum.reverse.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
         elif (x == 0): # on target
             print("Break 2...")
             if (y < 0): ### drive forward
-                rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.forward.value, 45)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.forward.value, left_speed=45, right_mode=RawMotorModesEnum.forward.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
             if (y == 0): ### stopped
-                rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.off.value, 0)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.off.value, left_speed=0, right_mode=RawMotorModesEnum.off.value, right_speed=0)
                 time.sleep(20)
                 print("Break ^, pt. 2")
             if (y > 0): ### drive backward
-                rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.reverse.value, 45)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.reverse.value, left_speed=45, right_mode=RawMotorModesEnum.reverse.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
         elif (x > 0): # turn left
             print("Break 3...")
             if (y < 0): ### turn forward
-                rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.forward.value, 45)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.off.value, left_speed=0, right_mode=RawMotorModesEnum.forward.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
             if (y == 0): ### pivot in place
-                rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.forward.value, 45)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.reverse.value, left_speed=45, right_mode=RawMotorModesEnum.forward.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
             if (y > 0): ### turn backward
-                rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.off.value, 0)
+                rvr.raw_motors(left_mode=RawMotorModesEnum.reverse.value, left_speed=45, right_mode=RawMotorModesEnum.off.value, right_speed=0)
                 time.sleep(20)
                 print("Break ^, pt. 2")
                 
