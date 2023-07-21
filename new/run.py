@@ -72,7 +72,7 @@ async def runner():
     global rvr
     global sock
 
-    cont = True
+    cont = Truegit 
 
     rvr.wake()
     time.sleep(2)
@@ -93,7 +93,7 @@ async def runner():
         elif (x == 0): # on target
             if (y < 0): ### drive forward
                 rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.forward.value, 45)
-                time.sleep(1)
+                time.sleep(4)
             if (y == 0): ### stopped
                 rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.off.value, 0)
                 time.sleep(1)
@@ -121,7 +121,7 @@ async def runner():
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
                 print(">>> RAW", detect)
-                if(detect.frame != previousFrame and detect.width > 100 and detect.area > 40000):
+                if(detect.frame != previousFrame and detect.area > 200):
                     previousFrame = detect.frame
                     print(">>>", detect)
                     cxy = deltafy(detect.center[0], detect.center[1], detect.top)

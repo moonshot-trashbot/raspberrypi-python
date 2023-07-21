@@ -22,8 +22,8 @@ class Detection:
         self.top = data["top"]
         self.bottom = data["bottom"]
 
-        self.width = abs(1280-(self.left+self.right))
-        self.height = abs(720-abs(self.top+self.bottom))
+        self.width = abs(1280-self.left-self.right)
+        self.height = abs(720-self.top-self.bottom)
         self.area = abs(self.width * self.height)
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
