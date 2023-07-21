@@ -104,14 +104,13 @@ async def runner():
 
     while cont:
         message = sock.recv().decode("utf-8")
-        print(">>> SOCKET: Receiving input from... please wait.")
-        print(">>> RAW", message)
         if(message is not None):
             jso = json.loads(message)
             rvr.reset_yaw()
             if(jso.__len__() > 0):
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
+                print(">>> RAW", detect)
                 if(detect.frame != previousFrame and detect.width > 100 and detect.area > 40000):
                     previousFrame = detect.frame
                     print(">>>", detect)
