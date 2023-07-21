@@ -29,6 +29,8 @@ import _models
 import _classes
 import zmq
 
+global rvr
+
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrObserver, RawMotorModesEnum
 rvr = SpheroRvrObserver()
