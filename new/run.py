@@ -78,53 +78,38 @@ async def runner():
     time.sleep(2)
     rvr.led_control.set_all_leds_color(color = Colors.pink)
     time.sleep(0.05)
-    
-    def raw_motors(ls, _lmode, rs, _rmode):
-        lm = RawMotorModesEnum.off.value
-        if(_lmode == 1): lm = RawMotorModesEnum.forward.value
-        if(_lmode == 2): lm = RawMotorModesEnum.reverse.value
-        rm = RawMotorModesEnum.off.value
-        if(_rmode == 1): rm = RawMotorModesEnum.forward.value
-        if(_rmode == 2): rm = RawMotorModesEnum.reverse.value
-        if(ls is None or not ls): ls = 0
-        if(rs is None or not rs): rs = 0
-        print(lm, ls, rm, rs)
-        rvr.raw_motors(
-            left_mode=RawMotorModesEnum.reverse.value,
-            left_speed=64,  # Valid speed values are 0-255
-            right_mode=RawMotorModesEnum.reverse.value,
-            right_speed=64  # Valid speed values are 0-255
-        )
-        # rvr.raw_motors(
-        #     left_mode=lm,
-        #     left_speed=ls,
-        #     right_mode=rm,
-        #     right_speed=rs
-        # )
-        time.sleep(1)
 
     def movement(x, y):
         if (x < 0): # turn right
             if (y < 0): ### turn forward
-                raw_motors(45, 1, 0, 0)
+                rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.off.value, 0)
+                time.sleep(1)
             if (y == 0): ### pivot in place
-                raw_motors(45, 1, 45, 2)
+                rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.reverse.value, 45)
+                time.sleep(1)
             if (y > 0): ### turn backward
-                raw_motors(0, 0, 45, 2)
+                rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.reverse.value, 45)
+                time.sleep(1)
         elif (x == 0): # on target
             if (y < 0): ### drive forward
-                raw_motors(45, 1, 45, 1)
+                rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.forward.value, 45)
+                time.sleep(1)
             if (y == 0): ### stopped
-                raw_motors(0, 0, 0, 0)
+                rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.off.value, 0)
+                time.sleep(1)
             if (y > 0): ### drive backward
-                raw_motors(45, 2, 45, 2)
+                rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.reverse.value, 45)
+                time.sleep(1)
         elif (x > 0): # turn left
             if (y < 0): ### turn forward
-                raw_motors(0, 0, 45, 1)
+                rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.forward.value, 45)
+                time.sleep(1)
             if (y == 0): ### pivot in place
-                raw_motors(45, 2, 45, 1)
+                rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.forward.value, 45)
+                time.sleep(1)
             if (y > 0): ### turn backward
-                raw_motors(45, 2, 0, 0)
+                rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.off.value, 0)
+                time.sleep(1)
                 
 
     while cont:
