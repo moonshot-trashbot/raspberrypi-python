@@ -143,7 +143,7 @@ async def runner():
                     debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
                     movement(cxy[0], cxy[1])
 
-    rvr.led_control.turn_off_leds()
+    rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
     time.sleep(1)
@@ -151,7 +151,7 @@ try:
     asyncio.run(runner())
 except KeyboardInterrupt as e:
     sock.term()
-    rvr.led_control.turn_off_leds()
+    rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
     time.sleep(1)
@@ -159,14 +159,14 @@ except KeyboardInterrupt as e:
     stop(False)
 except Exception as e:
     sock.term()
-    rvr.led_control.turn_off_leds()
+    rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
     time.sleep(1)
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(e)
 finally:
-    rvr.led_control.turn_off_leds()
+    rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
     time.sleep(1)
