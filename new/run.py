@@ -30,7 +30,7 @@ import _classes
 import zmq
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
-from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
+from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver, RawMotorModesEnum
 
 # loop = asyncio.get_event_loop()
 # rvr = SpheroRvrAsync(
@@ -84,23 +84,20 @@ async def runner():
         "seen": 0,
         "center": [None, None]
     }
-
-    def turnleft(deg):
-        rvr.drive_control.drive_forward_seconds(45, 359-deg, 0)
-        time.sleep(0.3)
-        return
-    def turnright(deg):
-        rvr.drive_control.drive_forward_seconds(45, deg, 0)
-        time.sleep(0.3)
-        return
-    def goforward(sec):
-        rvr.drive_control.drive_forward_seconds(45, 0, 1)
-        time.sleep(0.8)
-        return
-    def gobackward(sec):
-        rvr.drive_control.drive_backward_seconds(45, 0, 1)
-        time.sleep(0.8)
-        return
+    
+    def raw_motors(lspeed, _lmode, rspeed, _rmode):
+        lmode = RawMotorModesEnum.off.value
+        if(_lmode == 1): lmode = RawMotorModesEnum.forward.value
+        if(_lmode == 1): lmode = RawMotorModesEnum.reverse.value
+        rmode = RawMotorModesEnum.off.value
+        if(_rmode == 1): rmode = RawMotorModesEnum.forward.value
+        if(_rmode == 1): rmode = RawMotorModesEnum.reverse.value
+        rvr.raw_motors(
+            left_mode=lmode,
+            left_speed=lspeed,
+            right_mode=rmode,
+            right_speed=rspeed
+        )
 
     def movement(x, y):
         if (x < 0): # turn right
@@ -140,11 +137,7 @@ async def runner():
                     print(">>>", detect)
                     cxy = deltafy(detect.center[0], detect.center[1], detect.top)
                     debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
-                    print(cxy)
-                    if(cxy[0] > 0): turnleft(8)
-                    if(cxy[0] < 0): turnright(8)
-                    if(cxy[1] < 0): goforward(1)
-                    if(cxy[1] > 0): gobackward(1)
+                    movement(cxy[0], cxy[1])
 
     sock.term()
     rvr.led_control.turn_off_leds()
