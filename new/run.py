@@ -80,6 +80,7 @@ async def runner():
     time.sleep(0.05)
 
     def movement(x, y):
+        print("MVMT", x, y)
         if (x < 0): # turn right
             if (y < 0): ### turn forward
                 rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.off.value, 0)
