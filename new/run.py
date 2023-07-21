@@ -102,6 +102,30 @@ async def runner():
         time.sleep(0.8)
         return
 
+    def movement(x, y):
+        if (x < 0): # turn right
+            if (y < 0): ### turn forward
+                raw_motors(45, 1, 0, 0)
+            if (y == 0): ### pivot in place
+                raw_motors(45, 1, 45, 2)
+            if (y > 0): ### turn backward
+                raw_motors(0, 0, 45, 2)
+        elif (x == 0): # on target
+            if (ycoord < 0): ### drive forward
+                raw_motors(45, 1, 45, 1)
+            if (ycoord == 0): ### stopped
+                raw_motors(0, 0, 0, 0)
+            if (ycoord > 0): ### drive backward
+                raw_motors(45, 2, 45, 2)
+        elif (x > 0): # turn left
+            if (ycoord < 0): ### turn forward
+                raw_motors(0, 0, 45, 1)
+            if (ycoord == 0): ### pivot in place
+                raw_motors(45, 2, 45, 1)
+            if (ycoord > 0): ### turn backward
+                raw_motors(45, 2, 0, 0)
+                
+
     while cont:
         message = sock.recv().decode("utf-8")
         if(message is not None):
