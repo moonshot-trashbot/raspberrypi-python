@@ -61,7 +61,7 @@ def main():
         rectstripe = pygame.Rect(xgen-2, 0, 4, screenHeight)
         pygame.draw.rect(screen, pygame.Color(10, 255, 10), rectstripe)
 
-        vec = [(screenWidth-int(stripeCenterX-30)), int(stripeCenterY)]
+        vec = [(screenWidth-int(stripeCenterX-30))+10, int(stripeCenterY)]
         pygame.draw.circle(screen, pygame.Color(255, 10, 177), vec, 60)
 
         pygame.display.flip()
