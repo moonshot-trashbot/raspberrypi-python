@@ -41,7 +41,6 @@ def main():
     global cmult
     global running
     global head
-    global stripeCenterY
     global stripeCenterX
     global stripeCenterY
     while running:
