@@ -35,30 +35,35 @@ context = zmq.Context()
 sock = context.socket(zmq.PULL)
 sock.bind("tcp://*:420")
 
-def runner():
-    def stop(error):
-        global cont
-        cont = False
-        if(error is False):
-            print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors! This shutdown should take a few seconds.")
-        else:
-            print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
-            print(error)
-            traceback.print_tb(error.__traceback__, 10)
-        try:
-            sys.exit(0)
-        except SystemExit:
-            os._exit(0)
-            exit()
+cont = True
 
-    rvr = SpheroRvrAsync(
-        dal=SerialAsyncDal(
-            loop
-        )
-    )
+def stop(error):
+    global cont
+    cont = False
+    if(error is False):
+        print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors! This shutdown should take a few seconds.")
+    else:
+        print(">>> TRACEBACK: Now forcing the program to close down... (check error log?) This shutdown should take a few seconds.")
+        print(error)
+        traceback.print_tb(error.__traceback__, 10)
+    try:
+        sys.exit(0)
+    except SystemExit:
+        os._exit(0)
+        exit()
+
+async def runner():
+    global cont
 
     async def main(loop):
+        global cont
         cont = True
+
+        rvr = SpheroRvrAsync(
+            dal=SerialAsyncDal(
+                loop
+            )
+        )
 
         await rvr.wake()
         await asyncio.sleep(2)
@@ -76,21 +81,21 @@ def runner():
             cont = False
             return message
         
-
         sock.term()
+        await rvr.led_control.turn_off_leds()
         await rvr.close()
-    try:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(main(loop))
-    except KeyboardInterrupt as e:
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
-        stop(False)
-    except Exception as e:
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
-        stop(e)
 
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(main(loop))
 
-thr = _classes.StoppableThread(target=runner)
-thr.start()
-thr.join()
+try:
+    thr = _classes.StoppableThread(target=runner)
+    thr.start()
+    thr.join()
+except KeyboardInterrupt as e:
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    stop(False)
+except Exception as e:
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    stop(e)
