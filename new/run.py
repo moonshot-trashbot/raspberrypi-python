@@ -60,40 +60,36 @@ def stop(error):
         os._exit(0)
         exit()
 
-def runner():
+async def runner():
     global cont
     global rvr
+    global sock
+    
+    cont = True
 
-    async def main():
-        global cont
-        global rvr
-        cont = True
+    await rvr.wake()
+    await asyncio.sleep(2)
+    await rvr.led_control.set_all_leds_color(color = Colors.pink)
 
-        await rvr.wake()
-        await asyncio.sleep(2)
-        await rvr.led_control.set_all_leds_color(color = Colors.pink)
+    tracking = {
+        "id": None,
+        "seen": 0,
+        "center": [None, None]
+    }
 
-        tracking = {
-            "id": None,
-            "seen": 0,
-            "center": [None, None]
-        }
+    while cont:
+        message = sock.recv().decode("utf-8")
+        print(">>> SOCKET: Receiving input from... please wait.")
+        print("RAW", message)
+        if(message is None): return
+        jso = json.loads(message)
+        for detect in jso:
 
-        while cont:
-            message = sock.recv().decode("utf-8")
-            print(">>> SOCKET: Receiving input from... please wait.")
-            cont = False
-            return message
-        
-        sock.term()
-        await rvr.led_control.turn_off_leds()
-        await rvr.close()
-    asyncio.run(main())
-
+    sock.term()
+    await rvr.led_control.turn_off_leds()
+    await rvr.close()
 try:
-    thr = _classes.StoppableThread(target=runner)
-    thr.start()
-    thr.join()
+    asyncio.run(runner())
 except KeyboardInterrupt as e:
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(False)
