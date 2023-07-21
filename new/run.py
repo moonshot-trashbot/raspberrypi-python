@@ -30,7 +30,7 @@ import _classes
 import zmq
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
-from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver, RawMotorModesEnum
+from sphero_sdk import Colors, SpheroRvrObserver, RawMotorModesEnum
 rvr = SpheroRvrObserver()
 
 # loop = asyncio.get_event_loop()
@@ -82,6 +82,7 @@ async def runner():
     time.sleep(0.05)
 
     def movement(x, y):
+        global rvr
         print("MVMT", x, y)
         if (x < 0): # turn right
             print("Break 1...")
