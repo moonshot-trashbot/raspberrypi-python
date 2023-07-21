@@ -87,7 +87,7 @@ def runner():
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    loop.run_until_complete(main())
+    loop.run_until_complete(main(loop))
 
 thr = _classes.StoppableThread(target=runner)
 thr.start()
