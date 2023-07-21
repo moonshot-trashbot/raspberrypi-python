@@ -79,25 +79,21 @@ async def runner():
     rvr.led_control.set_all_leds_color(color = Colors.pink)
     time.sleep(0.05)
     
-    def raw_motors(lspeed, _lmode, rspeed, _rmode):
-        if(lspeed == 0 and rspeed == 0): return
-        if(_lmode == 0 and _rmode == 0): return
-        left_mode = RawMotorModesEnum.off.value
-        if(_lmode == 1): left_mode = RawMotorModesEnum.forward.value
-        if(_lmode == 2): left_mode = RawMotorModesEnum.reverse.value
-        right_mode = RawMotorModesEnum.off.value
-        if(_rmode == 1): right_mode = RawMotorModesEnum.forward.value
-        if(_rmode == 2): right_mode = RawMotorModesEnum.reverse.value
-        left_speed = lspeed
-        right_speed = rspeed
-        if(left_speed is None or not left_speed): left_speed = 0
-        if(right_speed is None or not right_speed): right_speed = 0
-        print(left_mode, right_mode, left_speed, right_speed)
+    def raw_motors(ls, _lmode, rs, _rmode):
+        lm = RawMotorModesEnum.off.value
+        if(_lmode == 1): lm = RawMotorModesEnum.forward.value
+        if(_lmode == 2): lm = RawMotorModesEnum.reverse.value
+        rm = RawMotorModesEnum.off.value
+        if(_rmode == 1): rm = RawMotorModesEnum.forward.value
+        if(_rmode == 2): rm = RawMotorModesEnum.reverse.value
+        if(ls is None or not ls): ls = 0
+        if(rs is None or not rs): rs = 0
+        print(lm, ls, rm, rs)
         rvr.raw_motors(
-            left_mode=left_mode,
-            left_speed=left_speed,
-            right_mode=right_mode,
-            right_speed=right_speed
+            left_mode=lm,
+            left_speed=ls,
+            right_mode=rm,
+            right_speed=rs
         )
         time.sleep(1)
 
