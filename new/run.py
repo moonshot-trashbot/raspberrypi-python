@@ -78,6 +78,8 @@ async def runner():
     time.sleep(2)
     rvr.led_control.set_all_leds_color(color = Colors.pink)
     time.sleep(0.05)
+    rvr.reset_yaw()
+    time.sleep(0.05)
 
     def movement(x, y):
         print("MVMT", x, y)
