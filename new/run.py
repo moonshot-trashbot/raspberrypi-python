@@ -85,25 +85,21 @@ async def runner():
         "center": [None, None]
     }
 
-    async def turnleft(deg):
+    def turnleft(deg):
         rvr.drive_control.drive_forward_seconds(45, 359-deg, 0)
         time.sleep(0.3)
-        rvr.reset_yaw()
         return
-    async def turnright(deg):
+    def turnright(deg):
         rvr.drive_control.drive_forward_seconds(45, deg, 0)
         time.sleep(0.3)
-        rvr.reset_yaw()
         return
-    async def goforward(sec):
+    def goforward(sec):
         rvr.drive_control.drive_forward_seconds(45, 0, 1)
         time.sleep(0.8)
-        rvr.reset_yaw()
         return
-    async def gobackward(sec):
+    def gobackward(sec):
         rvr.drive_control.drive_backward_seconds(45, 0, 1)
         time.sleep(0.8)
-        rvr.reset_yaw()
         return
 
     while cont:
@@ -122,10 +118,10 @@ async def runner():
                     cxy = deltafy(detect.center[0], detect.center[1], detect.top)
                     debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
                     print(cxy)
-                    if(cxy[0] > 0): await turnleft(8)
-                    if(cxy[0] < 0): await turnright(8)
-                    if(cxy[1] < 0): await goforward(1)
-                    if(cxy[1] > 0): await gobackward(1)
+                    if(cxy[0] > 0): turnleft(8)
+                    if(cxy[0] < 0): turnright(8)
+                    if(cxy[1] < 0): goforward(1)
+                    if(cxy[1] > 0): gobackward(1)
 
     sock.term()
     rvr.led_control.turn_off_leds()
