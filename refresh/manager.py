@@ -71,7 +71,7 @@ def heading_shift_fake(num):
 def heading_shift(num):
     global currentHeading
     calc = heading_shift_fake(num)
-    currentHeading = currentHeading + calc
+    currentHeading = calc
     return currentHeading
 
 def heading_get():
@@ -79,7 +79,7 @@ def heading_get():
     return currentHeading
 
 def drive_forward_seconds(spee, head, tim):
-    if(tim == 0):
+    if(tim < 1):
         driving.get_debugs().headchange(heading_shift_fake(head))
         driving.turn_either_degrees(heading_get(), head)
     else:
