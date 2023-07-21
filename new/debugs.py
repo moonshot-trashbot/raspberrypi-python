@@ -50,12 +50,12 @@ def main():
 
         screen.fill(pygame.Color(0, 0, 0))
 
-        rectnormal = pygame.Rect(int((screenWidth - (360*cmult))/2), 400, 360*cmult, 5)
-        pygame.draw.rect(screen, pygame.Color(100, 100, 255), rectnormal)
+        rectnormal = pygame.Rect(int((screenWidth - (360*cmult))/2), xMid-2, 360*cmult, 4)
+        pygame.draw.rect(screen, pygame.Color(10, 10, 255), rectnormal)
 
-        if(stripeCenterX < 25): stripeCenterX = -25
-        if(stripeCenterX > (screenWidth-25)): stripeCenterX = screenWidth-25
-        rectstripe = pygame.Rect(stripeCenterX-10, 0, 20, screenHeight)
+        if(stripeCenterX < 7): stripeCenterX = -7
+        if(stripeCenterX > (screenWidth-7)): stripeCenterX = screenWidth-7
+        rectstripe = pygame.Rect(stripeCenterX-7, 0, 14, screenHeight)
         pygame.draw.rect(screen, pygame.Color(10, 255, 10), rectstripe)
 
         xgen = xMid
