@@ -32,12 +32,13 @@ import zmq
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
 
-loop = asyncio.get_event_loop()
-rvr = SpheroRvrAsync(
-    dal=SerialAsyncDal(
-        loop
-    )
-)
+# loop = asyncio.get_event_loop()
+# rvr = SpheroRvrAsync(
+#     dal=SerialAsyncDal(
+#         loop
+#     )
+# )
+rvr = SpheroRvrObserver()
 
 context = zmq.Context()
 sock = context.socket(zmq.PULL)
@@ -73,9 +74,9 @@ async def runner():
 
     cont = True
 
-    await rvr.wake()
+    rvr.wake()
     time.sleep(2)
-    await rvr.led_control.set_all_leds_color(color = Colors.pink)
+    rvr.led_control.set_all_leds_color(color = Colors.pink)
     time.sleep(0.05)
 
     tracking = {
@@ -85,24 +86,24 @@ async def runner():
     }
 
     async def turnleft(deg):
-        await rvr.drive_control.drive_forward_seconds(45, 359-deg, 0)
+        rvr.drive_control.drive_forward_seconds(45, 359-deg, 0)
         time.sleep(0.3)
-        await rvr.reset_yaw()
+        rvr.reset_yaw()
         return
     async def turnright(deg):
-        await rvr.drive_control.drive_forward_seconds(45, deg, 0)
+        rvr.drive_control.drive_forward_seconds(45, deg, 0)
         time.sleep(0.3)
-        await rvr.reset_yaw()
+        rvr.reset_yaw()
         return
     async def goforward(sec):
-        await rvr.drive_control.drive_forward_seconds(45, 0, 1)
+        rvr.drive_control.drive_forward_seconds(45, 0, 1)
         time.sleep(0.8)
-        await rvr.reset_yaw()
+        rvr.reset_yaw()
         return
     async def gobackward(sec):
-        await rvr.drive_control.drive_backward_seconds(45, 0, 1)
+        rvr.drive_control.drive_backward_seconds(45, 0, 1)
         time.sleep(0.8)
-        await rvr.reset_yaw()
+        rvr.reset_yaw()
         return
 
     while cont:
@@ -111,7 +112,7 @@ async def runner():
         print(">>> RAW", message)
         if(message is not None):
             jso = json.loads(message)
-            await rvr.reset_yaw()
+            rvr.reset_yaw()
             if(jso.__len__() > 0):
                 detectPre = jso[0]
                 detect = _models.Detection(detectPre)
@@ -127,8 +128,8 @@ async def runner():
                     if(cxy[1] > 0): await gobackward(1)
 
     sock.term()
-    await rvr.led_control.turn_off_leds()
-    await rvr.close()
+    rvr.led_control.turn_off_leds()
+    rvr.close()
 try:
     asyncio.run(runner())
 except KeyboardInterrupt as e:
