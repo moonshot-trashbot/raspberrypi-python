@@ -89,11 +89,11 @@ async def runner():
                 rvr.raw_motors(left_mode=RawMotorModesEnum.forward.value, left_speed=45, right_mode=RawMotorModesEnum.off.value, right_speed=0)
                 time.sleep(20)
                 print("Break ^, pt. 2")
-            if (y == 0): ### pivot in place
+            elif (y == 0): ### pivot in place
                 rvr.raw_motors(left_mode=RawMotorModesEnum.forward.value, left_speed=45, right_mode=RawMotorModesEnum.reverse.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
-            if (y > 0): ### turn backward
+            elif (y > 0): ### turn backward
                 rvr.raw_motors(left_mode=RawMotorModesEnum.off.value, left_speed=0, right_mode=RawMotorModesEnum.reverse.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
@@ -103,11 +103,11 @@ async def runner():
                 rvr.raw_motors(left_mode=RawMotorModesEnum.forward.value, left_speed=45, right_mode=RawMotorModesEnum.forward.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
-            if (y == 0): ### stopped
+            elif (y == 0): ### stopped
                 rvr.raw_motors(left_mode=RawMotorModesEnum.off.value, left_speed=0, right_mode=RawMotorModesEnum.off.value, right_speed=0)
                 time.sleep(20)
                 print("Break ^, pt. 2")
-            if (y > 0): ### drive backward
+            elif (y > 0): ### drive backward
                 rvr.raw_motors(left_mode=RawMotorModesEnum.reverse.value, left_speed=45, right_mode=RawMotorModesEnum.reverse.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
@@ -117,15 +117,15 @@ async def runner():
                 rvr.raw_motors(left_mode=RawMotorModesEnum.off.value, left_speed=0, right_mode=RawMotorModesEnum.forward.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
-            if (y == 0): ### pivot in place
+            elif (y == 0): ### pivot in place
                 rvr.raw_motors(left_mode=RawMotorModesEnum.reverse.value, left_speed=45, right_mode=RawMotorModesEnum.forward.value, right_speed=45)
                 time.sleep(20)
                 print("Break ^, pt. 2")
-            if (y > 0): ### turn backward
+            elif (y > 0): ### turn backward
                 rvr.raw_motors(left_mode=RawMotorModesEnum.reverse.value, left_speed=45, right_mode=RawMotorModesEnum.off.value, right_speed=0)
                 time.sleep(20)
                 print("Break ^, pt. 2")
-                
+
 
     while cont:
         message = sock.recv().decode("utf-8")
@@ -142,6 +142,7 @@ async def runner():
                     cxy = deltafy(detect.center[0], detect.center[1], detect.top)
                     debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
                     movement(cxy[0], cxy[1])
+                    rvr.raw_motors(left_mode=RawMotorModesEnum.forward.value, left_speed=45, right_mode=RawMotorModesEnum.off.value, right_speed=0)
 
     rvr.led_control.turn_leds_off()
     time.sleep(0.05)
