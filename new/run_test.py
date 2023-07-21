@@ -66,7 +66,7 @@ def stop(error):
 previousFrame = 0
 
 def deltafy(xarr1, xarr2, xarr2top):
-    return [int((1280-int(xarr1))/120)-6, int(((int(xarr2)+xarr2top)/2)/120)-6]
+    return [int((1280-int(xarr1))/120)-6, int(((int(xarr2)+xarr2top)/2)/120)-3]
 
 async def runner():
     global previousFrame
