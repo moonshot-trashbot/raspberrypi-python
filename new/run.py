@@ -28,11 +28,17 @@ import debugs
 import _models
 import _classes
 import zmq
-import nest_asyncio
-nest_asyncio.apply()
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
+
+loop = asyncio.new_event_loop()
+rvr = SpheroRvrAsync(
+    dal=SerialAsyncDal(
+        loop
+    )
+)
+
 context = zmq.Context()
 sock = context.socket(zmq.PULL)
 sock.bind("tcp://*:420")
@@ -56,17 +62,12 @@ def stop(error):
 
 def runner():
     global cont
+    global rvr
 
     async def main():
         global cont
+        global rvr
         cont = True
-
-        loop = asyncio.new_event_loop()
-        rvr = SpheroRvrAsync(
-            dal=SerialAsyncDal(
-                loop
-            )
-        )
 
         await rvr.wake()
         await asyncio.sleep(2)
