@@ -90,7 +90,7 @@ async def runner():
         if (x < 0): # turn right
             print("Break 1...")
             if (y < 0): ### turn forward
-                rvr.raw_motors(
+                rvr.driving.raw_motors(
                     left_mode=RawMotorModesEnum.forward.value,
                     left_duty_cycle=45,
                     right_mode=RawMotorModesEnum.off.value,
