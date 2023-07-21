@@ -6,12 +6,7 @@ screenWidth = int(get_monitors(Enumerator.Xinerama)[0].width)
 screenHeight = int((screenWidth/16)*9)
 
 camChange = screenWidth/1280
-
-global head
-global stripeCenterX
-global stripeCenterY
-global xMid
-global yMid
+cmult = int(screenWidth/360)
 
 pygame.init()
 screen = pygame.display.set_mode((screenWidth, screenHeight))
@@ -43,6 +38,7 @@ def stripechange(x, y):
 def main():
     global xMid
     global yMid
+    global cmult
     global running
     global head
     global stripeCenterY
@@ -50,23 +46,22 @@ def main():
     global stripeCenterY
     while running:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+            if event.type == pygame.QUIT: running = False
 
         screen.fill(pygame.Color(0, 0, 0))
 
-        rectnormal = pygame.Rect(int((screenWidth - (360*4))/2), 400, 360*4, 10)
-        pygame.draw.rect(screen, pygame.Color(255, 255, 255), rectnormal)
+        rectnormal = pygame.Rect(int((screenWidth - (360*cmult))/2), 400, 360*cmult, 5)
+        pygame.draw.rect(screen, pygame.Color(100, 100, 255), rectnormal)
 
-        if(stripeCenterX < 8): stripeCenterX = -8
-        if(stripeCenterX > (screenWidth-8)): stripeCenterX = screenWidth-8
-        rectstripe = pygame.Rect(stripeCenterX-8, 0, 16, screenHeight)
-        pygame.draw.rect(screen, pygame.Color(0, 255, 0), rectstripe)
+        if(stripeCenterX < 25): stripeCenterX = -25
+        if(stripeCenterX > (screenWidth-25)): stripeCenterX = screenWidth-25
+        rectstripe = pygame.Rect(stripeCenterX-25, 0, 50, screenHeight)
+        pygame.draw.rect(screen, pygame.Color(100, 255, 100), rectstripe)
 
         xgen = xMid
 
         if(head <= 90 and head >= -90):
-            xgen = xMid + ((head)*4)
+            xgen = xMid + ((head)*cmult)
         vec = [int(xgen), int(yMid-10)]
         pygame.draw.circle(screen, pygame.Color(150, 150, 0), vec, 20)
         pygame.display.flip()
