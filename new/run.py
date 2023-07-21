@@ -61,7 +61,7 @@ def stop(error):
         exit()
 
 def deltafy(xarr1, xarr2, xarr2top):
-    return [int(int((1280-int(xarr1))/120)*120)+60, int(int(((int(xarr2)+xarr2top)/2)/120)*120)+60]
+    return [int((1280-int(xarr1))/120)-6, int(((int(xarr2)+xarr2top)/2)/120)-6]
 
 async def runner():
     global cont
@@ -73,12 +73,26 @@ async def runner():
     await rvr.wake()
     await asyncio.sleep(2)
     await rvr.led_control.set_all_leds_color(color = Colors.pink)
+    await asyncio.sleep(0.05)
 
     tracking = {
         "id": None,
         "seen": 0,
         "center": [None, None]
     }
+
+    async def turnleft(deg):
+        await rvr.drive.turn_left_degrees(0, deg)
+        return
+    async def turnright(deg):
+        await rvr.drive.turn_right_degrees(0, deg)
+        return
+    async def goforward(sec):
+        await rvr.drive.drive_forward_seconds(45, 0, 1)
+        return
+    async def gobackward(sec):
+        await rvr.drive.drive_backward_seconds(45, 0, 1)
+        return
 
     while cont:
         message = sock.recv().decode("utf-8")
@@ -91,8 +105,11 @@ async def runner():
             detect = _models.Detection(detectPre)
             print(">>>", detect)
             cxy = deltafy(detect.center[0], detect.center[1], detect.top)
-            debugs.stripechange(cxy[0], cxy[1])
-            # if(cx > 0)
+            debugs.stripechange(int(int(cxy[0]+6)*120), int(int(cxy[1]+6)*120))
+            if(cxy[0] > 0): await turnleft(8)
+            if(cxy[0] < 0): await turnright(8)
+            if(cxy[1] < 0): await goforward(1)
+            if(cxy[1] > 0): await gobackward(1)
 
     sock.term()
     await rvr.led_control.turn_off_leds()
