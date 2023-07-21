@@ -80,12 +80,14 @@ async def runner():
     time.sleep(0.05)
     
     def raw_motors(lspeed, _lmode, rspeed, _rmode):
+        if(lspeed == 0 and rspeed == 0): return
+        if(_lmode == 0 and _rmode == 0): return
         lmode = RawMotorModesEnum.off.value
         if(_lmode == 1): lmode = RawMotorModesEnum.forward.value
-        if(_lmode == 1): lmode = RawMotorModesEnum.reverse.value
+        if(_lmode == 2): lmode = RawMotorModesEnum.reverse.value
         rmode = RawMotorModesEnum.off.value
         if(_rmode == 1): rmode = RawMotorModesEnum.forward.value
-        if(_rmode == 1): rmode = RawMotorModesEnum.reverse.value
+        if(_rmode == 2): rmode = RawMotorModesEnum.reverse.value
         rvr.raw_motors(
             left_mode=(lmode),
             left_speed=(lspeed),
