@@ -92,7 +92,7 @@ async def runner():
         right_speed = rspeed
         if(left_speed is None or not left_speed): left_speed = 0
         if(right_speed is None or not right_speed): right_speed = 0
-        print({left_mode, right_mode, left_speed, right_speed})
+        print(left_mode, right_mode, left_speed, right_speed)
         rvr.raw_motors(
             left_mode=left_mode,
             left_speed=left_speed,
