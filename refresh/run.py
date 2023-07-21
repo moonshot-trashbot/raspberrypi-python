@@ -48,7 +48,7 @@ def calculate_heading(center_x):
     frame_width = 1280
     frame_center_x = frame_width / 2
     delta_x = center_x - frame_center_x
-    return custom_exponential_heading(delta_x)
+    return delta_x
 
 def calculate_forward(center_y):
     frame_height = 720
@@ -167,10 +167,10 @@ async def process(inp: _models.Detection or None):
         lastChance = int(time.time())
         heading_change = calculate_heading(center_x)
         driving.get_debugs().stripechange(center_x, center_y)
-        if heading_change > 0:
-            manager.right_turn(abs(heading_change))
-        else:
-            manager.left_turn(abs(heading_change))
+        if heading_change > 50:
+            manager.right_turn(10)
+        elif heading_change < -50:
+            manager.left_turn(10)
         print(">>> TRACKING: We turned to continue tracking (", tracking, "). Debug...", "\nCXY:", center_x, center_y, "\nHEADCHANGE", heading_change)
     else:
         print(">>> TRACKING: We aren't tracking box ( ID:", inp.id, ") but it is in frame.")
