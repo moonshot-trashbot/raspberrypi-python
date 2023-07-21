@@ -90,6 +90,7 @@ async def runner():
         if(_rmode == 2): right_mode = RawMotorModesEnum.reverse.value
         left_speed = lspeed
         right_speed = rspeed
+        print({left_mode, right_mode, left_speed, right_speed})
         rvr.raw_motors(
             left_mode=left_mode,
             left_speed=left_speed,
