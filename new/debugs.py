@@ -33,8 +33,8 @@ def stripechange(x, y):
     x = x * camChange
     y = y * camChange
     shifty = int(60*camChange)/2
-    stripeCenterX = (screenWidth-x)+shifty
-    stripeCenterY = y+shifty
+    stripeCenterX = (screenWidth-x)-shifty
+    stripeCenterY = y-shifty
 
 def main():
     global xMid
@@ -62,7 +62,7 @@ def main():
         pygame.draw.rect(screen, pygame.Color(10, 255, 10), rectstripe)
 
         vec = [screenWidth-int(stripeCenterX), int(stripeCenterY)]
-        pygame.draw.circle(screen, pygame.Color(255, 10, 177), vec, 100)
+        pygame.draw.circle(screen, pygame.Color(255, 10, 177), vec, 120)
 
         pygame.display.flip()
         dt = clock.tick(60) / 1000
