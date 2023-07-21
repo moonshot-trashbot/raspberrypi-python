@@ -28,6 +28,8 @@ import debugs
 import _models
 import _classes
 import zmq
+import nest_asyncio
+nest_asyncio.apply()
 
 sys.path.append('/home/pi/sphero-sdk-raspberrypi-python')
 from sphero_sdk import Colors, SpheroRvrAsync, SerialAsyncDal, SpheroRvrTargets, SpheroRvrObserver
