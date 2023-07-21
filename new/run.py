@@ -85,8 +85,7 @@ def runner():
         await rvr.led_control.turn_off_leds()
         await rvr.close()
 
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+    loop = asyncio.get_event_loop()
     asyncio.run(main(loop))
 
 try:
