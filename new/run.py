@@ -72,7 +72,7 @@ async def runner():
     global rvr
     global sock
 
-    cont = Truegit 
+    cont = True
 
     rvr.wake()
     time.sleep(2)
