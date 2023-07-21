@@ -87,43 +87,43 @@ async def runner():
             print("Break 1...")
             if (y < 0): ### turn forward
                 rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.off.value, 0)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
             if (y == 0): ### pivot in place
                 rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.reverse.value, 45)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
             if (y > 0): ### turn backward
                 rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.reverse.value, 45)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
         elif (x == 0): # on target
             print("Break 2...")
             if (y < 0): ### drive forward
                 rvr.raw_motors(RawMotorModesEnum.forward.value, 45, RawMotorModesEnum.forward.value, 45)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
             if (y == 0): ### stopped
                 rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.off.value, 0)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
             if (y > 0): ### drive backward
                 rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.reverse.value, 45)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
         elif (x > 0): # turn left
             print("Break 3...")
             if (y < 0): ### turn forward
                 rvr.raw_motors(RawMotorModesEnum.off.value, 0, RawMotorModesEnum.forward.value, 45)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
             if (y == 0): ### pivot in place
                 rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.forward.value, 45)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
             if (y > 0): ### turn backward
                 rvr.raw_motors(RawMotorModesEnum.reverse.value, 45, RawMotorModesEnum.off.value, 0)
-                time.sleep(2)
+                time.sleep(20)
                 print("Break ^, pt. 2")
                 
 
@@ -145,14 +145,25 @@ async def runner():
 
     sock.term()
     rvr.led_control.turn_off_leds()
+    time.sleep(0.05)
     rvr.close()
     time.sleep(1)
 try:
     asyncio.run(runner())
 except KeyboardInterrupt as e:
+    sock.term()
+    rvr.led_control.turn_off_leds()
+    time.sleep(0.05)
+    rvr.close()
+    time.sleep(1)
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(False)
 except Exception as e:
+    sock.term()
+    rvr.led_control.turn_off_leds()
+    time.sleep(0.05)
+    rvr.close()
+    time.sleep(1)
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(e)
 finally:
