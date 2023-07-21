@@ -82,6 +82,7 @@ def drive_forward_seconds(spee, head, tim):
     if(tim < 1):
         driving.get_debugs().headchange(heading_shift_fake(head))
         driving.turn_either_degrees(heading_get(), head)
+        driving.get_debugs().headchange(heading_shift(head))
     else:
         heading_shift(head)
         driving.get_debugs().headchange(heading_get())
