@@ -84,12 +84,12 @@ async def runner():
     async def turnleft(deg):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.turn_left_degrees(0, deg)
-        await asyncio.wait(0.3)
+        await asyncio.sleep(0.3)
         return
     async def turnright(deg):
         await rvr.drive_control.reset_heading()
         await rvr.drive_control.turn_right_degrees(0, deg)
-        await asyncio.wait(0.3)
+        await asyncio.sleep(0.3)
         return
     async def goforward(sec):
         await rvr.drive_control.reset_heading()
