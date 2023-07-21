@@ -150,7 +150,6 @@ async def runner():
 try:
     asyncio.run(runner())
 except KeyboardInterrupt as e:
-    sock.term()
     rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
@@ -158,7 +157,6 @@ except KeyboardInterrupt as e:
     signal.signal(signal.SIGINT, signal.SIG_IGN)
     stop(False)
 except Exception as e:
-    sock.term()
     rvr.led_control.turn_leds_off()
     time.sleep(0.05)
     rvr.close()
