@@ -48,6 +48,7 @@ cont = True
 
 def stop(error):
     global cont
+    global rvr
     cont = False
     if(error is False):
         print(">>> TRACEBACK: Manually requested the program to close after sucessfull runtime. Ignore any following errors! This shutdown should take a few seconds.")
@@ -174,6 +175,7 @@ async def runner():
 
 
     while cont:
+        global rvr
         message = sock.recv().decode("utf-8")
         if(message is not None):
             jso = json.loads(message)
