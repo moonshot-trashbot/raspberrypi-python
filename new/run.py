@@ -88,27 +88,27 @@ async def runner():
             if (y < 0): ### turn forward
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.forward.value,
-                    left_speed=45,
+                    left_duty_cycle=45,
                     right_mode=RawMotorModesEnum.off.value,
-                    right_speed=0
+                    right_duty_cycle=0
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
             elif (y == 0): ### pivot in place
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.forward.value,
-                    left_speed=45,
+                    left_duty_cycle=45,
                     right_mode=RawMotorModesEnum.reverse.value,
-                    right_speed=45
+                    right_duty_cycle=45
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
             elif (y > 0): ### turn backward
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.off.value,
-                    left_speed=0,
+                    left_duty_cycle=0,
                     right_mode=RawMotorModesEnum.reverse.value,
-                    right_speed=45
+                    right_duty_cycle=45
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
@@ -117,27 +117,27 @@ async def runner():
             if (y < 0): ### drive forward
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.forward.value,
-                    left_speed=45,
+                    left_duty_cycle=45,
                     right_mode=RawMotorModesEnum.forward.value,
-                    right_speed=45
+                    right_duty_cycle=45
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
             elif (y == 0): ### stopped
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.off.value,
-                    left_speed=0,
+                    left_duty_cycle=0,
                     right_mode=RawMotorModesEnum.off.value,
-                    right_speed=0
+                    right_duty_cycle=0
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
             elif (y > 0): ### drive backward
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.reverse.value,
-                    left_speed=45,
+                    left_duty_cycle=45,
                     right_mode=RawMotorModesEnum.reverse.value,
-                    right_speed=45
+                    right_duty_cycle=45
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
@@ -146,27 +146,27 @@ async def runner():
             if (y < 0): ### turn forward
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.off.value,
-                    left_speed=0,
+                    left_duty_cycle=0,
                     right_mode=RawMotorModesEnum.forward.value,
-                    right_speed=45
+                    right_duty_cycle=45
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
             elif (y == 0): ### pivot in place
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.reverse.value,
-                    left_speed=45,
+                    left_duty_cycle=45,
                     right_mode=RawMotorModesEnum.forward.value,
-                    right_speed=45
+                    right_duty_cycle=45
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
             elif (y > 0): ### turn backward
                 rvr.raw_motors(
                     left_mode=RawMotorModesEnum.reverse.value,
-                    left_speed=45,
+                    left_duty_cycle=45,
                     right_mode=RawMotorModesEnum.off.value,
-                    right_speed=0
+                    right_duty_cycle=0
                 )
                 time.sleep(20)
                 print("Break ^, pt. 2")
@@ -189,9 +189,9 @@ async def runner():
                     movement(cxy[0], cxy[1])
                     rvr.raw_motors(
                         left_mode=RawMotorModesEnum.forward.value,
-                        left_speed=45,
+                        left_duty_cycle=45,
                         right_mode=RawMotorModesEnum.off.value,
-                        right_speed=0
+                        right_duty_cycle=0
                     )
                     time.sleep(1)
 
