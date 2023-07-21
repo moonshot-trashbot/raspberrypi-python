@@ -78,12 +78,6 @@ async def runner():
     time.sleep(2)
     rvr.led_control.set_all_leds_color(color = Colors.pink)
     time.sleep(0.05)
-
-    tracking = {
-        "id": None,
-        "seen": 0,
-        "center": [None, None]
-    }
     
     def raw_motors(lspeed, _lmode, rspeed, _rmode):
         lmode = RawMotorModesEnum.off.value
@@ -93,11 +87,12 @@ async def runner():
         if(_rmode == 1): rmode = RawMotorModesEnum.forward.value
         if(_rmode == 1): rmode = RawMotorModesEnum.reverse.value
         rvr.raw_motors(
-            left_mode=lmode,
-            left_speed=lspeed,
-            right_mode=rmode,
-            right_speed=rspeed
+            left_mode=(lmode),
+            left_speed=(lspeed),
+            right_mode=(rmode),
+            right_speed=(rspeed)
         )
+        time.sleep(1)
 
     def movement(x, y):
         if (x < 0): # turn right
