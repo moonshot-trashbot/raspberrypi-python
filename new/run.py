@@ -52,7 +52,7 @@ def stop(error):
         os._exit(0)
         exit()
 
-async def runner():
+def runner():
     global cont
 
     async def main(loop):
