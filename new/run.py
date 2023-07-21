@@ -90,7 +90,7 @@ async def runner():
             detect = _models.Detection(detectPre)
             print(">>>", detect)
             cxy = deltafy(detect.center)
-            debugs.stripechange(cxy[0], int((cxy[1]+detect.top)/2)
+            debugs.stripechange(int(cxy[0]/160)*160, ((cxy[1]+detect.top)/180)*90)
             # if(cx > 0)
 
     sock.term()
